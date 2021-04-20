@@ -53,7 +53,6 @@ public class Assignment1 {
 				Collections.reverse(Arrays.asList(strArr));
 				// Join
 				for(String s: strArr) {
-					System.out.println(s);
 					reversed = reversed.concat(s);
 				}
 				return reversed;
