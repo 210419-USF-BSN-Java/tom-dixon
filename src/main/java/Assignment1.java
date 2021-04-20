@@ -51,14 +51,13 @@ public class Assignment1 {
 				String[] strArr = string.split("");
 				// Reverse
 				Collections.reverse(Arrays.asList(strArr));
-				
 				// Join
 				for(String s: strArr) {
-					reversed.concat(s);
+					System.out.println(s);
+					reversed = reversed.concat(s);
 				}
 				return reversed;
 		}
-
 }
 
 
