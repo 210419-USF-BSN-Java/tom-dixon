@@ -1,10 +1,10 @@
+package assignment01;
 import java.util.Arrays;
 import java.util.Collections;
 
 public class Assignment1 {
 
 		public String printNumberInWord(int number) {
-				// TODO Write an implementation for this method declaration
 			String result;
 			switch(number) {
 			case(0):
@@ -47,15 +47,27 @@ public class Assignment1 {
 
 		public String reverse(String string) {
 			String reversed = "";
-				// Split string
-				String[] strArr = string.split("");
-				// Reverse
-				Collections.reverse(Arrays.asList(strArr));
-				// Join
-				for(String s: strArr) {
-					reversed = reversed.concat(s);
-				}
-				return reversed;
+			// Split string
+			String[] strArr = string.split("");
+			// Reverse
+			Collections.reverse(Arrays.asList(strArr));
+			// Join
+			for(String s: strArr) {
+				reversed = reversed.concat(s);
+			}
+			return reversed;
+		}
+		
+		public String reverse2(String string) {
+			String reversed = "";
+			// Split string
+			String[] strArr = string.split("");
+
+			// Reverse and join
+			for(int i = string.length() - 1; i >= 0; i-- ) {
+				reversed = reversed.concat(strArr[i]);
+			}
+			return reversed;
 		}
 }
 
