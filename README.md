@@ -1,4 +1,4 @@
-## Assignment 01 
+## Assignment 01 [my solutions](https://github.com/210419-USF-BSN-Java/tom-dixon/blob/main/Assignment01/Assignment1.java)
 ### 4/20/21, Tuesday
 
 ### _Print Number in Word_
