@@ -1,10 +1,10 @@
-package com.shop.data;
+package com.shop.data.daos;
 
-import com.shop.models.User;
+import com.shop.data.models.User;
 
-public interface UsersDao extends GenericDao<Object>{
+public interface UsersDao extends GenericDao<User>{
 	// CRUD operations
-	Integer add(User u);
+	User add(User u);
 	User get(int i); // get by id
 	User get(String firstName, String lastName); // get by name
 	User update(int id, User u);

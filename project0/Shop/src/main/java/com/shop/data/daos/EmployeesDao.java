@@ -1,6 +1,6 @@
-package com.shop.data;
+package com.shop.data.daos;
 
-import com.shop.models.Employee;
+import com.shop.data.models.Employee;
 
 public interface EmployeesDao extends GenericDao<Object> {
 	Employee add(Employee e);
