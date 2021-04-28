@@ -2,7 +2,9 @@ package com.shop.data.daos;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.shop.data.models.User;
@@ -35,8 +37,31 @@ public class UsersDaoImpl implements UsersDao {
 
 	@Override
 	public List<User> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		List<User> users = new ArrayList<>();
+		
+		String sql = "select * from users";
+		
+		try (Connection conn = ConnectionFactory.getConnection()) {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				users.add( new User(
+						rs.getInt("id"),
+						rs.getString("user_type"),
+						rs.getString("first_name"),
+						rs.getString("last_name"),
+						rs.getString("username"),
+						rs.getString("pw")
+						)
+					);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return users;
 	}
 
 	@Override
