@@ -1,17 +1,23 @@
 package com.shop.services;
 
+import java.util.List;
+
 import com.shop.data.daos.UsersDao;
 import com.shop.data.models.User;
 
-public class UserService {
+public class UsersService {
 	private UsersDao uDao;
 	
-	UserService(UsersDao uDao){
+	public UsersService(UsersDao uDao){
 		this.uDao = uDao;
 	}
 	
 	public int addNewUser(User u) {
 		return uDao.add(u);
+	}
+	
+	public List<User> getAllUsers(){
+		return uDao.getAll();
 	}
 
 }
