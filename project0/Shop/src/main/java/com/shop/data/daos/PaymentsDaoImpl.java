@@ -11,9 +11,10 @@ public class PaymentsDaoImpl implements PaymentsDao {
 		return null;
 	}
 
-	public Payment add(Payment c) {
+	public int add(Payment c) {
+		int result = 0;
 		// TODO Auto-generated method stub
-		return null;
+		return result;
 	}
 
 	public Payment get(int i) {
@@ -26,9 +27,10 @@ public class PaymentsDaoImpl implements PaymentsDao {
 		return null;
 	}
 
-	public Integer remove(Payment c) {
+	public int remove(Payment c) {
+		int result = 0;
 		// TODO Auto-generated method stub
-		return null;
+		return result;
 	}
 
 }

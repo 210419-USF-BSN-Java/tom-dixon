@@ -11,9 +11,10 @@ public class OffersDaoImpl implements OffersDao{
 		return null;
 	}
 
-	public Offer add(Offer c) {
+	public int add(Offer c) {
+		int result = 0;
 		// TODO Auto-generated method stub
-		return null;
+		return result;
 	}
 
 	public Offer get(int i) {
@@ -26,9 +27,10 @@ public class OffersDaoImpl implements OffersDao{
 		return null;
 	}
 
-	public Integer remove(Offer c) {
+	public int remove(Offer c) {
+		int result = 0;
 		// TODO Auto-generated method stub
-		return null;
+		return result;
 	}
 
 }

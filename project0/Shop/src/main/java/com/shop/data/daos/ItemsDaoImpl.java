@@ -11,9 +11,10 @@ public class ItemsDaoImpl implements ItemsDao {
 		return null;
 	}
 
-	public Item add(Item i) {
+	public int add(Item i) {
+		int result = 0;
 		// TODO Auto-generated method stub
-		return null;
+		return result;
 	}
 
 	public Item get(int i) {
@@ -26,9 +27,10 @@ public class ItemsDaoImpl implements ItemsDao {
 		return null;
 	}
 
-	public Integer remove(Item i) {
+	public int remove(Item i) {
+		int result = 0;
 		// TODO Auto-generated method stub
-		return null;
+		return result;
 	}
 
 }

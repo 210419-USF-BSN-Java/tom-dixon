@@ -4,9 +4,9 @@ import java.util.List;
 
 public interface GenericDao<I> {
 	// CRUD operations
-	I add(I i);
+	int add(I i);
 	I get(int i);
 	List<I> getAll();
 	I update(int id, I i);
-	Integer remove(I i);
+	int remove(I i);
 }
