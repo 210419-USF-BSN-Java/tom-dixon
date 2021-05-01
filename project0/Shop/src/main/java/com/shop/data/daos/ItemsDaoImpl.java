@@ -28,10 +28,10 @@ public class ItemsDaoImpl implements ItemsDao {
 			result = ps.executeUpdate();
 
 		} catch (SQLException e) {
+			System.out.println("Exception thrown adding item");
 			e.printStackTrace();
 		}
-		return result;
-
+		System.out.println("result in itemsImpl add: " + result);
 		return result;
 	}
 

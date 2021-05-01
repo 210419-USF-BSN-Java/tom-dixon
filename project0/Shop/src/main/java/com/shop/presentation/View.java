@@ -6,12 +6,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+import com.shop.data.models.Item;
 import com.shop.data.models.User;
 import com.shop.presentation.components.Ui;
+import com.shop.services.ItemsService;
 import com.shop.services.UsersService;
 
 public class View {
 	UsersService uService;
+	ItemsService iService;
 	String textFileUrlStub; // looong file path
 	String userResponse;
 	Ui ui;
@@ -23,8 +26,9 @@ public class View {
 		view = new View();
 	}
 
-	public View(UsersService uService) {
+	public View(UsersService uService, ItemsService iService) {
 		this.uService = uService;
+		this.iService = iService;
 		textFileUrlStub = "/home/noxid/Revature/Java Fullstack/Assignments/tom-dixon/project0/Shop/src/main/resources/menuText/";
 	}
 
@@ -114,7 +118,7 @@ public class View {
 			try {
 				price = Double.parseDouble((priceStr));
 				// service call add item
-
+				iService.addNewItem(new Item(name, price));
 				validEntry = true;
 			} catch (NumberFormatException e) {
 				ui.margin(10);
