@@ -24,6 +24,7 @@ public class App {
 		ItemsService iService = new ItemsService(iDao);
 		View view = new View(uService, iService);
 
+		// call these in view.init()
 		view.displayShopSign();
 		view.welcome();
 	}
