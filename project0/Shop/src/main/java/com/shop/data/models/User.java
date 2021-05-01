@@ -7,7 +7,11 @@ public class User {
 	private String lastName;
 	private String username;
 	private String password;
-	
+
+		public User() {
+	}
+
+
 	public User(String userType, String firstName, String lastName, String username, String password) {
 		super();
 		this.userType = userType;
@@ -16,7 +20,7 @@ public class User {
 		this.username = username;
 		this.password = password;
 	}
-	
+
 	public User(int id, String userType, String firstName, String lastName, String username, String password) {
 		super();
 		this.id = id;
@@ -26,7 +30,7 @@ public class User {
 		this.username = username;
 		this.password = password;
 	}
-	
+
 
 	public String getUserType() {
 		return userType;
@@ -67,7 +71,6 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
 
 	@Override
 	public String toString() {
