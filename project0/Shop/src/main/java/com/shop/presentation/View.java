@@ -242,6 +242,15 @@ public class View {
 		}
 
 		// signup service
+		User u = new User("customer", firstName, lastName, un, pw);
+		if (uService.addNewUser(u) == 1) {
+			System.out.println("** Registration successful ** ");
+			System.out.println("** Redirecting to login... ** ");
+			login();
+		} else {
+			System.out.println("** Something went wrong **");
+			System.out.println("** Redirecting to main menu... **");
+		}
 
 	}
 
@@ -336,7 +345,6 @@ public class View {
 			default:
 				payments();
 				break;
-
 		}
 	}
 
