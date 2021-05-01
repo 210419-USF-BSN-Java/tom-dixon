@@ -136,7 +136,7 @@ public class View {
 				if (enterAnotherItem.equals("y")) {
 					addItem();
 				} else {
-					syso
+					System.out.println("** Redirecting to Employee Main Menu... **");
 					employeeMain();
 				}
 
