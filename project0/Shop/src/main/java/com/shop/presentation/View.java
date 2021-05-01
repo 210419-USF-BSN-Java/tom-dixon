@@ -120,6 +120,26 @@ public class View {
 				// service call add item
 				iService.addNewItem(new Item(name, price));
 				validEntry = true;
+
+				System.out.println("New item successfully added");
+
+				//
+				String enterAnotherItem = "";
+				System.out.print("Would you like to add another item (y/n)? ");
+				while (!(enterAnotherItem.equals("y") || enterAnotherItem.equals("n"))) {
+					enterAnotherItem = SC.nextLine();
+					if (!(enterAnotherItem.equals("y") || enterAnotherItem.equals("n"))) {
+						System.out.println("** INVALID ENTRY **");
+					}
+				}
+
+				if (enterAnotherItem.equals("y")) {
+					addItem();
+				} else {
+					syso
+					employeeMain();
+				}
+
 			} catch (NumberFormatException e) {
 				ui.margin(10);
 				System.out.println("** INVALID ENTRY **");
