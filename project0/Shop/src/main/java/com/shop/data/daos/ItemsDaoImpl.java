@@ -1,8 +1,12 @@
 package com.shop.data.daos;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 import com.shop.data.models.Item;
+import com.shop.util.ConnectionFactory;
 
 public class ItemsDaoImpl implements ItemsDao {
 
@@ -13,7 +17,21 @@ public class ItemsDaoImpl implements ItemsDao {
 
 	public int add(Item i) {
 		int result = 0;
-		// TODO Auto-generated method stub
+
+		String sql = "insert into items (name, price)" + "values" + "(?, ?)";
+
+		try (Connection conn = ConnectionFactory.getConnection()) {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, i.getName());
+			ps.setDouble(2, i.getPrice());
+
+			result = ps.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+
 		return result;
 	}
 
