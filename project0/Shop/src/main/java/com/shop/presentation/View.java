@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 import com.shop.data.models.Item;
 import com.shop.data.models.User;
@@ -29,23 +30,24 @@ public class View {
 	public View(UsersService uService, ItemsService iService) {
 		this.uService = uService;
 		this.iService = iService;
+
+		ui = new Ui();
+
 		textFileUrlStub = "/home/noxid/Revature/Java Fullstack/Assignments/tom-dixon/project0/Shop/src/main/resources/menuText/";
 	}
 
 	public void displayShopSign() {
 		File f = new File(textFileUrlStub + "shop_sign");
-		Ui header = new Ui();
-		header.textBlock(f);
+		ui.textBlock(f);
 	}
 
 	public void welcome() {
 		String choice = "";
 		File f = new File(textFileUrlStub + "welcome");
-		Ui header = new Ui();
 		// TODO create util that generates validChoices using varargs...
 		List<String> validChoices = new ArrayList<String>(Arrays.asList("1", "2"));
 		while (!validChoices.contains(choice)) {
-			header.textBlock(f);
+			ui.textBlock(f);
 			choice = SC.nextLine();
 
 			if (!validChoices.contains(choice)) {
@@ -64,9 +66,6 @@ public class View {
 
 	private void inventoryEmpMenu() {
 		File empMenu = new File(textFileUrlStub + "inventoryEmpMenu");
-		Ui ui = new Ui();
-		ui.textBlock(empMenu);
-
 		List<String> validChoices = new ArrayList<String>(Arrays.asList("1", "2"));
 		String choice = "";
 		while (!validChoices.contains(choice)) {
@@ -91,6 +90,60 @@ public class View {
 	}
 
 	private void removeItem() {
+		// get all items first
+		File header = new File(textFileUrlStub + "inventory"); // header text
+		File prompt = new File(textFileUrlStub + "selectId"); // header text
+		List<Item> inventory = iService.getAllItems(); // get items for display and generate valid ids
+		List<String> validIds = new ArrayList<>(); // holds valid ids to select from
+		String choice = "";
+
+		if (inventory.size() == 0) {
+			System.out.println("** INVENTORY IS EMPTY. Redirecting to employee main menu...");
+			employeeMain();
+		} else {
+
+			// display inventory
+			ui.textBlock(header);
+			ui.itemList(inventory);
+			// populate valid id list
+			for (Item i : inventory) {
+				validIds.add(String.valueOf(i.getId()));
+			}
+
+			// get input
+			while (!validIds.contains(choice)) {
+				ui.textBlock(prompt);
+				choice = SC.nextLine();
+				if (!validIds.contains(choice)) {
+					System.out.println("** INVALID CHOICE **");
+				}
+			}
+
+			// remove by id
+			if (iService.removeItemById(new Item(Integer.parseInt(choice))) == 1) {
+				String removeAnother = "";
+				System.out.println("** Item successfully removed **");
+				inventory = iService.getAllItems(); // get items for display and generate valid ids
+				ui.itemList(inventory);
+				System.out.print("Would you like to remove another item (y/n)? ");
+				while (!(removeAnother.equals("y") || removeAnother.equals("n"))) {
+					removeAnother = SC.nextLine();
+					if (!(removeAnother.equals("y") || removeAnother.equals("n"))) {
+						System.out.println("** INVALID ENTRY **. Try again...");
+					}
+				}
+
+				if (removeAnother == "y") {
+					removeItem();
+				} else {
+					System.out.println("** Redirecting to Employee Main Menu... **");
+					employeeMain();
+				}
+			} else {
+				System.out.println("** ITEM NOT REMOVED SUCCESSFULLY **");
+				System.out.println("Please try again");
+			}
+		}
 	}
 
 	private void addItem() {
@@ -189,6 +242,15 @@ public class View {
 		}
 
 		// signup service
+		User u = new User("customer", firstName, lastName, un, pw);
+		if (uService.addNewUser(u) == 1) {
+			System.out.println("** Registration successful ** ");
+			System.out.println("** Redirecting to login... ** ");
+			login();
+		} else {
+			System.out.println("** Something went wrong **");
+			System.out.println("** Redirecting to main menu... **");
+		}
 
 	}
 
@@ -266,6 +328,7 @@ public class View {
 		String choice = "";
 		while (!validChoices.contains(choice)) {
 			ui.textBlock(menu);
+			System.out.print("Enter selection: ");
 			choice = SC.nextLine();
 			if (!validChoices.contains(choice)) {
 				System.out.println("** INVALID CHOICE **");
@@ -282,7 +345,6 @@ public class View {
 			default:
 				payments();
 				break;
-
 		}
 	}
 

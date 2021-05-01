@@ -2,7 +2,9 @@ package com.shop.data.daos;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.shop.data.models.Item;
@@ -11,8 +13,19 @@ import com.shop.util.ConnectionFactory;
 public class ItemsDaoImpl implements ItemsDao {
 
 	public List<Item> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Item> items = new ArrayList<Item>();
+		String sql = "select * from items";
+		try (Connection conn = ConnectionFactory.getConnection()) {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Item item = new Item(rs.getInt("id"), rs.getString("name"), rs.getDouble("price"));
+				items.add(item);
+			}
+		} catch (SQLException e) {
+
+		}
+		return items;
 	}
 
 	public int add(Item i) {
@@ -47,7 +60,18 @@ public class ItemsDaoImpl implements ItemsDao {
 
 	public int remove(Item i) {
 		int result = 0;
-		// TODO Auto-generated method stub
+
+		String sql = "delete from items where id = ?";
+
+		try (Connection conn = ConnectionFactory.getConnection()) {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, i.getId());
+			result = ps.executeUpdate();
+
+		} catch (SQLException e) {
+			System.out.println("Exception thrown removing item");
+			e.printStackTrace();
+		}
 		return result;
 	}
 
