@@ -16,6 +16,7 @@ public class View {
 	String userResponse;
 	Ui ui;
 	View view;
+	User currentUser;
 	private static final Scanner SC = new Scanner(System.in);
 
 	public View() {
@@ -24,7 +25,7 @@ public class View {
 
 	public View(UsersService uService) {
 		this.uService = uService;
-		textFileUrlStub = "/home/noxid/java/RevatureCertProgram/Course Repo/Curriculum-Resources/Shop/src/main/resources/menuText/";
+		textFileUrlStub = "/home/noxid/Revature/Java Fullstack/Assignments/tom-dixon/project0/Shop/src/main/resources/menuText/";
 	}
 
 	public void displayShopSign() {
@@ -35,7 +36,7 @@ public class View {
 
 	public void welcome() {
 		String choice = "";
-		File f = new File(textFileUrlStub + "/welcome");
+		File f = new File(textFileUrlStub + "welcome");
 		Ui header = new Ui();
 		// TODO create util that generates validChoices using varargs...
 		List<String> validChoices = new ArrayList<String>(Arrays.asList("1", "2"));
@@ -57,17 +58,79 @@ public class View {
 		}
 	}
 
-	private void inventory(User u) {
-		File f = new File(textFileUrlStub + "/inventory");
-		Ui header = new Ui();
-		header.textBlock(f);
+	private void inventoryEmpMenu() {
+		File empMenu = new File(textFileUrlStub + "inventoryEmpMenu");
+		Ui ui = new Ui();
+		ui.textBlock(empMenu);
 
-		// inventory service call
+		List<String> validChoices = new ArrayList<String>(Arrays.asList("1", "2"));
+		String choice = "";
+		while (!validChoices.contains(choice)) {
+			ui.textBlock(empMenu);
+			choice = SC.nextLine();
+			if (!validChoices.contains(choice)) {
+				System.out.println("** INVALID CHOICE **");
+			}
+		}
+
+		switch (Integer.parseInt(choice)) {
+			case 1:
+				addItem();
+				break;
+			case 2:
+				removeItem();
+				break;
+			case 3:
+				employeeMain();
+		}
+
+	}
+
+	private void removeItem() {
+	}
+
+	private void addItem() {
+		String name = "";
+		String priceStr = "";
+		Double price = 0.00;
+
+		// validate price entry
+		boolean validEntry = false;
+
+		File addItem = new File(textFileUrlStub + "addItem");
+		Ui ui = new Ui();
+		ui.textBlock(addItem);
+
+		// item name
+		while (name.length() < 3) {
+			System.out.print("Item name: ");
+			name = SC.nextLine();
+		}
+		// item price
+		while (!validEntry) {
+			System.out.print("Item price (##.## format): $");
+			priceStr = SC.nextLine();
+
+			try {
+				price = Double.parseDouble((priceStr));
+				// service call add item
+
+				validEntry = true;
+			} catch (NumberFormatException e) {
+				ui.margin(10);
+				System.out.println("** INVALID ENTRY **");
+				System.out.println("Please try again.");
+				addItem();
+			} catch (Exception e) {
+				System.out.println("Something went wrong adding the item. Please try again.");
+				addItem();
+			}
+		}
 
 	}
 
 	private void signup() {
-		File f = new File(textFileUrlStub + "/signup");
+		File f = new File(textFileUrlStub + "signup");
 		String firstName = "";
 		String lastName = "";
 		String un = "";
@@ -101,7 +164,7 @@ public class View {
 			e.printStackTrace();
 		}
 
-		// login service
+		// signup service
 
 	}
 
@@ -138,16 +201,18 @@ public class View {
 		if (username != null) {
 			if (password.equals(pw)) {
 				if (userType != null) {
+					// log-in
+					currentUser = u;
 					// logged in. Route by usertype
 					switch (userType) {
 						case "customer":
-							customerMenu00(u);
+							customerMenu00();
 							break;
 						case "employee":
-							employeeMenu00(u);
+							employeeMain();
 							break;
 						default:
-							managerMenu00(u);
+							managerMain();
 					}
 				}
 			} else {
@@ -159,17 +224,17 @@ public class View {
 
 	}
 
-	private void managerMenu00(User u) {
+	private void managerMain() {
 
 	}
 
-	private void customerMenu00(User u) {
+	private void customerMenu00() {
 
 	}
 
-	public void employeeMenu00(User u) {
+	public void employeeMain() {
 		Ui ui = new Ui();
-		File greeting = new File(textFileUrlStub + "empMenu00");
+		File greeting = new File(textFileUrlStub + "loginGreeting");
 		File menu = new File(textFileUrlStub + "empMenu01");
 		ui.textBlock(greeting);
 
@@ -185,24 +250,23 @@ public class View {
 
 		switch (Integer.parseInt(choice)) {
 			case 1:
-				inventory(u);
+				inventoryEmpMenu();
 				break;
 			case 2:
-				offers(u);
+				offers();
 				break;
 			default:
-				payments(u);
+				payments();
 				break;
 
 		}
-
 	}
 
-	private void payments(User u) {
+	private void payments() {
 		System.out.println("payments");
 	}
 
-	private void offers(User u) {
+	private void offers() {
 		System.out.println("offers");
 	}
 

@@ -16,4 +16,11 @@ public class Ui {
             e.printStackTrace();
         }
     }
+
+    public void margin(int rows) {
+        for (int i = 1; i < rows; i++) {
+            System.out.println("");
+        }
+
+    }
 }
