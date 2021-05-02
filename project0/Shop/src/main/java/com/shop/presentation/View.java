@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.IntStream;
 
 import com.shop.data.models.Item;
 import com.shop.data.models.User;
@@ -20,7 +19,7 @@ public class View {
 	String userResponse;
 	Ui ui;
 	View view;
-	User currentUser;
+	User currentUser = null;
 	private static final Scanner SC = new Scanner(System.in);
 
 	public View() {
@@ -64,28 +63,73 @@ public class View {
 		}
 	}
 
-	private void inventoryEmpMenu() {
-		File empMenu = new File(textFileUrlStub + "inventoryEmpMenu");
-		List<String> validChoices = new ArrayList<String>(Arrays.asList("1", "2"));
+	private void inventoryMenu() {
+		List<String> validMenuChoices;
+		boolean currentUserIsCustomer = currentUser.getUserType().equals("customer");
+
+		System.out.println("current user is cust" + currentUserIsCustomer);
+		File menu = currentUserIsCustomer ? new File(textFileUrlStub + "inventoryCustMenu")
+				: new File(textFileUrlStub + "inventoryEmpMenu");
+
+		// generate valid choices for customer
+		List<Item> inventory = iService.getAllItems();
+		List<String> validCustomerChoices = new ArrayList<>();
+
+		for (Item i : inventory) {
+			validCustomerChoices.add(Integer.toString(i.getId()));
+		}
+
+		// add "n" as valid customer choice
+		validCustomerChoices.add("n");
+
+		// Valid choices for employee inventory menu are
+		List<String> validEmployeeChoices = new ArrayList<String>(Arrays.asList("1", "2", "3"));
+
+		validMenuChoices = currentUserIsCustomer ? validCustomerChoices : validEmployeeChoices;
+
 		String choice = "";
-		while (!validChoices.contains(choice)) {
-			ui.textBlock(empMenu);
+		while (!validMenuChoices.contains(choice)) {
+			ui.textBlock(menu);
+			// if customer, display inventory
+			if (currentUserIsCustomer) {
+				// display inventory
+				List<Item> items = iService.getAllItems();
+				ui.itemList(items);
+				System.out.println("=======================");
+				System.out.println("Enter Item Id or \"n\": ");
+			}
+
 			choice = SC.nextLine();
-			if (!validChoices.contains(choice)) {
+			if (!validMenuChoices.contains(choice)) {
 				System.out.println("** INVALID CHOICE **");
 			}
 		}
 
-		switch (Integer.parseInt(choice)) {
-			case 1:
-				addItem();
-				break;
-			case 2:
-				removeItem();
-				break;
-			case 3:
-				employeeMain();
+		if (!currentUserIsCustomer) {
+			switch (Integer.parseInt(choice)) {
+				case 1:
+					addItem();
+					break;
+				case 2:
+					removeItem();
+					break;
+				case 3:
+					employeeMain();
+			}
+		} else {
+			if (choice.equals("n")) {
+				customerMain();
+			} else {
+				custOffer(choice);
+			}
 		}
+	}
+
+	private void custOffer(String choice) {
+		// get item to make an offer on from choice (conver to into, then call item
+		System.out.println(choice);
+		// service getItem(id)
+		// if item not found, return to
 
 	}
 
@@ -176,7 +220,6 @@ public class View {
 
 				System.out.println("New item successfully added");
 
-				//
 				String enterAnotherItem = "";
 				System.out.print("Would you like to add another item (y/n)? ");
 				while (!(enterAnotherItem.equals("y") || enterAnotherItem.equals("n"))) {
@@ -277,22 +320,21 @@ public class View {
 			e.printStackTrace();
 		}
 
-		// service
+		// get user by username
 		User u = uService.getUserByUsername(un);
 
 		// extract user properties
-		String username = u.getUsername();
+		String username = u.getUsername(); // to check
 		String password = u.getPassword();
 		String userType = u.getUserType();
 		if (username != null) {
 			if (password.equals(pw)) {
+				currentUser = u;
 				if (userType != null) {
-					// log-in
-					currentUser = u;
 					// logged in. Route by usertype
 					switch (userType) {
 						case "customer":
-							customerMenu00();
+							customerMain();
 							break;
 						case "employee":
 							employeeMain();
@@ -303,9 +345,13 @@ public class View {
 				}
 			} else {
 				// incorrect login information. rerouting to main menu
-				System.out.println("*** ERROR LOGGIN IN. REROUTING TO MAIN MENU");
+				System.out.println("** ERROR LOGGIN IN **");
+				System.out.println("**  REROUTING TO MAIN MENU **");
 				view.welcome();
 			}
+		} else {
+			System.out.println("** USER NOT FOUND. TRY AGAIN **");
+			login();
 		}
 
 	}
@@ -314,17 +360,13 @@ public class View {
 
 	}
 
-	private void customerMenu00() {
-
-	}
-
-	public void employeeMain() {
-		Ui ui = new Ui();
+	private void customerMain() {
 		File greeting = new File(textFileUrlStub + "loginGreeting");
-		File menu = new File(textFileUrlStub + "empMenu01");
+		File menu = new File(textFileUrlStub + "customerMain");
+
 		ui.textBlock(greeting);
 
-		List<String> validChoices = new ArrayList<String>(Arrays.asList("1", "2", "3"));
+		List<String> validChoices = new ArrayList<String>(Arrays.asList("1", "2", "3", "4"));
 		String choice = "";
 		while (!validChoices.contains(choice)) {
 			ui.textBlock(menu);
@@ -334,18 +376,55 @@ public class View {
 				System.out.println("** INVALID CHOICE **");
 			}
 		}
-
 		switch (Integer.parseInt(choice)) {
 			case 1:
-				inventoryEmpMenu();
+				inventoryMenu();
 				break;
 			case 2:
 				offers();
 				break;
-			default:
+			case 3:
 				payments();
 				break;
+			case 4:
+				logout();
 		}
+	}
+
+	public void employeeMain() {
+		File greeting = new File(textFileUrlStub + "loginGreeting");
+		File menu = new File(textFileUrlStub + "empMenu01");
+		ui.textBlock(greeting);
+
+		List<String> validChoices = new ArrayList<String>(Arrays.asList("1", "2", "3", "4"));
+		String choice = "";
+		while (!validChoices.contains(choice)) {
+			ui.textBlock(menu);
+			System.out.print("Enter selection: ");
+			choice = SC.nextLine();
+			if (!validChoices.contains(choice)) {
+				System.out.println("** INVALID CHOICE **");
+			}
+		}
+		switch (Integer.parseInt(choice)) {
+			case 1:
+				inventoryMenu();
+				break;
+			case 2:
+				offers();
+				break;
+			case 3:
+				payments();
+				break;
+			case 4:
+				logout();
+		}
+	}
+
+	private void logout() {
+		currentUser = null;
+		System.out.println("** Successfully logged out **");
+		welcome();
 	}
 
 	private void payments() {
