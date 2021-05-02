@@ -9,9 +9,11 @@ import com.shop.data.daos.ItemsDao;
 
 import com.shop.data.daos.UsersDaoImpl;
 import com.shop.data.daos.ItemsDaoImpl;
+import com.shop.data.daos.OffersDao;
+import com.shop.data.daos.OffersDaoImpl;
 import com.shop.services.UsersService;
 import com.shop.services.ItemsService;
-
+import com.shop.services.OffersService;
 import com.shop.presentation.View;
 
 public class App {
@@ -20,9 +22,11 @@ public class App {
 
 		UsersDao uDao = new UsersDaoImpl();
 		ItemsDao iDao = new ItemsDaoImpl();
+		OffersDao oDao = new OffersDaoImpl();
 		UsersService uService = new UsersService(uDao);
 		ItemsService iService = new ItemsService(iDao);
-		View view = new View(uService, iService);
+		OffersService oService = new OffersService(oDao);
+		View view = new View(uService, iService, oService);
 
 		// call these in view.init()
 		view.displayShopSign();

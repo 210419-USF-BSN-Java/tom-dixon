@@ -8,9 +8,8 @@ public class User {
 	private String username;
 	private String password;
 
-		public User() {
+	public User() {
 	}
-
 
 	public User(String userType, String firstName, String lastName, String username, String password) {
 		super();
@@ -31,6 +30,13 @@ public class User {
 		this.password = password;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public String getUserType() {
 		return userType;
