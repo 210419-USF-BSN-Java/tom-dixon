@@ -7,14 +7,18 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.shop.data.models.Item;
+import com.shop.data.models.Offer;
 import com.shop.data.models.User;
 import com.shop.presentation.components.Ui;
 import com.shop.services.ItemsService;
+import com.shop.services.OffersService;
 import com.shop.services.UsersService;
+import com.shop.util.Calc;
 
 public class View {
 	UsersService uService;
 	ItemsService iService;
+	OffersService oService;
 	String textFileUrlStub; // looong file path
 	String userResponse;
 	Ui ui;
@@ -26,12 +30,11 @@ public class View {
 		view = new View();
 	}
 
-	public View(UsersService uService, ItemsService iService) {
+	public View(UsersService uService, ItemsService iService, OffersService oService) {
 		this.uService = uService;
 		this.iService = iService;
-
+		this.oService = oService;
 		ui = new Ui();
-
 		textFileUrlStub = "/home/noxid/Revature/Java Fullstack/Assignments/tom-dixon/project0/Shop/src/main/resources/menuText/";
 	}
 
@@ -69,7 +72,6 @@ public class View {
 		List<Item> items = null;
 		boolean currentUserIsCustomer = currentUser.getUserType().equals("customer");
 
-		System.out.println("current user is cust" + currentUserIsCustomer);
 		File menu = currentUserIsCustomer ? new File(textFileUrlStub + "inventoryCustMenu")
 				: new File(textFileUrlStub + "inventoryEmpMenu");
 
@@ -98,7 +100,7 @@ public class View {
 				items = iService.getAllItems();
 				ui.itemList(items);
 				System.out.println("=======================");
-				System.out.println("Enter Item Id or \"n\": ");
+				System.out.print("Enter Item Id or \"n\": ");
 			}
 
 			choice = SC.nextLine();
@@ -123,7 +125,6 @@ public class View {
 				customerMain();
 			} else {
 				for (Item i : items) {
-					System.out.println("Choice: " + choice);
 					if (i.getId() == Integer.parseInt(choice)) {
 						chosenItem = i;
 					}
@@ -134,10 +135,89 @@ public class View {
 	}
 
 	private void custOffer(Item i) {
-		// get item to make an offer on from choice (conver to into, then call item
-		System.out.println(i);
-		// service getItem(id)
-		// if item not found, return to
+
+		File header = new File(textFileUrlStub + "custOffer");
+
+		String input;
+		double deposit = 0.00;
+		double difference = 0.00;
+		String plan = "";
+
+		ui.textBlock(header);
+		System.out.println(i.getName() + " has some very nice features and is priced to sell at $" + i.getPrice());
+		System.out.println("");
+		System.out.println("How much would you like to put down? ");
+
+		boolean depositValid = false;
+		while (!depositValid) {
+			System.out.print("Deposit amount: $");
+			input = SC.nextLine();
+
+			// validate deposit amount
+			try {
+				deposit = Double.parseDouble(input);
+				if (deposit < i.getPrice()) {
+					depositValid = true;
+					difference = i.getPrice() - deposit;
+				}
+			} catch (NumberFormatException e) {
+				System.out.println("** VALUE MUST BY NUMERIC **");
+			}
+		}
+
+		ui.margin(3);
+		System.out.println(
+				"At " + deposit + " down, you have " + difference + " left to finance in the form of weekly payments.");
+		ui.hr();
+		System.out.println("Please choose one of the three options below:");
+		ui.hr();
+		;
+		System.out.println(
+				"1) 12 Week Plan: 12 $" + Calc.paymentAmount(12, difference, 0.05) + " payments at 5% interest");
+		System.out.println(
+				"2) 24 Week Plan: 12 $" + Calc.paymentAmount(24, difference, 0.08) + " payments, at 8% interest");
+		System.out.println(
+				"3) 48 Week Plan: 48 $" + Calc.paymentAmount(48, difference, 0.15) + " payments, at 12% interest");
+		ui.hr();
+
+		List<String> validChoices = new ArrayList<>(Arrays.asList("1", "2", "3"));
+		while (!validChoices.contains(plan)) {
+			System.out.print("Enter 1, 2, or 3 to select a payment plan: ");
+			plan = SC.nextLine();
+			if (!validChoices.contains(plan)) {
+				System.out.println("** INVALID CHOICE **");
+			}
+		}
+
+		// set weeks according to payment plan chosen
+		int weeks = 0;
+		double interest = 0.0;
+		if (plan.equals("1")) {
+			weeks = 12;
+			interest = 0.05;
+		} else if (plan.equals("2")) {
+			weeks = 24;
+			interest = 0.08;
+		} else if (plan.equals("3")) {
+			weeks = 48;
+			interest = 0.15;
+		}
+
+		String payment = Calc.paymentAmount(weeks, difference, interest);
+
+		double gross = deposit + (difference * interest) + difference;
+
+		Offer o = new Offer(i.getId(), deposit, weeks, Double.parseDouble(payment), currentUser.getId(), gross);
+
+		ui.hr();
+		// add offer service call
+		if (oService.addOffer(o) == 1) {
+			System.out.println("Your offer has been successfully added.");
+			System.out.println("...You are being directed back to the main menu...");
+			customerMain();
+		} else {
+			System.out.println("There was an error adding your offer. Please try again.");
+		}
 
 	}
 

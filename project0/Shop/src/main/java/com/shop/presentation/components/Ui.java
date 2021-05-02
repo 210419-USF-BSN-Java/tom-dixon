@@ -28,6 +28,10 @@ public class Ui {
 
     }
 
+    public void hr() {
+        System.out.println("---------------------------------------------");
+    }
+
     public void margin(int rows) {
         for (int i = 1; i < rows; i++) {
             System.out.println("");
