@@ -468,9 +468,9 @@ public class View {
 			case 1:
 				inventoryMenu();
 				break;
-			case 2:
-				offers();
-				break;
+			// case 2:
+			// custOffer();
+			// break;
 			case 3:
 				payments();
 				break;
@@ -499,7 +499,7 @@ public class View {
 				inventoryMenu();
 				break;
 			case 2:
-				offers();
+				employeeOffers();
 				break;
 			case 3:
 				payments();
@@ -520,8 +520,12 @@ public class View {
 
 	}
 
-	private void offers() {
-		System.out.println("offers");
+	private void employeeOffers() {
+		File greeting = new File(textFileUrlStub + "offersEmpHeader");
+		ui.textBlock(greeting);
+		// offer service call. get all offers
+		List<Offer> pendingOffers = oService.getOffers();
+		ui.offerList(pendingOffers);
 	}
 
 }

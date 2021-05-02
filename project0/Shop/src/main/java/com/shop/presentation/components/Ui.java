@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.shop.data.models.Item;
+import com.shop.data.models.Offer;
 
 public class Ui {
 
@@ -26,6 +27,15 @@ public class Ui {
             System.out.println("Id: " + item.getId() + " Name: " + item.getName() + " Price: $" + item.getPrice());
         }
 
+    }
+
+    public void offerList(List<Offer> offers) {
+        for (Offer o : offers) {
+            System.out.println("------------------------------------------------------------");
+            ;
+            System.out.println("Offer Id: " + o.getId() + " Deposit: $" + o.getDownPayment() + " Number of payments: "
+                    + o.getWeeks() + " Weekly payment amount: " + o.getPaymentPerWeek() + " Gross: " + o.getGross());
+        }
     }
 
     public void hr() {
