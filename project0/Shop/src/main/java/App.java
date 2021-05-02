@@ -5,9 +5,13 @@
 //import com.shop.data.daos.PaymentsDaoImpl;
 
 import com.shop.data.daos.UsersDao;
+
+import java.util.List;
+
 import com.shop.data.daos.ItemsDao;
 
 import com.shop.data.daos.UsersDaoImpl;
+import com.shop.data.models.Offer;
 import com.shop.data.daos.ItemsDaoImpl;
 import com.shop.data.daos.OffersDao;
 import com.shop.data.daos.OffersDaoImpl;
@@ -28,8 +32,13 @@ public class App {
 		OffersService oService = new OffersService(oDao);
 		View view = new View(uService, iService, oService);
 
+		List<Offer> offers = oService.getOffers();
+
+		for (Offer o : offers) {
+			System.out.println(o.getDownPayment() + " " + o.getPaymentPerWeek());
+		}
 		// call these in view.init()
-		view.displayShopSign();
-		view.welcome();
+		// view.displayShopSign();
+		// view.welcome();
 	}
 }

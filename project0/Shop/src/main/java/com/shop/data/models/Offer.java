@@ -26,6 +26,7 @@ public class Offer {
         this.itemId = itemId;
         this.downPayment = downPayment;
         this.weeks = weeks;
+        this.paymentPerWeek = paymentPerWeek;
         this.custId = custId;
         this.pending = pending;
         this.gross = gross;

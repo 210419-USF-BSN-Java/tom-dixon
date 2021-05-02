@@ -35,7 +35,7 @@ public class View {
 		this.iService = iService;
 		this.oService = oService;
 		ui = new Ui();
-		textFileUrlStub = "/home/noxid/Revature/Java Fullstack/Assignments/tom-dixon/project0/Shop/src/main/resources/menuText/";
+		textFileUrlStub = "/home/noxid/Revature/java-fullstack/Assignments/tom-dixon/project0/Shop/src/main/resources/menuText/";
 	}
 
 	public void displayShopSign() {

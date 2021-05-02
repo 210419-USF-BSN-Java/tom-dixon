@@ -1,5 +1,7 @@
 package com.shop.services;
 
+import java.util.List;
+
 import com.shop.data.daos.OffersDao;
 import com.shop.data.models.Offer;
 
@@ -12,6 +14,10 @@ public class OffersService {
 
     public int addOffer(Offer o) {
         return oDao.add(o);
+    }
+
+    public List<Offer> getOffers() {
+        return oDao.getAll();
     }
 
 }

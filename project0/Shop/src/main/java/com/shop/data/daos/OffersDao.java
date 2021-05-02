@@ -1,4 +1,7 @@
 package com.shop.data.daos;
+
+import java.util.List;
+
 import com.shop.data.models.Offer;
 
 public interface OffersDao extends GenericDao<Offer> {
@@ -10,4 +13,5 @@ public interface OffersDao extends GenericDao<Offer> {
 
 	int remove(Offer c);
 
+	List<Offer> getAll();
 }
