@@ -70,6 +70,7 @@ public class UsersDaoImpl implements UsersDao {
 			ps.setString(1, username);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
+				u.setId(rs.getInt("id"));
 				u.setFirstName(rs.getString("first_name"));
 				u.setUserType(rs.getString("user_type"));
 				u.setUsername(rs.getString("username"));
