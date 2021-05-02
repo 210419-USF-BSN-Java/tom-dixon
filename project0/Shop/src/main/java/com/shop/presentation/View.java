@@ -65,6 +65,8 @@ public class View {
 
 	private void inventoryMenu() {
 		List<String> validMenuChoices;
+		Item chosenItem = null;
+		List<Item> items = null;
 		boolean currentUserIsCustomer = currentUser.getUserType().equals("customer");
 
 		System.out.println("current user is cust" + currentUserIsCustomer);
@@ -93,7 +95,7 @@ public class View {
 			// if customer, display inventory
 			if (currentUserIsCustomer) {
 				// display inventory
-				List<Item> items = iService.getAllItems();
+				items = iService.getAllItems();
 				ui.itemList(items);
 				System.out.println("=======================");
 				System.out.println("Enter Item Id or \"n\": ");
@@ -120,14 +122,20 @@ public class View {
 			if (choice.equals("n")) {
 				customerMain();
 			} else {
-				custOffer(choice);
+				for (Item i : items) {
+					System.out.println("Choice: " + choice);
+					if (i.getId() == Integer.parseInt(choice)) {
+						chosenItem = i;
+					}
+				}
+				custOffer(chosenItem);
 			}
 		}
 	}
 
-	private void custOffer(String choice) {
+	private void custOffer(Item i) {
 		// get item to make an offer on from choice (conver to into, then call item
-		System.out.println(choice);
+		System.out.println(i);
 		// service getItem(id)
 		// if item not found, return to
 
@@ -429,6 +437,7 @@ public class View {
 
 	private void payments() {
 		System.out.println("payments");
+
 	}
 
 	private void offers() {
