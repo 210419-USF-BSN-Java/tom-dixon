@@ -6,6 +6,9 @@ public class Offer {
     private double downPayment;
     private int weeks;
     private double paymentPerWeek;
+    private int custId;
+    private boolean pending;
+    private double gross;
 
     public Offer() {
 
@@ -96,8 +99,11 @@ public class Offer {
         this.gross = gross;
     }
 
-    private int custId;
-    private boolean pending;
-    private double gross;
+    @Override
+    public String toString() {
+        return "Offer [custId=" + custId + ", downPayment=" + downPayment + ", gross=" + gross + ", id=" + id
+                + ", itemId=" + itemId + ", paymentPerWeek=" + paymentPerWeek + ", pending=" + pending + ", weeks="
+                + weeks + "]";
+    }
 
 }

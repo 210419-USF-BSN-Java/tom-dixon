@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.shop.data.daos.ItemsDao;
 import com.shop.data.models.Item;
+import com.shop.data.models.Offer;
+import com.shop.data.models.User;
 
 public class ItemsService {
     private ItemsDao iDao;
@@ -22,6 +24,14 @@ public class ItemsService {
 
     public int removeItemById(Item i) {
         return iDao.remove(i);
+    }
+
+    public int assignOwnership(Item item, Offer offer) {
+        // item id (id) = i.getId()
+        // owned_by = u.getId()
+        // remaining payments = o.getWeeks()
+        // balance = o.getGross()
+        return iDao.assignOwnership(item, offer);
     }
 
 }

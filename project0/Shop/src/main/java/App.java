@@ -11,6 +11,7 @@ import java.util.List;
 import com.shop.data.daos.ItemsDao;
 
 import com.shop.data.daos.UsersDaoImpl;
+import com.shop.data.models.Item;
 import com.shop.data.models.Offer;
 import com.shop.data.daos.ItemsDaoImpl;
 import com.shop.data.daos.OffersDao;
@@ -32,13 +33,19 @@ public class App {
 		OffersService oService = new OffersService(oDao);
 		View view = new View(uService, iService, oService);
 
-		List<Offer> offers = oService.getOffers();
+		// List<Offer> offers = oService.getOffers();
+		// for (Offer o : offers) {
+		// System.out.println(o.getDownPayment() + " " + o.getPaymentPerWeek());
+		// }
+		// Item item = new Item(7);
+		// oService.deleteOffersByItem(item);
 
-		for (Offer o : offers) {
-			System.out.println(o.getDownPayment() + " " + o.getPaymentPerWeek());
-		}
+		// List<Offer> offs = oService.getOffers();
+		// for (Offer o : offs) {
+		// System.out.println(o.getDownPayment() + " " + o.getPaymentPerWeek());
+		// }
 		// call these in view.init()
-		// view.displayShopSign();
-		// view.welcome();
+		view.displayShopSign();
+		view.welcome();
 	}
 }
