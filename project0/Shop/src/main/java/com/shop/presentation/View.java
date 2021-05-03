@@ -167,8 +167,8 @@ public class View {
 		}
 
 		ui.margin(3);
-		System.out.println(
-				"At " + deposit + " down, you have " + difference + " left to finance in the form of weekly payments.");
+		System.out.println("At " + deposit + " down, you have " + String.format("%.2f", difference)
+				+ " left to finance in the form of weekly payments.");
 		ui.hr();
 		System.out.println("Please choose one of the three options below:");
 		ui.hr();
@@ -186,7 +186,7 @@ public class View {
 			System.out.print("Enter 1, 2, or 3 to select a payment plan: ");
 			plan = SC.nextLine();
 			if (!validChoices.contains(plan)) {
-				System.out.println("** INVALID CHOICE **");
+				ui.invalidChoice();
 			}
 		}
 
@@ -215,7 +215,7 @@ public class View {
 		if (oService.addOffer(o) == 1) {
 			System.out.println("...Your offer has been successfully added.");
 			System.out.println("...You are being directed back to the main menu...");
-			ui.margin(20);
+			ui.hr();
 			customerMain();
 		} else {
 			System.out.println("There was an error adding your offer. Please try again.");
