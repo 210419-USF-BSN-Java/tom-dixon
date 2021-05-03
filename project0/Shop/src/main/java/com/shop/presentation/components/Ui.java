@@ -31,10 +31,12 @@ public class Ui {
 
     public void offerList(List<Offer> offers) {
         for (Offer o : offers) {
-            System.out.println("------------------------------------------------------------");
+            System.out.println(
+                    "--------------------------------------------------------------------------------------------------------------");
             ;
-            System.out.println("Offer Id: " + o.getId() + " Deposit: $" + o.getDownPayment() + " Number of payments: "
-                    + o.getWeeks() + " Weekly payment amount: " + o.getPaymentPerWeek() + " Gross: " + o.getGross());
+            System.out.println("Offer Id: " + o.getId() + " Item Id: " + o.getItemId() + " Deposit: $"
+                    + o.getDownPayment() + " Number of payments: " + o.getWeeks() + " Weekly payment amount: "
+                    + o.getPaymentPerWeek() + " Gross: " + o.getGross());
         }
     }
 

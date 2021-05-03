@@ -526,6 +526,56 @@ public class View {
 		// offer service call. get all offers
 		List<Offer> pendingOffers = oService.getOffers();
 		ui.offerList(pendingOffers);
+
+		ui.hr();
+
+		// create list of valid choices
+		List<String> validChoices = new ArrayList<String>(Arrays.asList());
+		validChoices.add("b"); // "b" routes employee back clearto main menu
+		// add pending offer ids to validchoices
+		for (Offer o : pendingOffers) {
+			validChoices.add(Integer.toString(o.getId()));
+		}
+
+		String choice = "";
+		while (!validChoices.contains(choice)) {
+			System.out.print("Enter Offer Id to approve. Enter 'b' to return to main menu: ");
+			choice = SC.nextLine();
+			if (!validChoices.contains(choice)) {
+				System.out.println("** INVALID CHOICE ** Try again");
+			}
+		}
+
+		if (choice.equals("b")) {
+			employeeMain();
+		} else {
+			// get selected offer from all offers
+			Offer selectedOffer = null;
+			for (Offer o : pendingOffers) {
+				if (o.getId() == Integer.parseInt(choice)) {
+					selectedOffer = o;
+				}
+			}
+
+			// set pending to false for approved offer
+			if (oService.approve(selectedOffer) == 1) {
+				// remove pending offers for same item as selected
+				// System.out.println("... Pending set to false on selected offer ...");
+
+				Item i = new Item(selectedOffer.getItemId());
+				boolean deleteInvalidOffersSuccess = oService.deleteOffersByItem(i) == 1;
+
+				if (deleteInvalidOffersSuccess) {
+					ui.hr();
+					System.out.println("Offer successfully approved. Remaining offers on item have been declined");
+					ui.hr();
+					employeeOffers();
+				}
+			} else {
+				System.out.println("** OFFER UPDATE UNSUCCESSFUL **  Try again");
+			}
+
+		}
 	}
 
 }
