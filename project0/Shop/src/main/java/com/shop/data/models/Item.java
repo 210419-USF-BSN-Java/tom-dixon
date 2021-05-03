@@ -5,6 +5,9 @@ public class Item {
     private String name;
     private double price;
 
+    public Item() {
+    }
+
     public Item(int id) {
         this.id = id;
     }

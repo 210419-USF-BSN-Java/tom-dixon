@@ -468,9 +468,9 @@ public class View {
 			case 1:
 				inventoryMenu();
 				break;
-			case 2:
-				offers();
-				break;
+			// case 2:
+			// custOffer();
+			// break;
 			case 3:
 				payments();
 				break;
@@ -499,7 +499,7 @@ public class View {
 				inventoryMenu();
 				break;
 			case 2:
-				offers();
+				employeeOffers();
 				break;
 			case 3:
 				payments();
@@ -520,8 +520,55 @@ public class View {
 
 	}
 
-	private void offers() {
-		System.out.println("offers");
-	}
+	private void employeeOffers() {
+		File greeting = new File(textFileUrlStub + "offersEmpHeader");
+		ui.textBlock(greeting);
+		// offer service call. get all offers
+		List<Offer> pendingOffers = oService.getOffers();
+		ui.offerList(pendingOffers);
 
+		ui.hr();
+
+		// create list of valid choices
+		List<String> validChoices = new ArrayList<String>(Arrays.asList());
+		validChoices.add("b"); // "b" routes employee back clearto main menu
+		// add pending offer ids to validchoices
+		for (Offer o : pendingOffers) {
+			validChoices.add(Integer.toString(o.getId()));
+		}
+
+		String choice = "";
+		while (!validChoices.contains(choice)) {
+			System.out.print("Enter Offer Id to approve. Enter 'b' to return to main menu: ");
+			choice = SC.nextLine();
+			if (!validChoices.contains(choice)) {
+				System.out.println("** INVALID CHOICE ** Try again");
+			}
+		}
+
+		if (choice.equals("b")) {
+			employeeMain();
+		} else {
+			// get selected offer from all offers
+			Offer selectedOffer = null;
+			for (Offer o : pendingOffers) {
+				if (o.getId() == Integer.parseInt(choice)) {
+					selectedOffer = o;
+				}
+			}
+
+			// set pending to false for approved offer. If refactor, consolidate into a
+			// TODO refactor: consolidate into a single service
+			// single service.
+			oService.approve(selectedOffer);
+			Item item = new Item(selectedOffer.getItemId());
+			oService.deleteOffersByItem(item);
+			iService.assignOwnership(item, currentUser, selectedOffer);
+
+			ui.hrBold();
+
+			System.out.println("Offer successfully approved. Remaining offers on item have been declined");
+			employeeOffers();
+		}
+	}
 }
