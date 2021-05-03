@@ -106,4 +106,18 @@ public class OffersDaoImpl implements OffersDao {
 		return result;
 	}
 
+	@Override
+	public int rejectOffer(Offer o) {
+		int result = 0;
+		String sql = "update offers set rejected = true, pending = false where id = ?";
+		try (Connection conn = ConnectionFactory.getConnection()) {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, o.getId());
+			result = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 }
