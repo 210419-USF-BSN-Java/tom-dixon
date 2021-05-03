@@ -118,4 +118,21 @@ public class ItemsDaoImpl implements ItemsDao {
 		return items;
 	}
 
+	@Override
+	public List<Item> getAllUnowned() {
+		List<Item> items = new ArrayList<Item>();
+		String sql = "select * from items where owned_by is null";
+		try (Connection conn = ConnectionFactory.getConnection()) {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Item item = new Item(rs.getInt("id"), rs.getString("name"), rs.getDouble("price"));
+				items.add(item);
+			}
+		} catch (SQLException e) {
+
+		}
+		return items;
+	}
+
 }
