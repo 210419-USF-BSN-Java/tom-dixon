@@ -16,9 +16,9 @@ public interface OffersDao extends GenericDao<Offer> {
 
 	int approve(Offer o);
 
-	// int deleteByItem(Item i);
-
 	List<Offer> getAll();
+
+	int rejectOffer(Offer o);
 
 	int rejectOfferByItem(Item i);
 }

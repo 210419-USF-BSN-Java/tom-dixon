@@ -44,17 +44,23 @@ public class Ui {
                     "--------------------------------------------------------------------------------------------------------------");
             ;
             System.out.println("Offer Id: " + o.getId() + " Item Id: " + o.getItemId() + " Deposit: $"
-                    + o.getDownPayment() + " Number of payments: " + o.getWeeks() + " Weekly payment amount: "
+                    + o.getDownPayment() + " Number of payments: " + o.getWeeks() + " Weekly payment amount: $"
                     + o.getPaymentPerWeek() + " Gross: " + o.getGross());
         }
     }
 
     public void hr() {
-        System.out.println("---------------------------------------------");
+        System.out.println("--------------------------------------------");
     }
 
     public void hrBold() {
         System.out.println("=====================================================================================");
+    }
+
+    public void invalidChoice() {
+        hr();
+        System.out.println("************* INVALID CHOICE ***************");
+        hr();
     }
 
     public void margin(int rows) {

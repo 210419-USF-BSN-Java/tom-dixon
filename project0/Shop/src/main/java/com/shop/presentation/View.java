@@ -167,8 +167,8 @@ public class View {
 		}
 
 		ui.margin(3);
-		System.out.println(
-				"At " + deposit + " down, you have " + difference + " left to finance in the form of weekly payments.");
+		System.out.println("At " + deposit + " down, you have " + String.format("%.2f", difference)
+				+ " left to finance in the form of weekly payments.");
 		ui.hr();
 		System.out.println("Please choose one of the three options below:");
 		ui.hr();
@@ -186,7 +186,7 @@ public class View {
 			System.out.print("Enter 1, 2, or 3 to select a payment plan: ");
 			plan = SC.nextLine();
 			if (!validChoices.contains(plan)) {
-				System.out.println("** INVALID CHOICE **");
+				ui.invalidChoice();
 			}
 		}
 
@@ -215,7 +215,7 @@ public class View {
 		if (oService.addOffer(o) == 1) {
 			System.out.println("...Your offer has been successfully added.");
 			System.out.println("...You are being directed back to the main menu...");
-			ui.margin(20);
+			ui.hr();
 			customerMain();
 		} else {
 			System.out.println("There was an error adding your offer. Please try again.");
@@ -570,7 +570,7 @@ public class View {
 
 		String choice = "";
 		while (!validChoices.contains(choice)) {
-			System.out.print("Enter Offer Id to approve. Enter 'b' to return to main menu: ");
+			System.out.print("Enter Offer Id to approve or reject. Enter 'b' to return to main menu: ");
 			choice = SC.nextLine();
 			if (!validChoices.contains(choice)) {
 				System.out.println("** INVALID CHOICE ** Try again");
@@ -588,25 +588,50 @@ public class View {
 				}
 			}
 
-			// set pending to false for approved offer. If refactor, consolidate into a
-			// TODO refactor: consolidate into a single service
-
-			int approve = oService.approve(selectedOffer);
+			String approveOrReject = "";
 			Item item = new Item(selectedOffer.getItemId());
-			int rejectOffers = oService.rejectOffersByItem(item);
-			int assignOwnership = iService.assignOwnership(item, selectedOffer);
 
-			ui.hrBold();
-			if (approve > 0 & rejectOffers > 0 & assignOwnership > 0) {
-				System.out.println("...Offer successfully approved");
-				System.out.println("...Any competing offers rejected");
-				System.out.println("...Item removed from available inventory & ownership assigned");
-				System.out.println("...Refreshing pending offer table");
-				employeeOffers();
-			} else {
-				System.out.println("*** SOMETHING WENT WRONG. PLEASE TRY AGAIN ***");
-				employeeOffers();
+			ui.hr();
+			while (!(approveOrReject.equals("a") | approveOrReject.equals("r"))) {
+				System.out.println("Enter 'a' to approve or 'r' to reject.");
+				System.out.print("Selection: ");
+				approveOrReject = SC.nextLine();
+				if (!(approveOrReject.equals("a") | approveOrReject.equals("r"))) {
+					ui.invalidChoice();
+				}
 			}
+
+			if (approveOrReject.equals("r")) {
+				// implement reject
+				if ((oService.rejectOffer(selectedOffer)) > 0) {
+					System.out.println("...Offer successfully rejected");
+					System.out.println("...Refreshing pending offer table");
+					employeeOffers();
+				} else {
+					System.out.println("*** SOMETHING WENT WRONG. PLEASE TRY AGAIN ***");
+					employeeOffers();
+				}
+			} else {
+
+				// TODO refactor: consolidate into a single offer service call
+				int approve = oService.approve(selectedOffer);
+				int rejectOffers = oService.rejectOffersByItem(item);
+				int assignOwnership = iService.assignOwnership(item, selectedOffer);
+
+				ui.hrBold();
+				if (approve > 0 & rejectOffers > 0 & assignOwnership > 0) {
+					System.out.println("...Offer successfully approved");
+					System.out.println("...Any competing offers rejected");
+					System.out.println("...Item removed from available inventory & ownership assigned");
+					System.out.println("...Refreshing pending offer table");
+					employeeOffers();
+				} else {
+					System.out.println("*** SOMETHING WENT WRONG. PLEASE TRY AGAIN ***");
+					employeeOffers();
+				}
+
+			}
+
 		}
 	}
 }
