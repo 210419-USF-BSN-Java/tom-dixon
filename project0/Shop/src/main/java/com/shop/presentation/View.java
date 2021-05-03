@@ -144,9 +144,10 @@ public class View {
 		String plan = "";
 
 		ui.textBlock(header);
-		System.out.println(i.getName() + " has some very nice features and is priced to sell at $" + i.getPrice());
+		System.out.println(
+				i.getName().toUpperCase() + " has some very nice features and is priced to sell at $" + i.getPrice());
 		System.out.println("");
-		System.out.println("How much would you like to put down? ");
+		System.out.println("How much would you like to put down on a deposit? ");
 
 		boolean depositValid = false;
 		while (!depositValid) {
@@ -173,12 +174,12 @@ public class View {
 		ui.hr();
 		;
 		System.out.println(
-				"1) 12 Week Plan: 12 $" + Calc.paymentAmount(12, difference, 0.05) + " payments at 5% interest");
+				"1) 12 Week Plan: 12 x $" + Calc.paymentAmount(12, difference, 0.05) + " payments at 5% interest");
 		System.out.println(
-				"2) 24 Week Plan: 12 $" + Calc.paymentAmount(24, difference, 0.08) + " payments, at 8% interest");
+				"2) 24 Week Plan: 24 x $" + Calc.paymentAmount(24, difference, 0.08) + " payments, at 8% interest");
 		System.out.println(
-				"3) 48 Week Plan: 48 $" + Calc.paymentAmount(48, difference, 0.15) + " payments, at 12% interest");
-		ui.hr();
+				"3) 48 Week Plan: 48 x $" + Calc.paymentAmount(48, difference, 0.15) + " payments, at 12% interest");
+		ui.hrBold();
 
 		List<String> validChoices = new ArrayList<>(Arrays.asList("1", "2", "3"));
 		while (!validChoices.contains(plan)) {
@@ -212,8 +213,9 @@ public class View {
 		ui.hr();
 		// add offer service call
 		if (oService.addOffer(o) == 1) {
-			System.out.println("Your offer has been successfully added.");
+			System.out.println("...Your offer has been successfully added.");
 			System.out.println("...You are being directed back to the main menu...");
+			ui.margin(20);
 			customerMain();
 		} else {
 			System.out.println("There was an error adding your offer. Please try again.");
@@ -223,7 +225,7 @@ public class View {
 
 	private void removeItem() {
 		// get all items first
-		File header = new File(textFileUrlStub + "inventory"); // header text
+		File header = new File(textFileUrlStub + "inventoryEmpMenu"); // header text
 		File prompt = new File(textFileUrlStub + "selectId"); // header text
 		List<Item> inventory = iService.getAvailableInventory(); // get items for display and generate valid ids
 		List<String> validIds = new ArrayList<>(); // holds valid ids to select from
@@ -451,9 +453,7 @@ public class View {
 	private void customerMain() {
 		File greeting = new File(textFileUrlStub + "loginGreeting");
 		File menu = new File(textFileUrlStub + "customerMain");
-
 		ui.textBlock(greeting);
-
 		List<String> validChoices = new ArrayList<String>(Arrays.asList("1", "2", "3", "4"));
 		String choice = "";
 		while (!validChoices.contains(choice)) {
@@ -516,7 +516,12 @@ public class View {
 	}
 
 	private void payments() {
-		System.out.println("payments");
+		boolean currentUserisCustomer = currentUser.getUserType() == "customer";
+		if (currentUserisCustomer) {
+			// display customer payments and menu
+		} else {
+			// display all payments
+		}
 
 	}
 
@@ -533,6 +538,14 @@ public class View {
 
 		ui.stringList(myItemStrings);
 
+		ui.margin(3);
+		ui.hrBold();
+		ui.margin(3);
+
+		System.out.println("Redirecting to main menu...");
+		ui.margin(3);
+		// redirect to cust main
+		customerMain();
 	}
 
 	private void employeeOffers() {
@@ -540,11 +553,14 @@ public class View {
 		ui.textBlock(greeting);
 		// offer service call. get all offers
 		List<Offer> pendingOffers = oService.getOffers();
+		// render pending offers
 		ui.offerList(pendingOffers);
 
 		ui.hr();
+		ui.hr();
+		ui.margin(2);
 
-		// create list of valid choices
+		// create list of valid user choices
 		List<String> validChoices = new ArrayList<String>(Arrays.asList());
 		validChoices.add("b"); // "b" routes employee back clearto main menu
 		// add pending offer ids to validchoices
@@ -574,15 +590,23 @@ public class View {
 
 			// set pending to false for approved offer. If refactor, consolidate into a
 			// TODO refactor: consolidate into a single service
-			// single service.
-			oService.approve(selectedOffer);
+
+			int approve = oService.approve(selectedOffer);
 			Item item = new Item(selectedOffer.getItemId());
-			oService.deleteOffersByItem(item);
-			iService.assignOwnership(item, selectedOffer);
+			int rejectOffers = oService.rejectOffersByItem(item);
+			int assignOwnership = iService.assignOwnership(item, selectedOffer);
 
 			ui.hrBold();
-			System.out.println("Offer successfully approved. Remaining offers on item have been declined");
-			employeeOffers();
+			if (approve > 0 & rejectOffers > 0 & assignOwnership > 0) {
+				System.out.println("...Offer successfully approved");
+				System.out.println("...Any competing offers rejected");
+				System.out.println("...Item removed from available inventory & ownership assigned");
+				System.out.println("...Refreshing pending offer table");
+				employeeOffers();
+			} else {
+				System.out.println("*** SOMETHING WENT WRONG. PLEASE TRY AGAIN ***");
+				employeeOffers();
+			}
 		}
 	}
 }
