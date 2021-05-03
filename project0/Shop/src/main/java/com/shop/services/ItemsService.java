@@ -18,6 +18,10 @@ public class ItemsService {
         return iDao.getAll();
     }
 
+    public List<Item> getOwnersItems(User u) {
+        return iDao.getOwnersItems(u);
+    }
+
     public int addNewItem(Item i) {
         return iDao.add(i);
     }
@@ -27,10 +31,6 @@ public class ItemsService {
     }
 
     public int assignOwnership(Item item, Offer offer) {
-        // item id (id) = i.getId()
-        // owned_by = u.getId()
-        // remaining payments = o.getWeeks()
-        // balance = o.getGross()
         return iDao.assignOwnership(item, offer);
     }
 

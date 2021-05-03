@@ -4,12 +4,30 @@ public class Item {
     private int id;
     private String name;
     private double price;
+    private int ownerId;
+    private int remainingPayments;
+    private double balance;
 
-    public Item() {
+    @Override
+    public String toString() {
+        return "Name: " + name + " Sticker price: $" + price + " Remaining payments: " + remainingPayments
+                + " Balance: $" + balance;
+    }
+
+    public Item(int id, String name, double price, int remainingPayments, double balance) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.remainingPayments = remainingPayments;
+        this.balance = balance;
     }
 
     public Item(int id) {
         this.id = id;
+    }
+
+    public Item() {
+
     }
 
     public Item(int id, String name, double price) {

@@ -468,9 +468,9 @@ public class View {
 			case 1:
 				inventoryMenu();
 				break;
-			// case 2:
-			// custOffer();
-			// break;
+			case 2:
+				customerItems();
+				break;
 			case 3:
 				payments();
 				break;
@@ -520,6 +520,21 @@ public class View {
 
 	}
 
+	private void customerItems() {
+		File greeting = new File(textFileUrlStub + "myItems");
+		ui.textBlock(greeting);
+		List<Item> myItems = iService.getOwnersItems(currentUser);
+
+		List<String> myItemStrings = new ArrayList<String>();
+
+		for (Item i : myItems) {
+			myItemStrings.add(i.toString());
+		}
+
+		ui.stringList(myItemStrings);
+
+	}
+
 	private void employeeOffers() {
 		File greeting = new File(textFileUrlStub + "offersEmpHeader");
 		ui.textBlock(greeting);
@@ -563,10 +578,9 @@ public class View {
 			oService.approve(selectedOffer);
 			Item item = new Item(selectedOffer.getItemId());
 			oService.deleteOffersByItem(item);
-			iService.assignOwnership(item, currentUser, selectedOffer);
+			iService.assignOwnership(item, selectedOffer);
 
 			ui.hrBold();
-
 			System.out.println("Offer successfully approved. Remaining offers on item have been declined");
 			employeeOffers();
 		}
