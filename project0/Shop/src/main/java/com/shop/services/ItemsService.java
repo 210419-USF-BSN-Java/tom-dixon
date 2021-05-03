@@ -18,6 +18,10 @@ public class ItemsService {
         return iDao.getAll();
     }
 
+    public List<Item> getAvailableInventory() {
+        return iDao.getAllUnowned();
+    }
+
     public List<Item> getOwnersItems(User u) {
         return iDao.getOwnersItems(u);
     }

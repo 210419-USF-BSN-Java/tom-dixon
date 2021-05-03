@@ -12,6 +12,8 @@ public interface ItemsDao extends GenericDao<Item> {
 
 	List<Item> getAll();
 
+	List<Item> getAllUnowned();
+
 	List<Item> getOwnersItems(User u);
 
 	Item get(int i);

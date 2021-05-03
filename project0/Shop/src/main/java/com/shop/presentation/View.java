@@ -76,7 +76,7 @@ public class View {
 				: new File(textFileUrlStub + "inventoryEmpMenu");
 
 		// generate valid choices for customer
-		List<Item> inventory = iService.getAllItems();
+		List<Item> inventory = iService.getAvailableInventory();
 		List<String> validCustomerChoices = new ArrayList<>();
 
 		for (Item i : inventory) {
@@ -97,7 +97,7 @@ public class View {
 			// if customer, display inventory
 			if (currentUserIsCustomer) {
 				// display inventory
-				items = iService.getAllItems();
+				items = iService.getAvailableInventory();
 				ui.itemList(items);
 				System.out.println("=======================");
 				System.out.print("Enter Item Id or \"n\": ");
@@ -225,7 +225,7 @@ public class View {
 		// get all items first
 		File header = new File(textFileUrlStub + "inventory"); // header text
 		File prompt = new File(textFileUrlStub + "selectId"); // header text
-		List<Item> inventory = iService.getAllItems(); // get items for display and generate valid ids
+		List<Item> inventory = iService.getAvailableInventory(); // get items for display and generate valid ids
 		List<String> validIds = new ArrayList<>(); // holds valid ids to select from
 		String choice = "";
 
@@ -255,7 +255,7 @@ public class View {
 			if (iService.removeItemById(new Item(Integer.parseInt(choice))) == 1) {
 				String removeAnother = "";
 				System.out.println("** Item successfully removed **");
-				inventory = iService.getAllItems(); // get items for display and generate valid ids
+				inventory = iService.getAvailableInventory(); // get items for display and generate valid ids
 				ui.itemList(inventory);
 				System.out.print("Would you like to remove another item (y/n)? ");
 				while (!(removeAnother.equals("y") || removeAnother.equals("n"))) {
