@@ -588,25 +588,33 @@ public class View {
 				}
 			}
 
-			// approve or reject flow here
 			String approveOrReject = "";
+			Item item = new Item(selectedOffer.getItemId());
 
 			ui.hr();
 			while (!(approveOrReject.equals("a") | approveOrReject.equals("r"))) {
 				System.out.println("Enter 'a' to approve or 'r' to reject.");
+				System.out.print("Selection: ");
+				approveOrReject = SC.nextLine();
 				if (!(approveOrReject.equals("a") | approveOrReject.equals("r"))) {
 					ui.invalidChoice();
 				}
 			}
 
 			if (approveOrReject.equals("r")) {
-
+				// implement reject
+				if ((oService.rejectOffer(selectedOffer)) > 0) {
+					System.out.println("...Offer successfully rejected");
+					System.out.println("...Refreshing pending offer table");
+					employeeOffers();
+				} else {
+					System.out.println("*** SOMETHING WENT WRONG. PLEASE TRY AGAIN ***");
+					employeeOffers();
+				}
 			} else {
 
-				// set pending to false for approved offer. If refactor, consolidate into a
-				// TODO refactor: consolidate into a single service call
+				// TODO refactor: consolidate into a single offer service call
 				int approve = oService.approve(selectedOffer);
-				Item item = new Item(selectedOffer.getItemId());
 				int rejectOffers = oService.rejectOffersByItem(item);
 				int assignOwnership = iService.assignOwnership(item, selectedOffer);
 
