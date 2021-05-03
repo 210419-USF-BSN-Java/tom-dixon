@@ -80,13 +80,14 @@ public class ItemsDaoImpl implements ItemsDao {
 	@Override
 	public int assignOwnership(Item item, Offer offer) {
 		int result = 0;
-		String sql = "update items set owned_by = ?, remaining_payments = ?, balance = ? where id = ? ";
+		String sql = "update items set owned_by = ?, remaining_payments = ?, balance = ?, accepted_offer = ? where id = ? ";
 		try (Connection conn = ConnectionFactory.getConnection()) {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, offer.getCustId());
 			ps.setInt(2, offer.getWeeks());
 			ps.setDouble(3, offer.getGross());
-			ps.setInt(4, item.getId());
+			ps.setInt(4, offer.getId());
+			ps.setInt(5, item.getId());
 
 			result = ps.executeUpdate();
 

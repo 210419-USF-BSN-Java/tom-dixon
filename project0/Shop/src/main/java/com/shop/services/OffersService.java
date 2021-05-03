@@ -25,7 +25,10 @@ public class OffersService {
         return oDao.approve(o);
     }
 
-    public int deleteOffersByItem(Item i) {
-        return oDao.deleteByItem(i);
+    public int rejectOffersByItem(Item i) {
+        return oDao.rejectOfferByItem(i);
     }
+    // public int deleteOffersByItem(Item i) {
+    // return oDao.deleteByItem(i);
+    // }
 }

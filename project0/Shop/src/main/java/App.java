@@ -37,7 +37,10 @@ public class App {
 		// for (Offer o : offers) {
 		// System.out.println(o.getDownPayment() + " " + o.getPaymentPerWeek());
 		// }
-		// Item item = new Item(7);
+		// Item item = new Item(2);
+		// System.out.println(item.getId());
+		// System.out.println(oService.rejectOffersByItem(item));
+
 		// oService.deleteOffersByItem(item);
 
 		// List<Offer> offs = oService.getOffers();

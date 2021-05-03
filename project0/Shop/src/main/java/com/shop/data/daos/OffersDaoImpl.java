@@ -92,18 +92,17 @@ public class OffersDaoImpl implements OffersDao {
 	}
 
 	@Override
-	public int deleteByItem(Item i) {
+	public int rejectOfferByItem(Item item) {
 		int result = 0;
-		String sql = "delete from offers where item_id = ?";
+		String sql = "update offers set rejected = true, pending = false where item_id = ?";
 		try (Connection conn = ConnectionFactory.getConnection()) {
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, i.getId());
+			ps.setInt(1, item.getId());
 			result = ps.executeUpdate();
 		} catch (SQLException e) {
-			System.out.println("OfferDaoImpl exception..... ");
+			System.out.println("OfferDaoImpl exception: rejectOfferByItem... ");
 			e.getStackTrace();
 		}
-
 		return result;
 	}
 
