@@ -95,7 +95,27 @@ public class ItemsDaoImpl implements ItemsDao {
 			e.printStackTrace();
 		}
 
-		return 0;
+		return result;
+	}
+
+	@Override
+	public List<Item> getOwnersItems(User u) {
+		List<Item> items = new ArrayList<Item>();
+		String sql = "select * from items where owned_by = ?";
+
+		try (Connection conn = ConnectionFactory.getConnection()) {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, u.getId());
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				items.add(new Item(rs.getInt("id"), rs.getString("name"), rs.getDouble("price"),
+						rs.getInt("remaining_payments"), rs.getDouble("balance")));
+			}
+		} catch (SQLException e) {
+			System.out.println("ItemsDaoImpl: exception thrown retrieving a user's items");
+			e.printStackTrace();
+		}
+		return items;
 	}
 
 }
