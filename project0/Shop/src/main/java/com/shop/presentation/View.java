@@ -570,7 +570,7 @@ public class View {
 
 		String choice = "";
 		while (!validChoices.contains(choice)) {
-			System.out.print("Enter Offer Id to approve. Enter 'b' to return to main menu: ");
+			System.out.print("Enter Offer Id to approve or reject. Enter 'b' to return to main menu: ");
 			choice = SC.nextLine();
 			if (!validChoices.contains(choice)) {
 				System.out.println("** INVALID CHOICE ** Try again");
@@ -588,25 +588,42 @@ public class View {
 				}
 			}
 
-			// set pending to false for approved offer. If refactor, consolidate into a
-			// TODO refactor: consolidate into a single service
+			// approve or reject flow here
+			String approveOrReject = "";
 
-			int approve = oService.approve(selectedOffer);
-			Item item = new Item(selectedOffer.getItemId());
-			int rejectOffers = oService.rejectOffersByItem(item);
-			int assignOwnership = iService.assignOwnership(item, selectedOffer);
-
-			ui.hrBold();
-			if (approve > 0 & rejectOffers > 0 & assignOwnership > 0) {
-				System.out.println("...Offer successfully approved");
-				System.out.println("...Any competing offers rejected");
-				System.out.println("...Item removed from available inventory & ownership assigned");
-				System.out.println("...Refreshing pending offer table");
-				employeeOffers();
-			} else {
-				System.out.println("*** SOMETHING WENT WRONG. PLEASE TRY AGAIN ***");
-				employeeOffers();
+			ui.hr();
+			while (!(approveOrReject.equals("a") | approveOrReject.equals("r"))) {
+				System.out.println("Enter 'a' to approve or 'r' to reject.");
+				if (!(approveOrReject.equals("a") | approveOrReject.equals("r"))) {
+					ui.invalidChoice();
+				}
 			}
+
+			if (approveOrReject.equals("r")) {
+
+			} else {
+
+				// set pending to false for approved offer. If refactor, consolidate into a
+				// TODO refactor: consolidate into a single service call
+				int approve = oService.approve(selectedOffer);
+				Item item = new Item(selectedOffer.getItemId());
+				int rejectOffers = oService.rejectOffersByItem(item);
+				int assignOwnership = iService.assignOwnership(item, selectedOffer);
+
+				ui.hrBold();
+				if (approve > 0 & rejectOffers > 0 & assignOwnership > 0) {
+					System.out.println("...Offer successfully approved");
+					System.out.println("...Any competing offers rejected");
+					System.out.println("...Item removed from available inventory & ownership assigned");
+					System.out.println("...Refreshing pending offer table");
+					employeeOffers();
+				} else {
+					System.out.println("*** SOMETHING WENT WRONG. PLEASE TRY AGAIN ***");
+					employeeOffers();
+				}
+
+			}
+
 		}
 	}
 }

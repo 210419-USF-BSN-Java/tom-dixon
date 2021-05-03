@@ -57,6 +57,10 @@ public class Ui {
         System.out.println("=====================================================================================");
     }
 
+    public void invalidChoice() {
+        System.out.println("*** INVALID CHOICE ***");
+    }
+
     public void margin(int rows) {
         for (int i = 1; i < rows; i++) {
             System.out.println("");
