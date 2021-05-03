@@ -223,7 +223,7 @@ public class View {
 
 	private void removeItem() {
 		// get all items first
-		File header = new File(textFileUrlStub + "inventory"); // header text
+		File header = new File(textFileUrlStub + "inventoryEmpMenu"); // header text
 		File prompt = new File(textFileUrlStub + "selectId"); // header text
 		List<Item> inventory = iService.getAvailableInventory(); // get items for display and generate valid ids
 		List<String> validIds = new ArrayList<>(); // holds valid ids to select from
@@ -451,9 +451,7 @@ public class View {
 	private void customerMain() {
 		File greeting = new File(textFileUrlStub + "loginGreeting");
 		File menu = new File(textFileUrlStub + "customerMain");
-
 		ui.textBlock(greeting);
-
 		List<String> validChoices = new ArrayList<String>(Arrays.asList("1", "2", "3", "4"));
 		String choice = "";
 		while (!validChoices.contains(choice)) {
@@ -533,6 +531,14 @@ public class View {
 
 		ui.stringList(myItemStrings);
 
+		ui.margin(3);
+		ui.hrBold();
+		ui.margin(3);
+
+		System.out.println("Redirecting to main menu...");
+		ui.margin(3);
+		// redirect to cust main
+		customerMain();
 	}
 
 	private void employeeOffers() {
@@ -581,7 +587,7 @@ public class View {
 			iService.assignOwnership(item, selectedOffer);
 
 			ui.hrBold();
-			System.out.println("Offer successfully approved. Remaining offers on item have been declined");
+			System.out.println("Offer successfully approved. Competing offers on item have been declined.");
 			employeeOffers();
 		}
 	}
