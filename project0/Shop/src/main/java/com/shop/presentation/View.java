@@ -557,25 +557,18 @@ public class View {
 				}
 			}
 
-			// set pending to false for approved offer
-			if (oService.approve(selectedOffer) == 1) {
-				// remove pending offers for same item as selected
-				// System.out.println("... Pending set to false on selected offer ...");
+			// set pending to false for approved offer. If refactor, consolidate into a
+			// TODO refactor: consolidate into a single service
+			// single service.
+			oService.approve(selectedOffer);
+			Item item = new Item(selectedOffer.getItemId());
+			oService.deleteOffersByItem(item);
+			iService.assignOwnership(item, currentUser, selectedOffer);
 
-				Item i = new Item(selectedOffer.getItemId());
-				boolean deleteInvalidOffersSuccess = oService.deleteOffersByItem(i) == 1;
+			ui.hrBold();
 
-				if (deleteInvalidOffersSuccess) {
-					ui.hr();
-					System.out.println("Offer successfully approved. Remaining offers on item have been declined");
-					ui.hr();
-					employeeOffers();
-				}
-			} else {
-				System.out.println("** OFFER UPDATE UNSUCCESSFUL **  Try again");
-			}
-
+			System.out.println("Offer successfully approved. Remaining offers on item have been declined");
+			employeeOffers();
 		}
 	}
-
 }

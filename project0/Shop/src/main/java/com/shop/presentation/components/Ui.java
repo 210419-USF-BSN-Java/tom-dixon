@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.sql.rowset.spi.SyncResolver;
+
 import com.shop.data.models.Item;
 import com.shop.data.models.Offer;
 
@@ -42,6 +44,10 @@ public class Ui {
 
     public void hr() {
         System.out.println("---------------------------------------------");
+    }
+
+    public void hrBold() {
+        System.out.println("=====================================================================================");
     }
 
     public void margin(int rows) {

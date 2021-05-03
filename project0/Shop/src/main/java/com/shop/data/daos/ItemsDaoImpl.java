@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.shop.data.models.Item;
+import com.shop.data.models.Offer;
+import com.shop.data.models.User;
 import com.shop.util.ConnectionFactory;
 
 public class ItemsDaoImpl implements ItemsDao {
@@ -73,6 +75,27 @@ public class ItemsDaoImpl implements ItemsDao {
 			e.printStackTrace();
 		}
 		return result;
+	}
+
+	@Override
+	public int assignOwnership(Item item, Offer offer) {
+		int result = 0;
+		String sql = "update items set owned_by = ?, remaining_payments = ?, balance = ? where id = ? ";
+		try (Connection conn = ConnectionFactory.getConnection()) {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, offer.getCustId());
+			ps.setInt(2, offer.getWeeks());
+			ps.setDouble(3, offer.getGross());
+			ps.setInt(4, item.getId());
+
+			result = ps.executeUpdate();
+
+		} catch (SQLException e) {
+			System.out.println("ItemsDaoImpl: Exception assigning ownership");
+			e.printStackTrace();
+		}
+
+		return 0;
 	}
 
 }
