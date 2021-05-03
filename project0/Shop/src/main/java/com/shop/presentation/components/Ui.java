@@ -25,10 +25,17 @@ public class Ui {
 
     public void itemList(List<Item> list) {
         for (Item item : list) {
-            System.out.println("-------------------------------------");
+            hr();
             System.out.println("Id: " + item.getId() + " Name: " + item.getName() + " Price: $" + item.getPrice());
         }
 
+    }
+
+    public void stringList(List<String> list) {
+        for (String s : list) {
+            hr();
+            System.out.println(s);
+        }
     }
 
     public void offerList(List<Offer> offers) {
