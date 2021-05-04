@@ -225,7 +225,6 @@ public class View {
 		} else {
 			System.out.println("There was an error adding your offer. Please try again.");
 		}
-
 	}
 
 	private void removeItem() {
@@ -529,12 +528,6 @@ public class View {
 	}
 
 	private void payments() {
-		boolean currentUserisCustomer = currentUser.getUserType() == "customer";
-		if (currentUserisCustomer) {
-			// display customer payments and menu
-		} else {
-			// display all payments
-		}
 
 	}
 
@@ -548,7 +541,6 @@ public class View {
 		for (Item i : myItems) {
 			myItemStrings.add(i.toString());
 		}
-
 		ui.stringList(myItemStrings);
 		ui.hrBold();
 		ui.margin(1);
