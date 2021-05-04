@@ -60,13 +60,28 @@ public class OffersDaoImpl implements OffersDao {
 	}
 
 	public Offer get(int i) {
-		// TODO Auto-generated method stub
-		return null;
+		// only retrieves payment per week to adjust balance on payment.
+		Offer offer = new Offer();
+		String sql = "select * from offers where id = ?";
+		try (Connection conn = ConnectionFactory.getConnection()) {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, i);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				offer.setPaymentPerWeek(rs.getDouble("per_week_amount"));
+			}
+
+		} catch (SQLException e) {
+			System.out.println("Exception thrown getting offer");
+			e.printStackTrace();
+		}
+
+		return offer;
 	}
 
-	public Offer update(int id, Offer c) {
+	public int update(int id, Offer c) {
 		// TODO Auto-generated method stub
-		return null;
+		return 0;
 	}
 
 	public int remove(Offer c) {

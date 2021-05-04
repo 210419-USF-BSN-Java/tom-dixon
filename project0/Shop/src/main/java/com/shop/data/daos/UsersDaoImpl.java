@@ -96,9 +96,9 @@ public class UsersDaoImpl implements UsersDao {
 	}
 
 	@Override
-	public User update(int id, User u) {
+	public int update(int id, User u) {
 		// TODO Auto-generated method stub
-		return null;
+		return 0;
 	}
 
 	@Override

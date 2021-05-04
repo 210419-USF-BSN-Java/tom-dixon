@@ -3,9 +3,6 @@ package com.shop.presentation.components;
 import java.io.File;
 import java.util.List;
 import java.util.Scanner;
-
-import javax.sql.rowset.spi.SyncResolver;
-
 import com.shop.data.models.Item;
 import com.shop.data.models.Offer;
 

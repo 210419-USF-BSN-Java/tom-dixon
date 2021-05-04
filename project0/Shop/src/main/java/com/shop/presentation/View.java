@@ -6,12 +6,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.xml.stream.StreamFilter;
+
 import com.shop.data.models.Item;
 import com.shop.data.models.Offer;
 import com.shop.data.models.User;
 import com.shop.presentation.components.Ui;
 import com.shop.services.ItemsService;
 import com.shop.services.OffersService;
+import com.shop.services.PaymentsService;
 import com.shop.services.UsersService;
 import com.shop.util.Calc;
 
@@ -19,6 +22,7 @@ public class View {
 	UsersService uService;
 	ItemsService iService;
 	OffersService oService;
+	PaymentsService pService;
 	String textFileUrlStub; // looong file path
 	String userResponse;
 	Ui ui;
@@ -30,10 +34,11 @@ public class View {
 		view = new View();
 	}
 
-	public View(UsersService uService, ItemsService iService, OffersService oService) {
+	public View(UsersService uService, ItemsService iService, OffersService oService, PaymentsService pService) {
 		this.uService = uService;
 		this.iService = iService;
 		this.oService = oService;
+		this.pService = pService;
 		ui = new Ui();
 		textFileUrlStub = "/home/noxid/Revature/java-fullstack/Assignments/tom-dixon/project0/Shop/src/main/resources/menuText/";
 	}
@@ -475,11 +480,17 @@ public class View {
 				customerItems();
 				break;
 			case 3:
-				payments();
+				customerPayments();
 				break;
 			case 4:
 				logout();
 		}
+	}
+
+	public void customerPayments() {
+		System.out.println("customer payments");
+		System.out.println("reroute to customerMain()");
+		customerMain();
 	}
 
 	public void employeeMain() {
@@ -537,21 +548,60 @@ public class View {
 		ui.textBlock(greeting);
 		List<Item> myItems = iService.getOwnersItems(currentUser);
 
+		// create item list
 		List<String> myItemStrings = new ArrayList<String>();
-
 		for (Item i : myItems) {
 			myItemStrings.add(i.toString());
 		}
 
 		ui.stringList(myItemStrings);
-
-		ui.margin(3);
 		ui.hrBold();
-		ui.margin(2);
-		System.out.println("Redirecting to main menu...");
-		ui.margin(2);
-		// redirect to cust main
-		customerMain();
+		ui.margin(1);
+
+		String choice = "";
+		List<String> validMenuChoices = new ArrayList<String>(Arrays.asList("b"));
+		// add item ids as valid choices
+		for (Item i : myItems) {
+			validMenuChoices.add(Integer.toString(i.getId()));
+		}
+
+		while (!validMenuChoices.contains(choice)) {
+			System.out.print("Enter Purchase Id to make a payment, or 'b' to return to main menu: ");
+			choice = SC.nextLine();
+			if (!validMenuChoices.contains(choice)) {
+				ui.invalidChoice();
+			}
+		}
+		if (!choice.equals("b")) {
+			// make a payment then refresh view
+			Item chosenItem = null;
+			for (Item i : myItems) {
+				if (i.getId() == Integer.parseInt(choice)) {
+					chosenItem = i;
+				}
+			}
+
+			// if payment was successful...
+			if (pService.processPayment(chosenItem, currentUser) == 2) {
+				//
+				ui.hr();
+				System.out.println("... PAYMENT PROCESSED");
+				System.out.println("... Reloading table");
+				ui.hr();
+			}
+			;
+			customerItems();
+			// if payment was not successful
+		} else {
+			ui.margin(3);
+			ui.hrBold();
+			ui.margin(2);
+			System.out.println("...Redirecting to main menu...");
+			ui.margin(2);
+			// redirect to cust main
+			customerMain();
+		}
+
 	}
 
 	private void employeeOffers() {
