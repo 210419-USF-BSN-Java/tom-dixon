@@ -25,14 +25,15 @@ public class PaymentsService {
         item.toString();
         u.toString();
 
-        System.out.println(item.getId());
-        System.out.println(item.getOfferId());
-        System.out.println(u.getId());
-        // // add payment
-        // pDao.add();
+        // System.out.println(item.getId());
+        // System.out.println(item.getOfferId());
+        // System.out.println(u.getId());
+        // // // add payment
 
-        Offer o = oDao.get(item.getOfferId());
-        System.out.println(o.getPaymentPerWeek());
+        result += pDao.add(new Payment(item.getId(), item.getOfferId(), u.getId()));
+
+        // Offer o = oDao.get(item.getOfferId());
+        // System.out.println(o.getPaymentPerWeek());
         // Payment p = new Payment(item.getId(), item.getOfferId(), u.getId());
 
         // // add payment to payment table

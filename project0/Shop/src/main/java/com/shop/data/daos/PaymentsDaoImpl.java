@@ -17,14 +17,17 @@ public class PaymentsDaoImpl implements PaymentsDao {
 
 	public int add(Payment payment) {
 		int result = 0;
-		String sql = "insert into payments (item_id, offer_id, user_id) values(? , ? , ?)";
+		String sql = "insert into payments (item_id, offer_id, user_id) values (?, ?, ?)";
 
+		System.out.println(payment.toString());
 		try (Connection conn = ConnectionFactory.getConnection()) {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, payment.getItemId());
 			ps.setInt(2, payment.getOfferId());
 			ps.setInt(3, payment.getUserId());
+			result = ps.executeUpdate();
 		} catch (SQLException e) {
+			System.out.println("PaymentsDaoImpl: exception adding payment");
 			e.printStackTrace();
 		}
 		return result;
