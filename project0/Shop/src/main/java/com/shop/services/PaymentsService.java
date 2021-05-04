@@ -26,14 +26,20 @@ public class PaymentsService {
         u.toString();
 
         // add payment and increment result
-        int addPayment = pDao.add(new Payment(item.getId(), item.getOfferId(), u.getId()));
+        result += pDao.add(new Payment(item.getId(), item.getOfferId(), u.getId()));
 
         // retrieve weekly payment amount from offer
         Offer offer = oDao.get(item.getOfferId());
 
-        System.out.println(offer.getPaymentPerWeek());
+        // System.out.println(offer.getPaymentPerWeek());
 
-        return addPayment;
+        // update item. decrement remaining_payment and subtract payment from balance
+        item.setBalance(item.getBalance() - offer.getPaymentPerWeek());
+        item.setRemainingPayments(item.getRemainingPayments() - 1);
+
+        result += iDao.update(item);
+
+        return result;
 
     }
 

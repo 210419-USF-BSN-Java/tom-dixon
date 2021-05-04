@@ -55,7 +55,7 @@ public class ItemsDaoImpl implements ItemsDao {
 		return null;
 	}
 
-	public int update(int id, Item item) {
+	public int update(Item item) {
 		int result = 0;
 		String sql = "update items set remaining_payments = ?, balance = ? where id = ? ";
 

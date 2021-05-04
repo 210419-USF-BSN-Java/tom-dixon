@@ -582,19 +582,21 @@ public class View {
 			}
 
 			// if payment was successful...
-			if (pService.processPayment(chosenItem, currentUser) == 1) {
+			if (pService.processPayment(chosenItem, currentUser) == 2) {
 				//
-
+				ui.hr();
+				System.out.println("... PAYMENT PROCESSED");
+				System.out.println("... Reloading table");
+				ui.hr();
 			}
 			;
 			customerItems();
 			// if payment was not successful
 		} else {
-
 			ui.margin(3);
 			ui.hrBold();
 			ui.margin(2);
-			System.out.println("Redirecting to main menu...");
+			System.out.println("...Redirecting to main menu...");
 			ui.margin(2);
 			// redirect to cust main
 			customerMain();
