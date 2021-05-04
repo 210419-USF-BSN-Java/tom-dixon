@@ -457,7 +457,7 @@ public class View {
 		File greeting = new File(textFileUrlStub + "loginGreeting");
 		File menu = new File(textFileUrlStub + "customerMain");
 		ui.textBlock(greeting);
-		List<String> validChoices = new ArrayList<String>(Arrays.asList("1", "2", "3", "4"));
+		List<String> validChoices = new ArrayList<String>(Arrays.asList("1", "2", "3"));
 		String choice = "";
 		while (!validChoices.contains(choice)) {
 			ui.textBlock(menu);
