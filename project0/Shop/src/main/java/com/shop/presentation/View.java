@@ -218,8 +218,8 @@ public class View {
 		ui.hr();
 		// add offer service call
 		if (oService.addOffer(o) == 1) {
-			System.out.println("...Your offer has been successfully added.");
-			System.out.println("...You are being directed back to the main menu...");
+			System.out.println("...Your offer has been successfully added");
+			System.out.println("...You are being directed back to the main menu");
 			ui.hr();
 			customerMain();
 		} else {
@@ -462,7 +462,7 @@ public class View {
 		File greeting = new File(textFileUrlStub + "loginGreeting");
 		File menu = new File(textFileUrlStub + "customerMain");
 		ui.textBlock(greeting);
-		List<String> validChoices = new ArrayList<String>(Arrays.asList("1", "2", "3", "4"));
+		List<String> validChoices = new ArrayList<String>(Arrays.asList("1", "2", "3"));
 		String choice = "";
 		while (!validChoices.contains(choice)) {
 			ui.textBlock(menu);
@@ -480,17 +480,12 @@ public class View {
 				customerItems();
 				break;
 			case 3:
-				customerPayments();
-				break;
-			case 4:
 				logout();
-		}
-	}
+				break;
+			default:
+				customerMain();
 
-	public void customerPayments() {
-		System.out.println("customer payments");
-		System.out.println("reroute to customerMain()");
-		customerMain();
+		}
 	}
 
 	public void employeeMain() {
