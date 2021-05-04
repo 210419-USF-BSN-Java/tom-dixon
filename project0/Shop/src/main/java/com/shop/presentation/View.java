@@ -547,8 +547,9 @@ public class View {
 		File greeting = new File(textFileUrlStub + "myItems");
 		ui.textBlock(greeting);
 		List<Item> myItems = iService.getOwnersItems(currentUser);
-		List<String> myItemStrings = new ArrayList<String>();
 
+		// create item list
+		List<String> myItemStrings = new ArrayList<String>();
 		for (Item i : myItems) {
 			myItemStrings.add(i.toString());
 		}
@@ -571,7 +572,6 @@ public class View {
 				ui.invalidChoice();
 			}
 		}
-
 		if (!choice.equals("b")) {
 			// make a payment then refresh view
 			Item chosenItem = null;
@@ -580,9 +580,15 @@ public class View {
 					chosenItem = i;
 				}
 			}
-			pService.processPayment(chosenItem, currentUser);
-			customerItems();
 
+			// if payment was successful...
+			if (pService.processPayment(chosenItem, currentUser) == 1) {
+				//
+
+			}
+			;
+			customerItems();
+			// if payment was not successful
 		} else {
 
 			ui.margin(3);
