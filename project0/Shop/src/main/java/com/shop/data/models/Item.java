@@ -10,8 +10,8 @@ public class Item {
 
     @Override
     public String toString() {
-        return "Name: " + name + " Sticker price: $" + price + " Remaining payments: " + remainingPayments
-                + " Balance: $" + balance;
+        return "Purchase Id: " + id + " Name: " + name + " Sticker price: $" + price + " Remaining payments: "
+                + remainingPayments + " Balance: $" + String.format("%.2f", balance);
     }
 
     public Item(int id, String name, double price, int remainingPayments, double balance) {
