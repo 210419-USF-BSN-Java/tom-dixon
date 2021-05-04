@@ -50,10 +50,10 @@ public class View {
 		List<String> validChoices = new ArrayList<String>(Arrays.asList("1", "2"));
 		while (!validChoices.contains(choice)) {
 			ui.textBlock(f);
+			System.out.print("Selection: ");
 			choice = SC.nextLine();
-
 			if (!validChoices.contains(choice)) {
-				System.out.println("*** INVALID CHOICE. TRY AGAIN ***");
+				ui.invalidChoice();
 			}
 		}
 		switch (Integer.parseInt(choice)) {
@@ -105,7 +105,7 @@ public class View {
 
 			choice = SC.nextLine();
 			if (!validMenuChoices.contains(choice)) {
-				System.out.println("** INVALID CHOICE **");
+				ui.invalidChoice();
 			}
 		}
 
@@ -249,7 +249,7 @@ public class View {
 				ui.textBlock(prompt);
 				choice = SC.nextLine();
 				if (!validIds.contains(choice)) {
-					System.out.println("** INVALID CHOICE **");
+					ui.invalidChoice();
 				}
 			}
 
@@ -263,7 +263,7 @@ public class View {
 				while (!(removeAnother.equals("y") || removeAnother.equals("n"))) {
 					removeAnother = SC.nextLine();
 					if (!(removeAnother.equals("y") || removeAnother.equals("n"))) {
-						System.out.println("** INVALID ENTRY **. Try again...");
+						ui.invalidChoice();
 					}
 				}
 
@@ -315,7 +315,7 @@ public class View {
 				while (!(enterAnotherItem.equals("y") || enterAnotherItem.equals("n"))) {
 					enterAnotherItem = SC.nextLine();
 					if (!(enterAnotherItem.equals("y") || enterAnotherItem.equals("n"))) {
-						System.out.println("** INVALID ENTRY **");
+						ui.invalidChoice();
 					}
 				}
 
@@ -328,8 +328,7 @@ public class View {
 
 			} catch (NumberFormatException e) {
 				ui.margin(10);
-				System.out.println("** INVALID ENTRY **");
-				System.out.println("Please try again.");
+				ui.invalidChoice();
 				addItem();
 			} catch (Exception e) {
 				System.out.println("Something went wrong adding the item. Please try again.");
@@ -440,7 +439,11 @@ public class View {
 				view.welcome();
 			}
 		} else {
+			ui.margin(2);
+			ui.hr();
 			System.out.println("** USER NOT FOUND. TRY AGAIN **");
+			ui.hr();
+			ui.margin(2);
 			login();
 		}
 
@@ -461,7 +464,7 @@ public class View {
 			System.out.print("Enter selection: ");
 			choice = SC.nextLine();
 			if (!validChoices.contains(choice)) {
-				System.out.println("** INVALID CHOICE **");
+				ui.invalidChoice();
 			}
 		}
 		switch (Integer.parseInt(choice)) {
@@ -491,7 +494,7 @@ public class View {
 			System.out.print("Enter selection: ");
 			choice = SC.nextLine();
 			if (!validChoices.contains(choice)) {
-				System.out.println("** INVALID CHOICE **");
+				ui.invalidChoice();
 			}
 		}
 		switch (Integer.parseInt(choice)) {
@@ -511,7 +514,11 @@ public class View {
 
 	private void logout() {
 		currentUser = null;
+		ui.margin(2);
+		ui.hr();
 		System.out.println("** Successfully logged out **");
+		ui.hr();
+		ui.margin(2);
 		welcome();
 	}
 
@@ -540,10 +547,9 @@ public class View {
 
 		ui.margin(3);
 		ui.hrBold();
-		ui.margin(3);
-
+		ui.margin(2);
 		System.out.println("Redirecting to main menu...");
-		ui.margin(3);
+		ui.margin(2);
 		// redirect to cust main
 		customerMain();
 	}
@@ -573,7 +579,7 @@ public class View {
 			System.out.print("Enter Offer Id to approve or reject. Enter 'b' to return to main menu: ");
 			choice = SC.nextLine();
 			if (!validChoices.contains(choice)) {
-				System.out.println("** INVALID CHOICE ** Try again");
+				ui.invalidChoice();
 			}
 		}
 
