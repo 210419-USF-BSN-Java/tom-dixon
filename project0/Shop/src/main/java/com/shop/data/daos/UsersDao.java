@@ -12,7 +12,7 @@ public interface UsersDao extends GenericDao<User> {
 
 	User get(String username); // get by username
 
-	User update(int id, User u);
+	int update(int id, User u);
 
 	int remove(User u);
 }

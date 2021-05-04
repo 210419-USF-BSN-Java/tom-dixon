@@ -55,9 +55,23 @@ public class ItemsDaoImpl implements ItemsDao {
 		return null;
 	}
 
-	public Item update(int id, Item item) {
-		// TODO Auto-generated method stub
-		return null;
+	public int update(int id, Item item) {
+		int result = 0;
+		String sql = "update items set remaining_payments = ?, balance = ? where id = ? ";
+
+		try (Connection conn = ConnectionFactory.getConnection()) {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, item.getRemainingPayments());
+			ps.setDouble(2, item.getBalance());
+			ps.setInt(3, item.getId());
+
+			result = ps.executeUpdate();
+
+		} catch (SQLException e) {
+			System.out.println("ItemDaoImpl: Exception updating Item");
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	public int remove(Item i) {
@@ -109,8 +123,8 @@ public class ItemsDaoImpl implements ItemsDao {
 			ps.setInt(1, u.getId());
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				items.add(new Item(rs.getInt("id"), rs.getString("name"), rs.getDouble("price"),
-						rs.getInt("remaining_payments"), rs.getDouble("balance")));
+				items.add(new Item(rs.getInt("id"), rs.getString("name"), rs.getDouble("price"), rs.getInt("owned_by"),
+						rs.getInt("remaining_payments"), rs.getDouble("balance"), rs.getInt("accepted_offer")));
 			}
 		} catch (SQLException e) {
 			System.out.println("ItemsDaoImpl: exception thrown retrieving a user's items");

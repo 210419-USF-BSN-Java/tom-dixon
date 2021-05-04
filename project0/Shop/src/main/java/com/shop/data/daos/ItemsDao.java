@@ -18,7 +18,7 @@ public interface ItemsDao extends GenericDao<Item> {
 
 	Item get(int i);
 
-	public Item update(int id, Item item);
+	public int update(int id, Item item);
 
 	int remove(Item i);
 
