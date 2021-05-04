@@ -6,12 +6,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.xml.stream.StreamFilter;
+
 import com.shop.data.models.Item;
 import com.shop.data.models.Offer;
 import com.shop.data.models.User;
 import com.shop.presentation.components.Ui;
 import com.shop.services.ItemsService;
 import com.shop.services.OffersService;
+import com.shop.services.PaymentsService;
 import com.shop.services.UsersService;
 import com.shop.util.Calc;
 
@@ -19,6 +22,7 @@ public class View {
 	UsersService uService;
 	ItemsService iService;
 	OffersService oService;
+	PaymentsService pService;
 	String textFileUrlStub; // looong file path
 	String userResponse;
 	Ui ui;
@@ -30,10 +34,11 @@ public class View {
 		view = new View();
 	}
 
-	public View(UsersService uService, ItemsService iService, OffersService oService) {
+	public View(UsersService uService, ItemsService iService, OffersService oService, PaymentsService pService) {
 		this.uService = uService;
 		this.iService = iService;
 		this.oService = oService;
+		this.pService = pService;
 		ui = new Ui();
 		textFileUrlStub = "/home/noxid/Revature/java-fullstack/Assignments/tom-dixon/project0/Shop/src/main/resources/menuText/";
 	}
@@ -50,10 +55,10 @@ public class View {
 		List<String> validChoices = new ArrayList<String>(Arrays.asList("1", "2"));
 		while (!validChoices.contains(choice)) {
 			ui.textBlock(f);
+			System.out.print("Selection: ");
 			choice = SC.nextLine();
-
 			if (!validChoices.contains(choice)) {
-				System.out.println("*** INVALID CHOICE. TRY AGAIN ***");
+				ui.invalidChoice();
 			}
 		}
 		switch (Integer.parseInt(choice)) {
@@ -105,7 +110,7 @@ public class View {
 
 			choice = SC.nextLine();
 			if (!validMenuChoices.contains(choice)) {
-				System.out.println("** INVALID CHOICE **");
+				ui.invalidChoice();
 			}
 		}
 
@@ -249,7 +254,7 @@ public class View {
 				ui.textBlock(prompt);
 				choice = SC.nextLine();
 				if (!validIds.contains(choice)) {
-					System.out.println("** INVALID CHOICE **");
+					ui.invalidChoice();
 				}
 			}
 
@@ -263,7 +268,7 @@ public class View {
 				while (!(removeAnother.equals("y") || removeAnother.equals("n"))) {
 					removeAnother = SC.nextLine();
 					if (!(removeAnother.equals("y") || removeAnother.equals("n"))) {
-						System.out.println("** INVALID ENTRY **. Try again...");
+						ui.invalidChoice();
 					}
 				}
 
@@ -315,7 +320,7 @@ public class View {
 				while (!(enterAnotherItem.equals("y") || enterAnotherItem.equals("n"))) {
 					enterAnotherItem = SC.nextLine();
 					if (!(enterAnotherItem.equals("y") || enterAnotherItem.equals("n"))) {
-						System.out.println("** INVALID ENTRY **");
+						ui.invalidChoice();
 					}
 				}
 
@@ -328,8 +333,7 @@ public class View {
 
 			} catch (NumberFormatException e) {
 				ui.margin(10);
-				System.out.println("** INVALID ENTRY **");
-				System.out.println("Please try again.");
+				ui.invalidChoice();
 				addItem();
 			} catch (Exception e) {
 				System.out.println("Something went wrong adding the item. Please try again.");
@@ -440,7 +444,11 @@ public class View {
 				view.welcome();
 			}
 		} else {
+			ui.margin(2);
+			ui.hr();
 			System.out.println("** USER NOT FOUND. TRY AGAIN **");
+			ui.hr();
+			ui.margin(2);
 			login();
 		}
 
@@ -461,7 +469,7 @@ public class View {
 			System.out.print("Enter selection: ");
 			choice = SC.nextLine();
 			if (!validChoices.contains(choice)) {
-				System.out.println("** INVALID CHOICE **");
+				ui.invalidChoice();
 			}
 		}
 		switch (Integer.parseInt(choice)) {
@@ -472,11 +480,17 @@ public class View {
 				customerItems();
 				break;
 			case 3:
-				payments();
+				customerPayments();
 				break;
 			case 4:
 				logout();
 		}
+	}
+
+	public void customerPayments() {
+		System.out.println("customer payments");
+		System.out.println("reroute to customerMain()");
+		customerMain();
 	}
 
 	public void employeeMain() {
@@ -491,7 +505,7 @@ public class View {
 			System.out.print("Enter selection: ");
 			choice = SC.nextLine();
 			if (!validChoices.contains(choice)) {
-				System.out.println("** INVALID CHOICE **");
+				ui.invalidChoice();
 			}
 		}
 		switch (Integer.parseInt(choice)) {
@@ -511,7 +525,11 @@ public class View {
 
 	private void logout() {
 		currentUser = null;
+		ui.margin(2);
+		ui.hr();
 		System.out.println("** Successfully logged out **");
+		ui.hr();
+		ui.margin(2);
 		welcome();
 	}
 
@@ -530,22 +548,60 @@ public class View {
 		ui.textBlock(greeting);
 		List<Item> myItems = iService.getOwnersItems(currentUser);
 
+		// create item list
 		List<String> myItemStrings = new ArrayList<String>();
-
 		for (Item i : myItems) {
 			myItemStrings.add(i.toString());
 		}
 
 		ui.stringList(myItemStrings);
-
-		ui.margin(3);
 		ui.hrBold();
-		ui.margin(3);
+		ui.margin(1);
 
-		System.out.println("Redirecting to main menu...");
-		ui.margin(3);
-		// redirect to cust main
-		customerMain();
+		String choice = "";
+		List<String> validMenuChoices = new ArrayList<String>(Arrays.asList("b"));
+		// add item ids as valid choices
+		for (Item i : myItems) {
+			validMenuChoices.add(Integer.toString(i.getId()));
+		}
+
+		while (!validMenuChoices.contains(choice)) {
+			System.out.print("Enter Purchase Id to make a payment, or 'b' to return to main menu: ");
+			choice = SC.nextLine();
+			if (!validMenuChoices.contains(choice)) {
+				ui.invalidChoice();
+			}
+		}
+		if (!choice.equals("b")) {
+			// make a payment then refresh view
+			Item chosenItem = null;
+			for (Item i : myItems) {
+				if (i.getId() == Integer.parseInt(choice)) {
+					chosenItem = i;
+				}
+			}
+
+			// if payment was successful...
+			if (pService.processPayment(chosenItem, currentUser) == 2) {
+				//
+				ui.hr();
+				System.out.println("... PAYMENT PROCESSED");
+				System.out.println("... Reloading table");
+				ui.hr();
+			}
+			;
+			customerItems();
+			// if payment was not successful
+		} else {
+			ui.margin(3);
+			ui.hrBold();
+			ui.margin(2);
+			System.out.println("...Redirecting to main menu...");
+			ui.margin(2);
+			// redirect to cust main
+			customerMain();
+		}
+
 	}
 
 	private void employeeOffers() {
@@ -573,7 +629,7 @@ public class View {
 			System.out.print("Enter Offer Id to approve or reject. Enter 'b' to return to main menu: ");
 			choice = SC.nextLine();
 			if (!validChoices.contains(choice)) {
-				System.out.println("** INVALID CHOICE ** Try again");
+				ui.invalidChoice();
 			}
 		}
 

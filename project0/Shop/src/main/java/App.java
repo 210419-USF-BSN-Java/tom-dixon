@@ -16,9 +16,12 @@ import com.shop.data.models.Offer;
 import com.shop.data.daos.ItemsDaoImpl;
 import com.shop.data.daos.OffersDao;
 import com.shop.data.daos.OffersDaoImpl;
+import com.shop.data.daos.PaymentsDao;
+import com.shop.data.daos.PaymentsDaoImpl;
 import com.shop.services.UsersService;
 import com.shop.services.ItemsService;
 import com.shop.services.OffersService;
+import com.shop.services.PaymentsService;
 import com.shop.presentation.View;
 
 public class App {
@@ -28,10 +31,12 @@ public class App {
 		UsersDao uDao = new UsersDaoImpl();
 		ItemsDao iDao = new ItemsDaoImpl();
 		OffersDao oDao = new OffersDaoImpl();
+		PaymentsDao pDao = new PaymentsDaoImpl();
 		UsersService uService = new UsersService(uDao);
 		ItemsService iService = new ItemsService(iDao);
 		OffersService oService = new OffersService(oDao);
-		View view = new View(uService, iService, oService);
+		PaymentsService pService = new PaymentsService(iDao, pDao, oDao);
+		View view = new View(uService, iService, oService, pService);
 
 		// List<Offer> offers = oService.getOffers();
 		// for (Offer o : offers) {

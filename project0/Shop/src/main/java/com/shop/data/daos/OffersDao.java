@@ -10,7 +10,7 @@ public interface OffersDao extends GenericDao<Offer> {
 
 	Offer get(int i);
 
-	Offer update(int id, Offer c);
+	int update(int id, Offer c);
 
 	int remove(Offer c);
 
