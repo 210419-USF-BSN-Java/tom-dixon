@@ -99,6 +99,7 @@ Be creative and incorporate other topics into your project, they do not have to 
 * Threading
 * Mocking
 * Password hashing
+<hr>
 
 ## Project1 - Employment Reimbursement System (ERS) [my solution](https://www.youtube.com/watch?v=oHg5SJYRHA0)
 ## Executive Summary
