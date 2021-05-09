@@ -33,7 +33,7 @@ public String reverse(String string) {
 	}
 
 ```
-## Project01(in progress) [my solution](https://github.com/210419-USF-BSN-Java/tom-dixon/tree/dev/project0/Shop)
+## Project0 [my solution](https://github.com/210419-USF-BSN-Java/tom-dixon/tree/dev/project0/Shop)
 ## *Some Kind of Shop* 
 
 ## Description
