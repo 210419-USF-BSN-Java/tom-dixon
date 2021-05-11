@@ -65,4 +65,11 @@ public class User {
         this.password = password;
     }
 
+    public User login(String username, String password) {
+        User result = null;
+        // call User.login service here
+
+        return result;
+    }
+
 }
