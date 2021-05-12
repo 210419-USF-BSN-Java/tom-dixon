@@ -1,4 +1,4 @@
-project0/shop/target/
+roject0/shop/target/
 project0/shop/pom.xml.tag
 project0/shop/pom.xml.releaseBackup
 project0/shop/pom.xml.versionsBackup
@@ -19,4 +19,8 @@ project1/ers/dependency-reduced-pom.xml
 project1/ers/buildNumber.properties
 project1/ers/.mvn/timing.properties
 project1/ers/.flattened-pom.xml
+
+.gitignore
+
+*.class
 
