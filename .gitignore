@@ -1,3 +1,4 @@
+# project0 shop
 project0/shop/target/
 project0/shop/pom.xml.tag
 project0/shop/pom.xml.releaseBackup
@@ -9,6 +10,7 @@ project0/shop/buildNumber.properties
 project0/shop/.mvn/timing.properties
 project0/shop/.flattened-pom.xml
 
+# project1 shop
 project1/ers/target/
 project1/ers/pom.xml.tag
 project1/ers/pom.xml.releaseBackup
