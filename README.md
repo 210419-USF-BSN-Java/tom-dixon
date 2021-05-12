@@ -1,7 +1,6 @@
 ## Assignment 0 [my solutions](https://github.com/210419-USF-BSN-Java/tom-dixon/blob/main/Assignment01/Assignment1.java)
 
 A couple code challenges issued at the beginning of training.
-- dfdf
 <hr>
 
 ## Project0- Some Kind of Shop [my solution](https://github.com/210419-USF-BSN-Java/tom-dixon/tree/dev/project0/Shop)
