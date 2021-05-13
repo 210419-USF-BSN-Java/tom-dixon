@@ -1,0 +1,22 @@
+/* .header-transformY {
+  transform: translateY(10em);
+} */
+
+.outer-container {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  width: 400px;
+  padding: 40px 30px;
+}
+
+.inner-container {
+  width: 300px;
+  /* border: 1px solid red; */
+  /* display: grid;
+  justify-content: center; */
+}
+
+.btn-x-padding {
+  padding-left: 50px;
+  padding-right: 50px;
+}
