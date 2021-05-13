@@ -15,7 +15,16 @@ public class LoginServlet extends HttpServlet {
             throws IOException, ServletException {
 
         // This is bad practice
-        PrintWriter pw = response.getWriter();
+
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+
+        System.out.println("******************************");
+        System.out.println("******************************");
+        System.out.println(username);
+        System.out.println(password);
+        System.out.println("******************************");
+        System.out.println("******************************");
 
         // call login service here from UserService
 
