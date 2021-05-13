@@ -1,4 +1,4 @@
-package services;
+package controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,9 +15,6 @@ public class LoginServlet extends HttpServlet {
             throws IOException, ServletException {
 
         // This is bad practice
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-
         PrintWriter pw = response.getWriter();
 
         // call login service here from UserService
