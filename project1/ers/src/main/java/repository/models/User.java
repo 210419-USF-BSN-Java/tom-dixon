@@ -4,27 +4,27 @@ public class User {
     private int id;
     private String firstName;
     private String lastName;
-    private String role;
+    private int roleId;
     private String email;
     private String userName;
     private String password;
 
-    public User(int id, String firstName, String lastName, String role, String email, String userName,
-            String password) {
+    public User(int id, String firstName, String lastName, int roleId, String email, String userName, String password) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.role = role;
+        this.roleId = roleId;
         this.email = email;
         this.userName = userName;
         this.password = password;
+
     }
 
-    public User(int id, String firstName, String lastName, String role, String email, String userName) {
+    public User(int id, String firstName, String lastName, int roleId, String email, String userName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.role = role;
+        this.roleId = roleId;
         this.email = email;
         this.userName = userName;
     }
@@ -53,12 +53,12 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getRole() {
-        return role;
+    public int getRoleId() {
+        return roleId;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
     }
 
     public String getEmail() {

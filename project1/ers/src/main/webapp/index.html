@@ -10,7 +10,7 @@
       integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="../css/index.css" />
+    <link rel="stylesheet" href="index.css" />
     <title>Login</title>
   </head>
   <body>
@@ -43,12 +43,17 @@
     <header class="px-4 mb-5">
       <h1 class="mb-2 text-center">Employment Reimbursement System</h1>
     </header>
-
     <div class="outer-container mx-auto">
       <div class="inner-container mx-auto">
-        <form action="">
+        <form action="login" id="login-form" method="post">
           <div class="form-floating mb-3">
-            <input class="form-control" id="login-un" placeholder="Username" />
+            <input
+              class="form-control"
+              id="login-un"
+              name="username"
+              placeholder="Username"
+              required
+            />
             <label for="login-un">Username</label>
           </div>
           <div class="form-floating mb-4">
@@ -57,6 +62,8 @@
               class="form-control"
               id="login-pw"
               placeholder="Password"
+              name="password"
+              required
             />
             <label for="login-pw">Password</label>
           </div>
@@ -75,5 +82,6 @@
       integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
       crossorigin="anonymous"
     ></script>
+    <!-- <script src="./login.js"></script> -->
   </body>
 </html>

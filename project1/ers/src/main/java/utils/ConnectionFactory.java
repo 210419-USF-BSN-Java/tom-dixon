@@ -12,13 +12,25 @@ public class ConnectionFactory {
 
     private static Connection conn;
 
+    // public static void main(String[] args) {
+    // getConnection();
+
+    // System.out.println(getConnection());
+    // }
+
     public static Connection getConnection() {
+        String connection = ERS_URL + ":5432/postgres?user=" + ERS_UN + "&password=" + ERS_PW;
+
         try {
-            conn = DriverManager.getConnection(ERS_URL, ERS_UN, ERS_PW);
-        } catch (SQLException e) {
+            Class.forName("org.postgresql.Driver");
+            conn = DriverManager.getConnection(connection);
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("******************************");
+            System.out.println("ConnectionFactory Exception");
+            System.out.println("******************************");
             e.printStackTrace();
+
         }
         return conn;
     }
-
 }
