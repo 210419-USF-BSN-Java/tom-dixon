@@ -1,7 +1,6 @@
 package controllers;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -9,7 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import repository.models.User;
+import services.UserService;
+
 public class LoginServlet extends HttpServlet {
+
+    private UserService uService = new UserService();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
@@ -19,16 +23,22 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        System.out.println("******************************");
-        System.out.println("******************************");
-        System.out.println(username);
-        System.out.println(password);
-        System.out.println("******************************");
-        System.out.println("******************************");
-
         // call login service here from UserService
-
+        User user = uService.login(username, password);
         // if valid,
+        if (user != null) {
+            System.out.println("*************");
+            System.out.println(user.getRoleId());
+            System.out.println("*************");
+
+            if (user.getRoleId() == 1) {
+                System.out.println("REROUTING TO MANAGER HOME");
+            } else {
+                System.out.println("REROUTING TO EMPLOYEE HOME");
+            }
+        } else {
+            System.out.println("SOMETHING WENT WRONG");
+        }
         // set session data
         // HttpSession instance = request.getSession();
         // session.setAttribute("userId", id);

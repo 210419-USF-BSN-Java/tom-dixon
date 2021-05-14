@@ -32,7 +32,7 @@ public class UserDaoImpl implements UserDao {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 User u = new User(rs.getInt("id"), rs.getString("first_name"), rs.getString("last_name"),
-                        rs.getString("role"), rs.getString("email"), rs.getString("username"));
+                        rs.getInt("user_role_id"), rs.getString("email"), rs.getString("username"));
                 result = u;
             }
         } catch (SQLException e) {
@@ -42,16 +42,17 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User getByUsername(String username) {
+    public User login(String username, String password) {
         User result = null;
-        String sql = "select * from users where username = ?";
+        String sql = "select * from users where username = ? and password = ?";
         try (Connection con = ConnectionFactory.getConnection()) {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, username);
+            ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 User u = new User(rs.getInt("id"), rs.getString("first_name"), rs.getString("last_name"),
-                        rs.getString("role"), rs.getString("email"), rs.getString("username"),
+                        rs.getInt("user_role_id"), rs.getString("email"), rs.getString("username"),
                         rs.getString("password"));
                 result = u;
             }
