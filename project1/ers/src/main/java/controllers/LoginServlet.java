@@ -27,12 +27,9 @@ public class LoginServlet extends HttpServlet {
         User user = uService.login(username, password);
         // if valid,
         if (user != null) {
-            System.out.println("*************");
-            System.out.println(user.getRoleId());
-            System.out.println("*************");
-
             if (user.getRoleId() == 1) {
                 System.out.println("REROUTING TO MANAGER HOME");
+                request.getRequestDispatcher("managerHome").forward(request, response);
             } else {
                 System.out.println("REROUTING TO EMPLOYEE HOME");
             }
