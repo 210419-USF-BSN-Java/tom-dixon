@@ -12,7 +12,7 @@ public class HomeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
 
-        request.getRequestDispatcher("login.html").include(request, response);
+        request.getRequestDispatcher("index.html").include(request, response);
 
     };
 

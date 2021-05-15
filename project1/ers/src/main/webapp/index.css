@@ -73,3 +73,7 @@
     rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px,
     rgb(0 0 0 / 0%) 0px 0px 0px 0px;
 }
+
+.hidden {
+  display: none;
+}

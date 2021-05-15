@@ -4,9 +4,7 @@ window.addEventListener( 'load', ( event ) => {
         console.log( "IS THIS THING ON" )
         document.querySelector( ".spinner-container" ).remove();
         // display card choices
-        document.querySelector( "#card-menu-container" ).classList.remove( "hidden" )
-
-
+        document.querySelector( ".card-menu-container" ).classList.remove( "hidden" )
     }, 2000 );
 
 

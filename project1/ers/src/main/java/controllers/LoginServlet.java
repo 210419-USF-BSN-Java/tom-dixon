@@ -29,10 +29,10 @@ public class LoginServlet extends HttpServlet {
         if (user != null) {
             if (user.getRoleId() == 1) {
                 System.out.println("REROUTING TO MANAGER HOME");
-                request.getRequestDispatcher("./pages/manager.html").forward(request, response);
+                request.getRequestDispatcher("manager.html").forward(request, response);
             } else {
                 System.out.println("REROUTING TO EMPLOYEE HOME");
-                request.getRequestDispatcher("./pages/employee.html").forward(request, response);
+                request.getRequestDispatcher("employee.html").forward(request, response);
             }
         } else {
             System.out.println("SOMETHING WENT WRONG");
