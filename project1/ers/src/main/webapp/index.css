@@ -3,7 +3,7 @@
 } */
 
 .outer-container {
-  border: 1px solid rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   width: 400px;
   padding: 40px 30px;
@@ -19,4 +19,61 @@
 .btn-x-padding {
   padding-left: 50px;
   padding-right: 50px;
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}
+.main-content-container {
+  padding: 0 50px;
+}
+
+.card-menu-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 0 20px;
+}
+.menu-card {
+  padding: 20px 30px;
+  width: 20rem;
+}
+
+.card-subheader-container {
+  padding: 25px 15px 15px 30px;
+}
+
+.card-subheader-container:hover {
+  box-shadow: rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px,
+    rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(60 66 87 / 16%) 0px 0px 0px 1px inset,
+    rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px,
+    rgb(0 0 0 / 0%) 0px 0px 0px 0px;
+
+  cursor: pointer;
+}
+
+.tertiary-color {
+  color: rgb(84, 105, 212);
+}
+
+.mr-sm {
+  margin-right: 7px;
+}
+
+.flex-baseline {
+  display: flex;
+}
+
+.shadow:hover {
+  box-shadow: rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px,
+    rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(60 66 87 / 16%) 0px 0px 0px 1px inset,
+    rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px,
+    rgb(0 0 0 / 0%) 0px 0px 0px 0px;
+}
+
+.hidden {
+  display: none;
 }
