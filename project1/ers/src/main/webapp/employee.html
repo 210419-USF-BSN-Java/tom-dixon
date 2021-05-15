@@ -60,7 +60,7 @@
       </div>
       <section>
         <div class="card-menu-container hidden">
-          <div class="menu-card">
+          <div class="menu-card" name="cust-request-new" id="custRequestNew">
             <div class="card-header card-subheader-container">
               <h3 class="fs-6 tertiary-color flex-baseline">
                 <svg
@@ -80,7 +80,7 @@
               <p>Submit a new request for reimbursement</p>
             </div>
           </div>
-          <div class="menu-card">
+          <div class="menu-card" id="custViewPending" name="cust-pending">
             <div class="card-header card-subheader-container">
               <h3 class="fs-6 tertiary-color flex-baseline">
                 <svg
@@ -100,7 +100,7 @@
               <p>View all pending reimbursement requests</p>
             </div>
           </div>
-          <div class="menu-card">
+          <div class="menu-card" id="custViewResolved" name="cust-resolved">
             <div class="card-header card-subheader-container">
               <h3 class="fs-6 tertiary-color flex-baseline">
                 <svg
@@ -114,8 +114,9 @@
                   <path
                     d="M1.02 6A1 1 0 0 1 .5 4.134C.82 3.95 3.32 2.572 8 0c4.681 2.572 7.181 3.95 7.5 4.134A1 1 0 0 1 14.98 6zM11 14V7.5h3V14h1a1 1 0 0 1 1 1v1H0v-1a1 1 0 0 1 1-1h1V7.5h3V14h1.5V7.5h3V14z"
                     fill-rule="evenodd"
-                  ></path></svg
-                >Resolved
+                  ></path>
+                </svg>
+                Resolved
               </h3>
               <p>View all approved/rejected reimbursement requests</p>
             </div>
@@ -129,5 +130,6 @@
       crossorigin="anonymous"
     ></script>
     <script src="./page-load.js"></script>
+    <script src="./emp-main-ui.js"></script>
   </body>
 </html>
