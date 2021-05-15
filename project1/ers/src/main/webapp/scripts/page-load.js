@@ -3,7 +3,9 @@ window.addEventListener( 'load', ( event ) => {
         // remove spinner from DOM
         console.log( "IS THIS THING ON" )
         document.querySelector( ".spinner-container" ).remove();
-        // get 
+        // display card choices
+        document.querySelector( "#card-menu-container" ).classList.remove( "hidden" )
+
 
     }, 2000 );
 
