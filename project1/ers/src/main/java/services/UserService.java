@@ -10,7 +10,9 @@ public class UserService {
     public User login(String un, String pw) {
         System.out.println("****************");
         System.out.println("****************");
-        System.out.println("USER SERVICE SERVICE");
+        System.out.println("USER SERVICE");
+        System.out.println("Username: " + un);
+        System.out.println("Password: " + pw);
         System.out.println("****************");
         System.out.println("****************");
         return uDao.login(un, pw);
