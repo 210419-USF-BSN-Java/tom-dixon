@@ -15,6 +15,6 @@ A Java app with console UI for an an online store.
 - emojis
 <hr>
 
-## Project1- Employee Reimbursement System (in progress) [my solution](https://www.youtube.com/watch?v=YddwkMJG1Jo)
+## Project1- Employee Reimbursement System (in progress) [my solution](#)
 
 
