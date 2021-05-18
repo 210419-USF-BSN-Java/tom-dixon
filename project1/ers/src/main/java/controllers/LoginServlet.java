@@ -18,12 +18,10 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
 
-        // This is bad practice
-
+        // try get parameter
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        // call login service here from UserService
         User user = uService.login(username, password);
         // if valid,
         if (user != null) {
@@ -37,17 +35,13 @@ public class LoginServlet extends HttpServlet {
         } else {
             System.out.println("SOMETHING WENT WRONG");
         }
-        // set session data
-        // HttpSession instance = request.getSession();
-        // session.setAttribute("userId", id);
-        // session.setAttribute("username", username);
-        // session.setAttribute("user-type", userType);
-        // return json with username, userType and id back and status code 200
-
-        // else
-        // return status code 400
 
     };
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
+        System.out.println("HELLLLOOOOOOO");
+    }
 
     protected void doDelete(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
