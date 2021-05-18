@@ -1,0 +1,7 @@
+POST https://localhost:8080/ers/login HTTP/1.1
+content-type: application/json
+
+{
+    "username": "sample",
+    "password": "shitstorm"
+}
