@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,18 +18,26 @@ public class LoginServlet extends HttpServlet {
 
     private UserService uService = new UserService();
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws IOException, ServletException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 
         // try get parameter
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+        String username = req.getParameter("username");
+        String password = req.getParameter("password");
 
         User user = uService.login(username, password);
-        // if valid,
+
         if (user != null) {
+            // bake cookies
+            Cookie userId = new Cookie("userId", String.valueOf(user.getId()));
+            Cookie userType = new Cookie("userRole", String.valueOf(user.getRoleId()));
+            Cookie name = new Cookie("username", String.valueOf(user.getUserName()));
+
+            res.addCookie(userId);
+            res.addCookie(userType);
+            res.addCookie(name);
+
             if (user.getRoleId() == 1) {
-                System.out.println("REROUTING TO MANAGER HOME");
+
             } else {
                 System.out.println("REROUTING TO EMPLOYEE HOME");
             }
@@ -38,14 +47,12 @@ public class LoginServlet extends HttpServlet {
 
     };
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws IOException, ServletException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         System.out.println("logging from goGet in login servlet");
     }
 
-    protected void doDelete(HttpServletRequest request, HttpServletResponse response)
-            throws IOException, ServletException {
-        HttpSession session = request.getSession(false);
+    protected void doDelete(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+        HttpSession session = req.getSession(false);
         if (session != null) {
             session.invalidate();
         }
