@@ -31,7 +31,7 @@ function App() {
 
   return (
     <Router>
-      <AppNav />
+      <AppNav user={user} />
       <Route path="/" render={props => ( <LoginPage {...props} login={login} user={user} /> )} />
       <Route path="/main" render={props => ( <Main {...props} user={user} /> )} />
     </Router>

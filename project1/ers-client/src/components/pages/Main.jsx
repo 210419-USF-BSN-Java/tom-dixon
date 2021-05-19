@@ -3,7 +3,8 @@ import Page from '../Page';
 import Card from '../Card';
 
 const Main = ({ user }) => {
-  //TODO if user.roleId == 2, get reimbursements
+  //TODO get reimbursements according to user role/id
+  //TODO add logout when user state
   return (
     <Page>
       <h1 style={{ fontSize: 'calc(1.3rem + .6vw)' }}>Reimbursements</h1>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AppNav = () => {
+const AppNav = ({ user }) => {
   return (
     <header className='border-b md:flex md:items-center md:justify-between p-4 pb-0 shadow-lg md:pb-4'>
       <div className='flex items-center justify-between mb-4 md:mb-0'>
@@ -34,6 +34,14 @@ const AppNav = () => {
               href='#'
             >
               Contact
+            </a>
+          </li>
+          <li className='md:ml-4'>
+            <a
+              className='border-t block no-underline hover:underline py-2 text-grey-darkest hover:text-black md:border-none md:p-0'
+              href='#'
+            >
+              Logout
             </a>
           </li>
         </ul>
