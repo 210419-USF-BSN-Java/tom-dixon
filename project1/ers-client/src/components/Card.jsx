@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Card = ({ icon, title }) => {
+const Card = ({ icon, title, desc }) => {
   return (
     <div
-      class='menu-card pt-6 px-7 max-w-20-custom pb-7 mb-5'
+      class='menu-card pt-6 px-7 max-w-16-custom pb-7 mb-5'
       name='cust-request-new'
       id='custRequestNew'
     >
@@ -12,7 +12,7 @@ const Card = ({ icon, title }) => {
           <span className='mr-2'>{icon()}</span>
           <span style={{ color: 'rgb(84, 105, 212)' }}>{title}</span>
         </h3>
-        <p>Submit a new request for reimbursement</p>
+        <p>{desc}</p>
       </div>
     </div>
   );

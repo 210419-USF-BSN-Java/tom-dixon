@@ -9,6 +9,11 @@
   background-color: rgba(0, 0, 0, 0.03);
 }
 
-.max-w-20-custom {
+.menu-card:hover {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.max-w-16-custom {
   max-width: 16rem;
 }

@@ -22,10 +22,7 @@ function App() {
     if ( result.data ) {
       const { data: { id, roleId, username } } = result;
       setUser( { id, roleId, username } )
-    } else {
-
     }
-
   }
 
 

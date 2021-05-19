@@ -2,6 +2,8 @@ import React from 'react';
 import Page from '../Page';
 import Card from '../Card';
 import fatStacks from '../../svg-icons/fatStacks';
+import time from '../../svg-icons/time';
+import bank from '../../svg-icons/bank';
 
 const Main = ({ user }) => {
   //TODO get reimbursements according to user role/id
@@ -20,9 +22,21 @@ const Main = ({ user }) => {
         name='card-container'
         class='flex flex-wrap gap-x-3 gap-y-3 justify-around'
       >
-        <Card icon={fatStacks} title='Request' />
-        <Card icon={fatStacks} title='Request' />
-        <Card icon={fatStacks} title='Request' />
+        <Card
+          icon={fatStacks}
+          title='Request'
+          desc='Submit a new request for reimbursement'
+        />
+        <Card
+          icon={time}
+          title='Pending'
+          desc='View all pending reimbursement requests'
+        />
+        <Card
+          icon={bank}
+          title='Resolved'
+          desc='View all approved/rejected reimbursement requests'
+        />
       </div>
     </Page>
   );
