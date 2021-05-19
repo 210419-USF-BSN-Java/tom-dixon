@@ -3,6 +3,7 @@ package controllers;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import repository.models.User;
 import services.UserService;
+import utils.JsonConverter;
 
 @WebServlet(name = "login", urlPatterns = { "/login" })
 public class LoginServlet extends HttpServlet {
@@ -32,15 +34,19 @@ public class LoginServlet extends HttpServlet {
             Cookie userType = new Cookie("userRole", String.valueOf(user.getRoleId()));
             Cookie name = new Cookie("username", String.valueOf(user.getUserName()));
 
+            // package for delivery
             res.addCookie(userId);
             res.addCookie(userType);
             res.addCookie(name);
 
-            if (user.getRoleId() == 1) {
+            // set output type for message
+            res.setContentType("application/json;charset=UTF-8");
+            ServletOutputStream jsonOut = res.getOutputStream();
 
-            } else {
-                System.out.println("REROUTING TO EMPLOYEE HOME");
-            }
+            JsonConverter converter = new JsonConverter();
+            String output = converter.convertToJson(user);
+            jsonOut.print(output);
+
         } else {
             System.out.println("SOMETHING WENT WRONG");
         }
