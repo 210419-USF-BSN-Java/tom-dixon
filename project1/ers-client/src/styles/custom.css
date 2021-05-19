@@ -1,0 +1,19 @@
+.flex-baseline-custom {
+  display: flex;
+  align-items: baseline;
+}
+
+.menu-card {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.menu-card:hover {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.max-w-16-custom {
+  max-width: 16rem;
+}
