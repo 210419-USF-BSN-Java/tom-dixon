@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import qs from 'qs';
 import { Redirect } from 'react-router';
 
-const LoginForm = () => {
+const LoginForm = ({ login, user }) => {
   // useEffect(() => {
 
   //   return () => {
@@ -29,22 +29,14 @@ const LoginForm = () => {
       password: password,
     });
 
-    const headers = {
-      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-    };
+    const result = await login(formData);
 
-    const result = await axios.post('login', formData, headers);
-    if (!result.data) {
-      // user feedback unsuccessful login
-    } else {
-      // set user data to context
-      // redirect to main
-      console.log('redirecting to main');
-      setLoggedIn(true);
+    if (!result) {
+      //TODO  user feedback unsuccessful login
     }
   }
 
-  return loggedIn ? (
+  return user ? (
     <Redirect to='/main/' />
   ) : (
     <div className='h-screen font-sans login bg-cover'>
@@ -58,7 +50,7 @@ const LoginForm = () => {
               LOGIN
             </p>
             <div className=''>
-              <label className='block text-sm text-white' for='email'>
+              <label className='block text-sm text-white' htmlFor='email'>
                 E-mail
               </label>
               <input
