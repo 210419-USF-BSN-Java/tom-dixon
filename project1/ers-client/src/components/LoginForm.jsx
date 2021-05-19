@@ -70,6 +70,7 @@ const LoginForm = ({ login, user }) => {
                 className='w-full px-5 py-1 text-gray-700 bg-gray-300 rounded focus:outline-none focus:bg-white'
                 name='password'
                 id='password'
+                type='password'
                 placeholder='password'
                 arial-label='password'
                 required

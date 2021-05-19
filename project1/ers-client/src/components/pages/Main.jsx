@@ -5,16 +5,24 @@ import fatStacks from '../../svg-icons/fatStacks';
 
 const Main = ({ user }) => {
   //TODO get reimbursements according to user role/id
-  //TODO add logout when user state
 
+  // create card content based on roleId (1 = manager, 2 = employee)
+
+  const { id, roleId, userName } = user;
   return (
     <Page>
       <h1 style={{ fontSize: 'calc(1.3rem + .6vw)' }}>Reimbursements</h1>
-      <h3 class='text-xl'>{user.roleId == 1 ? 'Manager' : 'Employee'}</h3>
-      <div name='card-container' class=''>
-        <Card icon={fatStacks} />
-        {/* <Card />
-        <Card /> */}
+      <h3 class='text-l uppercase text-gray-500 mb-10'>
+        {roleId == 1 ? 'Manager' : 'Employee'}
+      </h3>
+
+      <div
+        name='card-container'
+        class='flex flex-wrap gap-x-3 gap-y-3 justify-around'
+      >
+        <Card icon={fatStacks} title='Request' />
+        <Card icon={fatStacks} title='Request' />
+        <Card icon={fatStacks} title='Request' />
       </div>
     </Page>
   );

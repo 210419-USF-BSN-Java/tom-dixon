@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import '../src/styles/custom.css'
 
 
 // import './App.css';
@@ -7,7 +8,6 @@ import LoginPage from './components/pages/LoginPage'
 import Main from './components/pages/Main'
 import AppNav from './components/AppNav'
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-
 
 
 function App() {
@@ -27,6 +27,7 @@ function App() {
     }
 
   }
+
 
 
   return (

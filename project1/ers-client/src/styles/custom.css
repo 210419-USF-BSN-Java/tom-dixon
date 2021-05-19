@@ -1,0 +1,14 @@
+.flex-baseline-custom {
+  display: flex;
+  align-items: baseline;
+}
+
+.menu-card {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.max-w-20-custom {
+  max-width: 16rem;
+}
