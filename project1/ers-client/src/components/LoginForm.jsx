@@ -1,11 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import qs from 'qs';
+import { Redirect } from 'react-router';
 
 const LoginForm = () => {
+  // useEffect(() => {
+
+  //   return () => {
+
+  //   }
+  // }, [])
+
   const initialValues = { username: '', password: '' };
 
   const [form, setForm] = useState(initialValues);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   function onChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -25,9 +34,19 @@ const LoginForm = () => {
     };
 
     const result = await axios.post('login', formData, headers);
-    console.log(result);
+    if (!result.data) {
+      // user feedback unsuccessful login
+    } else {
+      // set user data to context
+      // redirect to main
+      console.log('redirecting to main');
+      setLoggedIn(true);
+    }
   }
-  return (
+
+  return loggedIn ? (
+    <Redirect to='/main/' />
+  ) : (
     <div className='h-screen font-sans login bg-cover'>
       <div className='container mx-auto h-full flex flex-1 justify-center items-center'>
         <div className='leading-loose'>
