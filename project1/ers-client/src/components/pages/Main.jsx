@@ -11,8 +11,7 @@ import { Redirect } from 'react-router';
 const Main = ({ user }) => {
   //TODO get reimbursements according to user role/id
 
-  // create card content based on roleId (1 = manager, 2 = employee)
-
+  //TODO weird shift on other card in same column when hovering
   const employeeNavCards = () => {
     return (
       <>
@@ -66,20 +65,19 @@ const Main = ({ user }) => {
     );
   };
 
-  const { id, roleId, userName } = user;
   return !user ? (
     <Redirect to='/login' />
   ) : (
     <Page>
       <h1 style={{ fontSize: 'calc(1.3rem + .6vw)' }}>Reimbursements</h1>
       <h3 class='text-l uppercase text-gray-500 mb-10'>
-        {roleId == 1 ? 'Manager' : 'Employee'}
+        {user.roleId == 1 ? 'Manager' : 'Employee'}
       </h3>
       <div
         name='card-container'
         class='flex flex-wrap gap-x-3 gap-y-3 justify-around'
       >
-        {roleId == 1 ? managerNavCards() : employeeNavCards()}
+        {user.roleId == 1 ? managerNavCards() : employeeNavCards()}
       </div>
     </Page>
   );
