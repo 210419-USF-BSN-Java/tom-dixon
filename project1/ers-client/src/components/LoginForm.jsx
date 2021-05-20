@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import qs from 'qs';
 import { Redirect } from 'react-router';
 
