@@ -12,10 +12,12 @@ function EmployeeRequestForm() {
   }
 
   return (
-    <div class='w-full max-w-xs'>
-      <h2>Reimbursement Request</h2>
+    <div class='w-full max-w-xs text-sm'>
+      <h2 class='text-2xl action-text form-title text-center mb-3'>
+        Reimbursement Request
+      </h2>
       <form
-        class='bg-gray-100 shadow-md rounded px-8 pt-6 pb-8 mb-4'
+        class='bg-gray shadow-md rounded px-8 pt-6 pb-8 mb-4'
         action='emp-request'
       >
         <label
@@ -24,7 +26,7 @@ function EmployeeRequestForm() {
         >
           Type
         </label>
-        <select className='block appearance-none w-full bg-white border border-gray-200 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow-sm leading-tight focus:outline-none focus:shadow-outline'>
+        <select className='block appearance-none w-full bg-white border border-gray-200 hover:border-gray-500 px-4 py-2 pr-8 mb-6 shadow-sm leading-tight focus:outline-none focus:shadow-outline'>
           <option>Other</option>
           <option>Lodging</option>
           <option>meals</option>
@@ -36,7 +38,7 @@ function EmployeeRequestForm() {
           Amount
         </label>
         <input
-          className='block appearance-none w-full bg-white border border-gray-200 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow-sm leading-tight focus:outline-none focus:shadow-outline'
+          className='block appearance-none w-full bg-white border border-gray-200 hover:border-gray-500 px-4 py-2 pr-8 shadow-sm mb-6 text-sm leading-tight focus:outline-none focus:shadow-outline'
           type='number'
           name='amount'
           id=''
@@ -48,10 +50,19 @@ function EmployeeRequestForm() {
           Description
         </label>
         <textarea
-          class='form-textarea mt-1 block w-full rounded border border-gray-200 '
+          class='hover:border-gray-500 form-textarea mt-1 block w-full border border-gray-200 px-2 py-2 mb-5'
           rows='3'
           placeholder='Additional information?'
         ></textarea>
+
+        <div class='flex justify-center'>
+          <button
+            class='shadow form-btn focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4'
+            type='button'
+          >
+            Request{' '}
+          </button>
+        </div>
       </form>
     </div>
   );

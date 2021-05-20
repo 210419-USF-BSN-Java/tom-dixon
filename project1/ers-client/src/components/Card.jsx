@@ -16,7 +16,7 @@ const Card = ({ icon, title, desc, action }) => {
       <div class='card-header card-subheader-container'>
         <h3 class='fs-6 tertiary-color flex-baseline-custom mb-1'>
           <span className='mr-2'>{icon()}</span>
-          <span style={{ color: 'rgb(84, 105, 212)' }}>{title}</span>
+          <span class='action-text'>{title}</span>
         </h3>
         <p>{desc}</p>
       </div>

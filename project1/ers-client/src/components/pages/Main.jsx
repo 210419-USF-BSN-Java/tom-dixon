@@ -81,7 +81,7 @@ const Main = ({ user }) => {
       </h3>
       <div
         name='card-container'
-        class='flex flex-wrap gap-x-3 gap-y-3 justify-around'
+        class='flex flex-wrap gap-x-3 gap-y-3 justify-around mb-9'
       >
         {user.roleId == 1
           ? managerNavCards(manViewStateControl)

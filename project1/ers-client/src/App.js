@@ -33,6 +33,11 @@ function App() {
     setUser( null )
   }
 
+  async function getReimbursementTypes() {
+    console.log( "get reimbursement types" )
+    const result = await axios.get( 'reimbursementRequest' )
+  }
+
   return (
     <Router>
       <AppNav user={user} logout={logout} />

@@ -79,7 +79,7 @@ const LoginForm = ({ login, user }) => {
             <div className='mt-4 items-center flex justify-center'>
               <button
                 type='submit'
-                className='px-4 py-1 text-white font-light tracking-wider bg-gray-900 hover:bg-gray-800 rounded'
+                className='px-4 py-1 text-white font-bold tracking-wider form-btn '
               >
                 Submit
               </button>

@@ -17,3 +17,24 @@
 .max-w-16-custom {
   max-width: 16rem;
 }
+
+.bg-gray {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.action-text {
+  color: rgb(84, 105, 212);
+}
+
+.form-btn {
+  background-color: rgb(84, 105, 212);
+}
+
+.form-btn:hover {
+  background-color: rgba(84, 105, 212, 0.8);
+}
+
+/* .form-title {
+  position: absolute;
+  left: 0;
+} */
