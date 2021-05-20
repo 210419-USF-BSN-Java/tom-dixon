@@ -25,11 +25,17 @@ function App() {
     }
   }
 
+  async function logout() {
+    console.log( "POOOP" )
+    setUser( null )
+
+  }
+
 
 
   return (
     <Router>
-      <AppNav user={user} />
+      <AppNav user={user} logout={logout} />
       <Route path="/" render={props => ( <LoginPage {...props} login={login} user={user} /> )} />
       <Route path="/main" render={props => ( <Main {...props} user={user} /> )} />
     </Router>
