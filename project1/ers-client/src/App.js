@@ -26,12 +26,12 @@ function App() {
   }
 
   async function logout() {
-    console.log( "POOOP" )
+    //TODO call to /logout 
+    console.log( "logout called" )
+    const result = await axios.get( 'logout' )
+    console.log( result )
     setUser( null )
-
   }
-
-
 
   return (
     <Router>

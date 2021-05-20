@@ -9,7 +9,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import repository.models.User;
 import services.UserService;
@@ -48,19 +47,8 @@ public class LoginServlet extends HttpServlet {
             jsonOut.print(output);
 
         } else {
-            System.out.println("SOMETHING WENT WRONG");
+            System.out.println("SOMETHING WENT WRONG while logging in");
         }
 
     };
-
-    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-        System.out.println("logging from goGet in login servlet");
-    }
-
-    protected void doDelete(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-        HttpSession session = req.getSession(false);
-        if (session != null) {
-            session.invalidate();
-        }
-    }
 }
