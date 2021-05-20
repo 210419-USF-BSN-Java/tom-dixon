@@ -1,6 +1,10 @@
 import React from 'react';
 
 const AppNav = ({ user, logout }) => {
+  function handleClick() {
+    logout();
+  }
+
   return (
     <header className='border-b md:flex md:items-center md:justify-between p-4 pb-0 shadow-lg md:pb-4'>
       <div className='flex items-center justify-between mb-4 md:mb-0'>
@@ -36,14 +40,16 @@ const AppNav = ({ user, logout }) => {
               Contact
             </button>
           </li>
-          <li className='md:ml-4'>
-            <button
-              className='border-t block no-underline hover:underline py-2 text-grey-darkest hover:text-black md:border-none md:p-0'
-              onClick={logout}
-            >
-              Logout
-            </button>
-          </li>
+          {user ? (
+            <li className='md:ml-4'>
+              <button
+                className='border-t block no-underline hover:underline py-2 text-grey-darkest hover:text-black md:border-none md:p-0'
+                onClick={handleClick}
+              >
+                Logout
+              </button>
+            </li>
+          ) : null}
         </ul>
       </nav>
     </header>
