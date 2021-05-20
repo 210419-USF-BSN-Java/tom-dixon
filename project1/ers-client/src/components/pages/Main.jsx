@@ -8,6 +8,7 @@ import { Redirect } from 'react-router';
 const Main = ({ user }) => {
   const [manView, setManView] = useState(null);
   const [empView, setEmpView] = useState(null);
+  const [mainView, setMainView] = useState(null);
   //TODO weird shift on other card in same column when hovering
 
   const manViewStateControl = {
@@ -26,6 +27,64 @@ const Main = ({ user }) => {
     },
   };
 
+  const empViewStateControl = {
+    //TODO implement manager views
+    request: function () {
+      setEmpView('request');
+    },
+    resolved: function () {
+      setEmpView('resolved');
+    },
+    pending: function () {
+      setEmpView('pending');
+    },
+  };
+
+  function generateMainView() {
+    const view = empView || manView;
+
+    switch (view) {
+      case 'request':
+        return EmployeeRequestForm();
+      case 'pending':
+        return EmployeePendingRequests();
+      case 'resolved':
+        return EmployeeResolvedRequests();
+      default:
+        return null;
+    }
+  }
+
+  function EmployeeRequestForm() {
+    // get option types
+    return (
+      <div>
+        <h2>Reimbursement Request</h2>
+        <form class='' action='emp-request'>
+          <input type='text' />
+          <input type='text' />
+          <input type='text' />
+        </form>
+      </div>
+    );
+  }
+
+  function EmployeePendingRequests(props) {
+    return (
+      <div>
+        <h2>Pending Request Table</h2>
+      </div>
+    );
+  }
+
+  function EmployeeResolvedRequests() {
+    return (
+      <div>
+        <h2>Resolved Requests</h2>
+      </div>
+    );
+  }
+
   return !user ? (
     <Redirect to='/login' />
   ) : (
@@ -40,7 +99,10 @@ const Main = ({ user }) => {
       >
         {user.roleId == 1
           ? managerNavCards(manViewStateControl)
-          : employeeNavCards()}
+          : employeeNavCards(empViewStateControl)}
+      </div>
+      <div className='main-content flex justify-center' name='main-content'>
+        {empView || manView ? generateMainView() : null}
       </div>
     </Page>
   );
