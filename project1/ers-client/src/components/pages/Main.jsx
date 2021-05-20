@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Page from '../Page';
 import employeeNavCards from '../EmployeeNavCards';
 import managerNavCards from '../ManagerNavCards';
+import EmployeeRequestForm from '../EmployeeRequestForm';
 
 import { Redirect } from 'react-router';
 
@@ -42,7 +43,6 @@ const Main = ({ user }) => {
 
   function generateMainView() {
     const view = empView || manView;
-
     switch (view) {
       case 'request':
         return EmployeeRequestForm();
@@ -53,20 +53,6 @@ const Main = ({ user }) => {
       default:
         return null;
     }
-  }
-
-  function EmployeeRequestForm() {
-    // get option types
-    return (
-      <div>
-        <h2>Reimbursement Request</h2>
-        <form class='' action='emp-request'>
-          <input type='text' />
-          <input type='text' />
-          <input type='text' />
-        </form>
-      </div>
-    );
   }
 
   function EmployeePendingRequests(props) {
