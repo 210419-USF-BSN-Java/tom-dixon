@@ -1,68 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Page from '../Page';
-import Card from '../Card';
-import fatStacks from '../../svg-icons/fatStacks';
-import time from '../../svg-icons/time';
-import bank from '../../svg-icons/bank';
-import userIcon from '../../svg-icons/userIcon';
-import usersIcon from '../../svg-icons/usersIcon';
+import employeeNavCards from '../EmployeeNavCards';
+import managerNavCards from '../ManagerNavCards';
+
 import { Redirect } from 'react-router';
 
 const Main = ({ user }) => {
-  //TODO get reimbursements according to user role/id
-
+  const [manView, setManView] = useState(null);
+  const [empView, setEmpView] = useState(null);
   //TODO weird shift on other card in same column when hovering
-  const employeeNavCards = () => {
-    return (
-      <>
-        <Card
-          icon={fatStacks}
-          title='Request'
-          desc='Submit a new request for reimbursement'
-        />
-        <Card
-          icon={time}
-          title='Pending'
-          desc='View all pending reimbursement requests'
-        />
-        <Card
-          icon={bank}
-          title='Resolved'
-          desc='View all approved/rejected reimbursement requests'
-        />
-      </>
-    );
-  };
 
-  const managerNavCards = () => {
-    return (
-      <>
-        <div>
-          <Card
-            icon={time}
-            title='Pending'
-            desc='View all pending reimbursement requests'
-          />
-          <Card
-            icon={bank}
-            title='Resolved'
-            desc='View all approved/rejected reimbursement requests'
-          />
-        </div>
-        <div>
-          <Card
-            icon={userIcon}
-            title='Employee requests'
-            desc='View all requests from a single employee'
-          />
-          <Card
-            icon={usersIcon}
-            title='Employees'
-            desc='View all employees on record'
-          />
-        </div>
-      </>
-    );
+  const manViewStateControl = {
+    //TODO implement manager views
+    pending: function () {
+      console.log('pending');
+    },
+    resolved: function () {
+      console.log('resolved');
+    },
+    singleEmployee: function () {
+      console.log('single view');
+    },
+    allEmployees: function () {
+      console.log('all employees');
+    },
   };
 
   return !user ? (
@@ -77,7 +38,9 @@ const Main = ({ user }) => {
         name='card-container'
         class='flex flex-wrap gap-x-3 gap-y-3 justify-around'
       >
-        {user.roleId == 1 ? managerNavCards() : employeeNavCards()}
+        {user.roleId == 1
+          ? managerNavCards(manViewStateControl)
+          : employeeNavCards()}
       </div>
     </Page>
   );

@@ -1,8 +1,14 @@
 import React from 'react';
 
-const Card = ({ icon, title, desc }) => {
+const Card = ({ icon, title, desc, action }) => {
+  function handleClick() {
+    // console.log('hello');
+    action();
+  }
+
   return (
-    <div
+    <button
+      onClick={handleClick}
       class='menu-card pt-6 px-7 max-w-16-custom pb-7 mb-5'
       name='cust-request-new'
       id='custRequestNew'
@@ -14,7 +20,7 @@ const Card = ({ icon, title, desc }) => {
         </h3>
         <p>{desc}</p>
       </div>
-    </div>
+    </button>
   );
 };
 
