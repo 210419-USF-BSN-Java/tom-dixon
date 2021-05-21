@@ -15,17 +15,6 @@ const initialReqFormValues = {
 const Main = ({ user, addRequest }) => {
   const [manView, setManView] = useState(null);
   const [empView, setEmpView] = useState(null);
-  // const [mainView, setMainView] = useState(null);
-  const [reqFormValues, setReqFormValues] = useState(initialReqFormValues);
-
-  function handleReqFormChange(e) {
-    console.log(e.target.name);
-  }
-
-  function handleRequestSubmit() {
-    console.log('Call addRequest');
-    addRequest();
-  }
 
   const manViewStateControl = {
     //TODO implement manager views
@@ -60,30 +49,16 @@ const Main = ({ user, addRequest }) => {
     const view = empView || manView;
     switch (view) {
       case 'request':
-        return EmployeeRequestForm(reqFormValues, handleReqFormChange);
+        return <EmployeeRequestForm />;
       case 'pending':
-        return EmployeePendingRequests();
+        console.log('pending');
+        break;
       case 'resolved':
-        return EmployeeResolvedRequests();
+        console.log('resolved requests');
+        break;
       default:
         return null;
     }
-  }
-
-  function EmployeePendingRequests(props) {
-    return (
-      <div>
-        <h2>Pending Request Table</h2>
-      </div>
-    );
-  }
-
-  function EmployeeResolvedRequests() {
-    return (
-      <div>
-        <h2>Resolved Requests</h2>
-      </div>
-    );
   }
 
   return !user ? (
