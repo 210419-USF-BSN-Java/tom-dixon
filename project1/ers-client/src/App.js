@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import qs from 'qs';
+
 import '../src/styles/custom.css'
 
 
@@ -22,6 +24,8 @@ function App() {
   // API CALLS
   async function login( formData ) {
 
+    console.log( 'check form data login' )
+    console.log( formData )
     const result = await axios.post( 'login', formData, formHeaders );
     console.log( result.data )
     if ( result.data ) {
@@ -37,9 +41,18 @@ function App() {
     setUser( null )
   }
 
-  async function addRequest( formData ) {
-    const result = await axios.post( 'login', formData, formHeaders );
-    console.log( result.data )
+  async function addRequest( { amount, desc, typeId } ) {
+
+    //  add employee id rename vars to match params in the back and format as path params because Servlets
+    const reqParams = qs.stringify( {
+      amount,
+      description: desc,
+      type: typeId,
+      empId: user.id
+    } )
+
+    const result = await axios.post( 'add-emp-reimbursement', reqParams, formHeaders );
+    console.log( result )
   }
 
   async function getReimbursementTypes() {
@@ -51,7 +64,7 @@ function App() {
     <Router>
       <AppNav user={user} logout={logout} />
       <Route path="/" render={props => ( <LoginPage {...props} login={login} user={user} /> )} />
-      <Route path="/main" render={props => ( <Main {...props} user={user} /> )} />
+      <Route path="/main" render={props => ( <Main {...props} user={user} addReq={addRequest} /> )} />
     </Router>
   );
 }

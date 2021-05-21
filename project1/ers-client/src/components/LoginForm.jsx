@@ -13,7 +13,7 @@ const LoginForm = ({ login, user }) => {
   const initialValues = { username: '', password: '' };
 
   const [form, setForm] = useState(initialValues);
-  const [loggedIn, setLoggedIn] = useState(false);
+  // const [loggedIn, setLoggedIn] = useState(false);
 
   function onChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
