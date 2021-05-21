@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -12,10 +13,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import repository.models.Reimbursement;
+import repository.models.User;
 import services.ReimbursementService;
 import utils.JsonConverter;
 
-@WebServlet(name = "add-emp-reimbursement", urlPatterns = { "/main/add-emp-reimbursement" })
+@WebServlet(name = "emp-reimbursement", urlPatterns = { "/main/emp-reimbursement" })
 public class EmpReimbursementServlet extends HttpServlet {
 
     private ReimbursementService rService = new ReimbursementService();
@@ -43,6 +45,24 @@ public class EmpReimbursementServlet extends HttpServlet {
 
         JsonConverter converter = new JsonConverter();
         String output = converter.convertToJson(re);
+        jsonOut.print(output);
+
+    }
+
+    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+        // returns all of a single employees reimbursement reqs
+
+        // retrieve emp id from cookie and create user
+        int id = 10;
+        User u = new User();
+        u.setId(id);
+        List<Reimbursement> result = rService.getReimbursementsByEmployee(u);
+        // set output type for message
+        res.setContentType("application/json;charset=UTF-8");
+        ServletOutputStream jsonOut = res.getOutputStream();
+
+        JsonConverter converter = new JsonConverter();
+        String output = converter.convertToJson(result);
         jsonOut.print(output);
 
     }

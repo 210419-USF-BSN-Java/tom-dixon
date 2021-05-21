@@ -51,11 +51,12 @@ function App() {
       empId: user.id
     } )
 
-    const result = await axios.post( 'add-emp-reimbursement', reqParams, formHeaders );
+    const result = await axios.post( 'emp-reimbursement', reqParams, formHeaders );
     console.log( result )
   }
 
   async function getReimbursementTypes() {
+    //implement to dynamically generate reimbursement type options for emp req form
     console.log( "get reimbursement types" )
     const result = await axios.get( 'reimbursementRequest' )
   }

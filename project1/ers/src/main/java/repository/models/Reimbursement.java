@@ -35,6 +35,20 @@ public class Reimbursement {
         this.reimbursementTypeId = reimbursementTypeId;
     }
 
+    public Reimbursement(int id, double amount, String dateSubmitted, String dateResolved, String description,
+            String receipt, int authorId, int resolverId, int statusId, int reimbursementTypeId) {
+        this.id = id;
+        this.amount = amount;
+        this.dateSubmitted = dateSubmitted;
+        this.dateResolved = dateResolved;
+        this.description = description;
+        this.receipt = receipt;
+        this.authorId = authorId;
+        this.resolverId = resolverId;
+        this.statusId = statusId;
+        this.reimbursementTypeId = reimbursementTypeId;
+    }
+
     public int getId() {
         return id;
     }

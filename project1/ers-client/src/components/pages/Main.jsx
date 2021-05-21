@@ -6,12 +6,6 @@ import EmployeeRequestForm from '../EmployeeRequestForm';
 
 import { Redirect } from 'react-router';
 
-const initialReqFormValues = {
-  typeId: 0,
-  dec: '',
-  amount: 0,
-};
-
 const Main = ({ user, addReq }) => {
   const [manView, setManView] = useState(null);
   const [empView, setEmpView] = useState(null);
