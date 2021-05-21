@@ -2,14 +2,12 @@ import React from 'react';
 import axios from 'axios';
 
 function EmployeeRequestForm() {
-  async function createOptions() {
-    try {
-      const result = await axios.get('reimbursement-types');
-      console.log(result.data);
-    } catch (err) {
-      console.log(err);
-    }
-  }
+  const typeOptions = [
+    { id: 1, expense_type: 'Lodging' },
+    { id: 2, expense_type: 'Travel' },
+    { id: 3, expense_type: 'Food' },
+    { id: 4, expense_type: 'Other' },
+  ];
 
   return (
     <div class='w-full max-w-xs text-sm'>
@@ -27,9 +25,11 @@ function EmployeeRequestForm() {
           Type
         </label>
         <select className='block appearance-none w-full bg-white border border-gray-200 hover:border-gray-500 px-4 py-2 pr-8 mb-6 shadow-sm leading-tight focus:outline-none focus:shadow-outline'>
-          <option>Other</option>
-          <option>Lodging</option>
-          <option>meals</option>
+          {typeOptions.map(({ id, expense_type }) => (
+            <option key={id} id={id}>
+              {expense_type}
+            </option>
+          ))}
         </select>
         <label
           className='block text-gray-700 text-sm font-bold mb-2'
