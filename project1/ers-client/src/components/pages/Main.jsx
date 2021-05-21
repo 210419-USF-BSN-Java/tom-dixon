@@ -12,7 +12,7 @@ const initialReqFormValues = {
   amount: 0,
 };
 
-const Main = ({ user, addRequest }) => {
+const Main = ({ user, addReq }) => {
   const [manView, setManView] = useState(null);
   const [empView, setEmpView] = useState(null);
 
@@ -49,7 +49,7 @@ const Main = ({ user, addRequest }) => {
     const view = empView || manView;
     switch (view) {
       case 'request':
-        return <EmployeeRequestForm />;
+        return <EmployeeRequestForm addReq={addReq} />;
       case 'pending':
         console.log('pending');
         break;

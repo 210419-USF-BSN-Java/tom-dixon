@@ -9,16 +9,16 @@ const typeOptions = [
 
 const initVals = {
   desc: '',
-  amount: null,
+  amount: 0,
   typeId: 1,
 };
 
-function EmployeeRequestForm() {
+function EmployeeRequestForm({ addReq }) {
   const [form, setForm] = useState(initVals);
 
   function handleRequestSubmit(e) {
     e.preventDefault();
-
+    addReq(form);
     setForm(initVals);
   }
 

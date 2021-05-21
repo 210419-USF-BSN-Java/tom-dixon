@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 // import javax.servlet.http.Cookie;
 // import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,8 +15,8 @@ import repository.models.Reimbursement;
 import services.ReimbursementService;
 import utils.JsonConverter;
 
-@WebServlet(name = "add-emp-reimbursement", urlPatterns = { "/add-emp-reimbursement" })
-public class EmpReimbursementServlet {
+@WebServlet(name = "add-emp-reimbursement", urlPatterns = { "/main/add-emp-reimbursement" })
+public class EmpReimbursementServlet extends HttpServlet {
 
     private ReimbursementService rService = new ReimbursementService();
 
