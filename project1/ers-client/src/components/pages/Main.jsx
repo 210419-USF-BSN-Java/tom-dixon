@@ -6,11 +6,26 @@ import EmployeeRequestForm from '../EmployeeRequestForm';
 
 import { Redirect } from 'react-router';
 
-const Main = ({ user }) => {
+const initialReqFormValues = {
+  typeId: 0,
+  dec: '',
+  amount: 0,
+};
+
+const Main = ({ user, addRequest }) => {
   const [manView, setManView] = useState(null);
   const [empView, setEmpView] = useState(null);
-  const [mainView, setMainView] = useState(null);
-  //TODO weird shift on other card in same column when hovering
+  // const [mainView, setMainView] = useState(null);
+  const [reqFormValues, setReqFormValues] = useState(initialReqFormValues);
+
+  function handleReqFormChange(e) {
+    console.log(e.target.name);
+  }
+
+  function handleRequestSubmit() {
+    console.log('Call addRequest');
+    addRequest();
+  }
 
   const manViewStateControl = {
     //TODO implement manager views
@@ -45,7 +60,7 @@ const Main = ({ user }) => {
     const view = empView || manView;
     switch (view) {
       case 'request':
-        return EmployeeRequestForm();
+        return EmployeeRequestForm(reqFormValues, handleReqFormChange);
       case 'pending':
         return EmployeePendingRequests();
       case 'resolved':
@@ -76,12 +91,12 @@ const Main = ({ user }) => {
   ) : (
     <Page>
       <h1 style={{ fontSize: 'calc(1.3rem + .6vw)' }}>Reimbursements</h1>
-      <h3 class='text-l uppercase text-gray-500 mb-10'>
+      <h3 className='ext-l uppercase text-gray-500 mb-10'>
         {user.roleId == 1 ? 'Manager' : 'Employee'}
       </h3>
       <div
         name='card-container'
-        class='flex flex-wrap gap-x-3 gap-y-3 justify-around mb-9'
+        className='flex flex-wrap gap-x-3 gap-y-3 justify-around mb-9'
       >
         {user.roleId == 1
           ? managerNavCards(manViewStateControl)

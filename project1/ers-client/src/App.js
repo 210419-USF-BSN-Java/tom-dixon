@@ -10,14 +10,19 @@ import AppNav from './components/AppNav'
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 
+const formHeaders = {
+  'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+};
+
+// MAIN APP -- BEGIN
 function App() {
   const [ user, setUser ] = useState( null );
 
+
+  // API CALLS
   async function login( formData ) {
-    const headers = {
-      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-    };
-    const result = await axios.post( 'login', formData, headers );
+
+    const result = await axios.post( 'login', formData, formHeaders );
     console.log( result.data )
     if ( result.data ) {
       const { data: { id, roleId, username } } = result;
@@ -26,11 +31,15 @@ function App() {
   }
 
   async function logout() {
-    //TODO call to /logout 
     console.log( "logout called" )
     const result = await axios.get( 'logout' )
     console.log( result )
     setUser( null )
+  }
+
+  async function addRequest( formData ) {
+    const result = await axios.post( 'login', formData, formHeaders );
+    console.log( result.data )
   }
 
   async function getReimbursementTypes() {
