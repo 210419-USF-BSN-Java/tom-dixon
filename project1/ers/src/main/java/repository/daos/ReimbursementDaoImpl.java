@@ -14,7 +14,7 @@ public class ReimbursementDaoImpl implements ReimbursementDao {
     @Override
     public Reimbursement add(Reimbursement u) {
         Reimbursement result = null;
-        String sql = "insert into reimbursement (amount, description, author_id, reimbursement_type_id) values = (?, ?, ?, ? ) returning *";
+        String sql = "insert into reimbursement (amount, description, author_id, reimbursement_type_id) values (?, ?, ?, ? ) returning *";
         try (Connection con = ConnectionFactory.getConnection()) {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setDouble(1, u.getAmount());
@@ -23,13 +23,14 @@ public class ReimbursementDaoImpl implements ReimbursementDao {
             ps.setInt(4, u.getReimbursementTypeId());
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                Reimbursement r = new Reimbursement(rs.getInt("id"), rs.getDouble("amount"),
-                        rs.getString("dateSubmitted"), rs.getString("description"), rs.getInt("author_id"),
-                        rs.getInt("status_id"), rs.getInt("reimbursement_type_id"));
+                Reimbursement r = new Reimbursement(rs.getInt("id"), rs.getDouble("amount"), rs.getString("submitted"),
+                        rs.getString("description"), rs.getInt("author_id"), rs.getInt("status_id"),
+                        rs.getInt("reimbursement_type_id"));
                 result = r;
             }
         } catch (SQLException e) {
-            System.out.println("UserDaoImpl exception: get");
+            System.out.println("ReimbursementDoaImpl: add");
+            e.printStackTrace();
         }
         return result;
 

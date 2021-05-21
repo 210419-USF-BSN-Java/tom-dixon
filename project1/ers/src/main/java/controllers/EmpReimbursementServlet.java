@@ -14,7 +14,7 @@ import repository.models.Reimbursement;
 import services.ReimbursementService;
 import utils.JsonConverter;
 
-@WebServlet(name = "emp-reimbursement", urlPatterns = { "/emp-reimbursement" })
+@WebServlet(name = "add-emp-reimbursement", urlPatterns = { "/add-emp-reimbursement" })
 public class EmpReimbursementServlet {
 
     private ReimbursementService rService = new ReimbursementService();
