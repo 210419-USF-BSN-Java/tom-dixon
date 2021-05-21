@@ -1,7 +1,10 @@
 import React from 'react';
-import axios from 'axios';
 
-function EmployeeRequestForm() {
+function EmployeeRequestForm({
+  reqFormValues,
+  handleReqFormChange,
+  handleRequestSubmit,
+}) {
   const typeOptions = [
     { id: 1, expense_type: 'Lodging' },
     { id: 2, expense_type: 'Travel' },
@@ -15,6 +18,7 @@ function EmployeeRequestForm() {
         Reimbursement Request
       </h2>
       <form
+        onSubmit={handleRequestSubmit}
         class='bg-gray shadow-md rounded px-8 pt-6 pb-8 mb-4'
         action='emp-request'
       >
@@ -24,10 +28,15 @@ function EmployeeRequestForm() {
         >
           Type
         </label>
-        <select className='block appearance-none w-full bg-white border border-gray-200 hover:border-gray-500 px-4 py-2 pr-8 mb-6 shadow-sm leading-tight focus:outline-none focus:shadow-outline'>
+        <select
+          // value={reqFormValues.typeId}
+          name='typeId'
+          onChange={handleReqFormChange}
+          className='block appearance-none w-full bg-white border border-gray-200 hover:border-gray-500 px-4 py-2 pr-8 mb-6 shadow-sm leading-tight focus:outline-none focus:shadow-outline'
+        >
           {typeOptions.map(({ id, expense_type }) => (
-            <option key={id} id={id}>
-              {expense_type}
+            <option value={id} key={id}>
+              {id} - {expense_type}
             </option>
           ))}
         </select>
@@ -41,7 +50,7 @@ function EmployeeRequestForm() {
           className='block appearance-none w-full bg-white border border-gray-200 hover:border-gray-500 px-4 py-2 pr-8 shadow-sm mb-6 text-sm leading-tight focus:outline-none focus:shadow-outline'
           type='number'
           name='amount'
-          id=''
+          value={reqFormValues.amount}
         />
         <label
           className='block text-gray-700 text-sm font-bold mb-2'
@@ -50,18 +59,22 @@ function EmployeeRequestForm() {
           Description
         </label>
         <textarea
+          name='desc'
+          value={reqFormValues.desc}
+          onChange={handleReqFormChange}
           class='hover:border-gray-500 form-textarea mt-1 block w-full border border-gray-200 px-2 py-2 mb-5'
           rows='3'
           placeholder='Additional information?'
         ></textarea>
 
         <div class='flex justify-center'>
-          <button
+          <input
+            onClick={handleRequestSubmit}
             class='shadow form-btn focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4'
-            type='button'
+            type='submit'
           >
-            Request{' '}
-          </button>
+            Submit Request{' '}
+          </input>
         </div>
       </form>
     </div>
