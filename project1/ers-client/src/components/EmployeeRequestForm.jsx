@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import CloseIcon from '../svg-icons/close';
 
 const typeOptions = [
   { id: 1, expense_type: 'Lodging' },
@@ -13,7 +14,7 @@ const initVals = {
   typeId: 1,
 };
 
-function EmployeeRequestForm({ addReq }) {
+function EmployeeRequestForm({ addReq, clearMain }) {
   const [form, setForm] = useState(initVals);
 
   function handleRequestSubmit(e) {
@@ -26,6 +27,11 @@ function EmployeeRequestForm({ addReq }) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
 
+  function handleCloseReqForm() {
+    setForm(initVals);
+    clearMain();
+  }
+
   const { desc, amount, typeId } = form;
 
   return (
@@ -35,9 +41,17 @@ function EmployeeRequestForm({ addReq }) {
       </h2>
       <form
         onSubmit={handleRequestSubmit}
-        class='bg-gray shadow-md px-8 pt-6 pb-8 mb-4'
+        className='bg-gray relative shadow-md px-8 pt-6 pb-8 mb-4'
         action='emp-request'
       >
+        <div className='flex justify-end absolute right-3 top-3'>
+          <button
+            onClick={handleCloseReqForm}
+            className='text-gray-600 hover:text-gray-800'
+          >
+            <CloseIcon />
+          </button>
+        </div>
         <label
           className='block text-gray-700 text-sm font-bold mb-2'
           htmlFor='type'
