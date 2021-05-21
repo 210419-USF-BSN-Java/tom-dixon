@@ -1,3 +1,8 @@
+html,
+body {
+  background-color: rgba(249, 250, 251);
+}
+
 .flex-baseline-custom {
   display: flex;
   align-items: baseline;
