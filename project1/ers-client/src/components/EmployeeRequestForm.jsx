@@ -1,16 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-function EmployeeRequestForm({
-  reqFormValues,
-  handleReqFormChange,
-  handleRequestSubmit,
-}) {
-  const typeOptions = [
-    { id: 1, expense_type: 'Lodging' },
-    { id: 2, expense_type: 'Travel' },
-    { id: 3, expense_type: 'Food' },
-    { id: 4, expense_type: 'Other' },
-  ];
+const typeOptions = [
+  { id: 1, expense_type: 'Lodging' },
+  { id: 2, expense_type: 'Travel' },
+  { id: 3, expense_type: 'Food' },
+  { id: 4, expense_type: 'Other' },
+];
+
+const initVals = {
+  desc: '',
+  amount: null,
+  typeId: 1,
+};
+
+function EmployeeRequestForm() {
+  const [form, setForm] = useState(initVals);
+
+  function handleRequestSubmit(e) {
+    e.preventDefault();
+
+    setForm(initVals);
+  }
+
+  function handleReqFormChange(e) {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  }
+
+  const { desc, amount, typeId } = form;
 
   return (
     <div class='w-full max-w-xs text-sm'>
@@ -19,7 +35,7 @@ function EmployeeRequestForm({
       </h2>
       <form
         onSubmit={handleRequestSubmit}
-        class='bg-gray shadow-md rounded px-8 pt-6 pb-8 mb-4'
+        class='bg-gray shadow-md px-8 pt-6 pb-8 mb-4'
         action='emp-request'
       >
         <label
@@ -29,7 +45,7 @@ function EmployeeRequestForm({
           Type
         </label>
         <select
-          // value={reqFormValues.typeId}
+          value={typeId}
           name='typeId'
           onChange={handleReqFormChange}
           className='block appearance-none w-full bg-white border border-gray-200 hover:border-gray-500 px-4 py-2 pr-8 mb-6 shadow-sm leading-tight focus:outline-none focus:shadow-outline'
@@ -47,10 +63,11 @@ function EmployeeRequestForm({
           Amount
         </label>
         <input
+          onChange={handleReqFormChange}
           className='block appearance-none w-full bg-white border border-gray-200 hover:border-gray-500 px-4 py-2 pr-8 shadow-sm mb-6 text-sm leading-tight focus:outline-none focus:shadow-outline'
           type='number'
           name='amount'
-          value={reqFormValues.amount}
+          value={amount}
         />
         <label
           className='block text-gray-700 text-sm font-bold mb-2'
@@ -60,11 +77,11 @@ function EmployeeRequestForm({
         </label>
         <textarea
           name='desc'
-          value={reqFormValues.desc}
+          value={desc}
           onChange={handleReqFormChange}
           class='hover:border-gray-500 form-textarea mt-1 block w-full border border-gray-200 px-2 py-2 mb-5'
           rows='3'
-          placeholder='Additional information?'
+          placeholder='Additional information'
         ></textarea>
 
         <div class='flex justify-center'>
@@ -72,9 +89,8 @@ function EmployeeRequestForm({
             onClick={handleRequestSubmit}
             class='shadow form-btn focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4'
             type='submit'
-          >
-            Submit Request{' '}
-          </input>
+            value='Submit Request'
+          />
         </div>
       </form>
     </div>
