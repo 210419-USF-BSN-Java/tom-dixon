@@ -12,6 +12,29 @@ public class Reimbursement {
     private int statusId;
     private int reimbursementTypeId;
 
+    public Reimbursement(double amount, String descr) {
+        this.amount = amount;
+        this.description = descr;
+    }
+
+    public Reimbursement(double amount, String desc, int authorId, int reimbursementTypeId) {
+        this.amount = amount;
+        this.description = desc;
+        this.authorId = authorId;
+        this.reimbursementTypeId = reimbursementTypeId;
+    }
+
+    public Reimbursement(int id, double amount, String dateSubmitted, String description, int authorId, int statusId,
+            int reimbursementTypeId) {
+        this.id = id;
+        this.amount = amount;
+        this.dateSubmitted = dateSubmitted;
+        this.description = description;
+        this.authorId = authorId;
+        this.statusId = statusId;
+        this.reimbursementTypeId = reimbursementTypeId;
+    }
+
     public int getId() {
         return id;
     }
