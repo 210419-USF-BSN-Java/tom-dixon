@@ -49,7 +49,9 @@ const Main = ({ user, addReq }) => {
     const view = empView || manView;
     switch (view) {
       case 'request':
-        return <EmployeeRequestForm addReq={addReq} />;
+        return (
+          <EmployeeRequestForm addReq={addReq} clearMain={clearMainView} />
+        );
       case 'pending':
         console.log('pending');
         break;
@@ -59,6 +61,10 @@ const Main = ({ user, addReq }) => {
       default:
         return null;
     }
+  }
+
+  function clearMainView() {
+    empView ? setEmpView(null) : setManView(null);
   }
 
   return !user ? (
