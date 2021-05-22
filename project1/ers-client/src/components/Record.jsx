@@ -1,6 +1,9 @@
 import React from 'react';
 import ReadIcon from '../svg-icons/readDesc';
 import PhotoIcon from '../svg-icons/photo';
+import CheckIcon from '../svg-icons/check';
+import RejectIcon from '../svg-icons/reject';
+import formatDate from '../utils/formatDate';
 
 const Record = ({
   id,
@@ -14,9 +17,8 @@ const Record = ({
   makeDescriptionModal,
   isManager,
 }) => {
-  function formatDate(date) {
-    const formattedDate = new Date(date);
-    return formattedDate.toDateString();
+  function handleApprove() {
+    console.log('handle approve');
   }
 
   return (
@@ -68,11 +70,16 @@ const Record = ({
       {isManager && (
         <td class='px-5 py-5 border-b border-gray-200 bg-white text-center text-sm'>
           <div>
-            <button href='#' class='text-indigo-600 hover:text-indigo-900'>
-              <PhotoIcon />
+            <button
+              onClick={handleApprove}
+              href='#'
+              class='text-indigo-600 hover:text-indigo-900'
+            >
+              <CheckIcon />
             </button>
+
             <button href='#' class='text-indigo-600 hover:text-indigo-900'>
-              <PhotoIcon />
+              <RejectIcon />
             </button>
           </div>
         </td>

@@ -36,7 +36,9 @@ const PendingRequestTable = ({ getReqs, getAllReqs, user, updateReq }) => {
   }
 
   return (
-    <div class={`container mx-auto px-4 sm:px-8`}>
+    <div
+      class={`container mx-auto px-4 sm:px-8 ${isManager ? '' : 'max-w-3xl'}`}
+    >
       <div class='py-8'>
         <div class='flex flex-row mb-1 sm:mb-0 justify-between w-full'>
           <h2 class='text-xl leading-tight'>Pending Requests</h2>
