@@ -44,16 +44,12 @@ public class ReimbursementsServlet extends HttpServlet {
                 // set output type for message
                 res.setContentType("application/json;charset=UTF-8");
                 ServletOutputStream jsonOut = res.getOutputStream();
-        
+
                 JsonConverter converter = new JsonConverter();
                 String output = converter.convertToJson(reimbursements);
                 jsonOut.print(output);
             }
 
         }
-
-
-
-
+    }
 }
-;

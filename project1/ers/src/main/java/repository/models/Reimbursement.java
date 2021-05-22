@@ -8,35 +8,39 @@ public class Reimbursement {
     private String description;
     private String receipt;
     private int authorId;
-    private int resolverId;
     private int statusId;
-    private int reimbursementTypeId;
+    private String status;
+    private int typeId;
+    private String type;
+    private int resolverId;
+    private String resolverFirstName;
+    private String resolverLastName;
 
     public Reimbursement(double amount, String descr) {
         this.amount = amount;
         this.description = descr;
     }
 
-    public Reimbursement(double amount, String desc, int authorId, int reimbursementTypeId) {
+    public Reimbursement(double amount, String desc, int authorId, int typeId) {
         this.amount = amount;
         this.description = desc;
         this.authorId = authorId;
-        this.reimbursementTypeId = reimbursementTypeId;
+        this.typeId = typeId;
     }
 
     public Reimbursement(int id, double amount, String dateSubmitted, String description, int authorId, int statusId,
-            int reimbursementTypeId) {
+            int typeId) {
         this.id = id;
         this.amount = amount;
         this.dateSubmitted = dateSubmitted;
         this.description = description;
         this.authorId = authorId;
         this.statusId = statusId;
-        this.reimbursementTypeId = reimbursementTypeId;
+        this.typeId = typeId;
     }
 
     public Reimbursement(int id, double amount, String dateSubmitted, String dateResolved, String description,
-            String receipt, int authorId, int resolverId, int statusId, int reimbursementTypeId) {
+            String receipt, int authorId, int resolverId, int statusId, int typeId) {
         this.id = id;
         this.amount = amount;
         this.dateSubmitted = dateSubmitted;
@@ -46,7 +50,66 @@ public class Reimbursement {
         this.authorId = authorId;
         this.resolverId = resolverId;
         this.statusId = statusId;
-        this.reimbursementTypeId = reimbursementTypeId;
+        this.typeId = typeId;
+    }
+
+    public Reimbursement(int id, double amount, String dateSubmitted, String dateResolved, String description,
+            String receipt, int authorId, int resolverId, int statusId, int typeId, String type, String status,
+            String resolverFirstName, String resolverLastName) {
+        this.id = id;
+        this.amount = amount;
+        this.dateSubmitted = dateSubmitted;
+        this.dateResolved = dateResolved;
+        this.description = description;
+        this.receipt = receipt;
+        this.authorId = authorId;
+        this.resolverId = resolverId;
+        this.statusId = statusId;
+        this.typeId = typeId;
+        this.type = type;
+        this.status = status;
+        this.resolverFirstName = resolverFirstName;
+        this.resolverLastName = resolverLastName;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public int getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(int typeId) {
+        this.typeId = typeId;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getResolverFirstName() {
+        return resolverFirstName;
+    }
+
+    public void setResolverFirstName(String resolverFirstName) {
+        this.resolverFirstName = resolverFirstName;
+    }
+
+    public String getResolverLastName() {
+        return resolverLastName;
+    }
+
+    public void setResolverLastName(String resolverLastName) {
+        this.resolverLastName = resolverLastName;
     }
 
     public int getId() {
@@ -122,11 +185,11 @@ public class Reimbursement {
     }
 
     public int getReimbursementTypeId() {
-        return reimbursementTypeId;
+        return typeId;
     }
 
-    public void setReimbursementTypeId(int reimbursementTypeId) {
-        this.reimbursementTypeId = reimbursementTypeId;
+    public void setReimbursementTypeId(int typeId) {
+        this.typeId = typeId;
     }
 
 }
