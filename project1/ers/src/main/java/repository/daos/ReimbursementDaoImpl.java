@@ -42,7 +42,7 @@ public class ReimbursementDaoImpl implements ReimbursementDao {
     public List<Reimbursement> getAllByEmp(User u) {
         List<Reimbursement> result = new ArrayList<Reimbursement>();
         // sql
-        String sql = "select r.*, rt.\"expense_type\", rs.\"status\" as \"status\", u.first_name as resolver_first_name, u.last_name as resolver_last_name from reimbursement r full join reimbursement_type rt on r.reimbursement_type_id = rt.id full join users u on r.resolver_id = u.id full join    reimbursement_status rs on r.status_id = rs.id where r.author_id =?;";
+        String sql = "select r.*, rt.\"expense_type\", rs.\"status\" as \"status\", u2.first_name as author_first_name, u2.last_name as author_last_name, u.first_name as resolver_first_name, u.last_name as resolver_last_name from reimbursement r full join reimbursement_type rt on reimbursement_type_id = rt.id full join users u on r.resolver_id = u.id full join users u2 on r.author_id = u2.id full join reimbursement_status rs on r.status_id = rs.id where r.author_id =?";
         // preparedstatment
         try (Connection con = ConnectionFactory.getConnection()) {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -53,7 +53,8 @@ public class ReimbursementDaoImpl implements ReimbursementDao {
                         rs.getString("resolved"), rs.getString("description"), rs.getString("receipt"),
                         rs.getInt("author_id"), rs.getInt("resolver_id"), rs.getInt("status_id"),
                         rs.getInt("reimbursement_type_id"), rs.getString("expense_type"), rs.getString("status"),
-                        rs.getString("resolver_first_name"), rs.getString("resolver_last_name"));
+                        rs.getString("resolver_first_name"), rs.getString("resolver_last_name"),
+                        rs.getString("author_first_name"), rs.getString("author_last_name"));
                 result.add(r);
             }
         } catch (SQLException e) {
@@ -67,7 +68,7 @@ public class ReimbursementDaoImpl implements ReimbursementDao {
     public List<Reimbursement> getAll() {
         List<Reimbursement> result = new ArrayList<Reimbursement>();
         // sql
-        String sql = "select r.*, rt.\"expense_type\", rs.\"status\" as\"status\", u.first_name as resolver_first_name, u.last_name as resolver_last_name from reimbursement r full join reimbursement_type rt on r.reimbursement_type_id = rt.id full join users u on r.resolver_id = u.id full join reimbursement_status rs on r.status_id = rs.id where r.author_id notnull;";
+        String sql = "select r.*, rt.\"expense_type\", rs.\"status\" as \"status\", u2.first_name as author_first_name, u2.last_name as author_last_name, u.first_name as resolver_first_name, u.last_name as resolver_last_name from reimbursement r full join reimbursement_type rt on reimbursement_type_id = rt.id full join users u on r.resolver_id = u.id full join users u2 on r.author_id = u2.id full join reimbursement_status rs on r.status_id = rs.id where r.author_id notnull";
         // preparedstatment
         try (Connection con = ConnectionFactory.getConnection()) {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -77,11 +78,12 @@ public class ReimbursementDaoImpl implements ReimbursementDao {
                         rs.getString("resolved"), rs.getString("description"), rs.getString("receipt"),
                         rs.getInt("author_id"), rs.getInt("resolver_id"), rs.getInt("status_id"),
                         rs.getInt("reimbursement_type_id"), rs.getString("expense_type"), rs.getString("status"),
-                        rs.getString("resolver_first_name"), rs.getString("resolver_last_name"));
+                        rs.getString("resolver_first_name"), rs.getString("resolver_last_name"),
+                        rs.getString("author_first_name"), rs.getString("author_last_name"));
                 result.add(r);
             }
         } catch (SQLException e) {
-            System.out.println("ReimbursementDoaImpl: getAllByEmp");
+            System.out.println("ReimbursementDoaImpl: getAll");
             e.printStackTrace();
         }
         return result;

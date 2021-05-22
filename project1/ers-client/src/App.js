@@ -66,6 +66,8 @@ function App() {
   }
 
   async function getOneEmpsReqs() {
+
+    console.log( 'get one emp\'s reqs' )
     let { data } = await axios.get( 'emp-reimbursement' )
     if ( data ) {
       console.log( data )
@@ -73,10 +75,20 @@ function App() {
     }
   }
 
-  function getAllReqs() {
-    console.log( 'make get req to "reimbursements"' )
+  async function getAllReqs() {
+    console.log( 'getting all reqs' )
+    let { data } = await axios.get( 'reimbursements' )
+    if ( data ) {
+      console.log( data )
+      return data
+    }
     // filter results for 
   }
+
+  async function updateReq() {
+    console.log( "calling update req" )
+  }
+
 
   function getEmployees() {
     console.log( "GET ALL EMPLOYEES" )

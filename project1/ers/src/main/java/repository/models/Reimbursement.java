@@ -15,6 +15,8 @@ public class Reimbursement {
     private int resolverId;
     private String resolverFirstName;
     private String resolverLastName;
+    private String authorFirstName;
+    private String authorLastName;
 
     public Reimbursement(double amount, String descr) {
         this.amount = amount;
@@ -55,7 +57,7 @@ public class Reimbursement {
 
     public Reimbursement(int id, double amount, String dateSubmitted, String dateResolved, String description,
             String receipt, int authorId, int resolverId, int statusId, int typeId, String type, String status,
-            String resolverFirstName, String resolverLastName) {
+            String resolverFirstName, String resolverLastName, String authorFirstName, String authorLastName) {
         this.id = id;
         this.amount = amount;
         this.dateSubmitted = dateSubmitted;
@@ -70,6 +72,8 @@ public class Reimbursement {
         this.status = status;
         this.resolverFirstName = resolverFirstName;
         this.resolverLastName = resolverLastName;
+        this.authorFirstName = authorFirstName;
+        this.authorLastName = authorLastName;
     }
 
     public String getStatus() {

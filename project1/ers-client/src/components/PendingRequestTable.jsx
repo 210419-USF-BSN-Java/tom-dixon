@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import DescpriptionModal from './DescpriptionModal';
 import Record from './Record';
 
-const PendingRequestTable = ({ getReqs, getAllReqs, user }) => {
+const PendingRequestTable = ({ getReqs, getAllReqs, user, updateReq }) => {
   const [reqs, setReqs] = useState([]);
   const [modalText, setModalText] = useState(null);
 
@@ -12,6 +12,8 @@ const PendingRequestTable = ({ getReqs, getAllReqs, user }) => {
       clearReqs();
     };
   }, []);
+
+  const isManager = user.roleId == 1;
 
   function closeModal() {
     setModalText(null);
@@ -23,8 +25,10 @@ const PendingRequestTable = ({ getReqs, getAllReqs, user }) => {
 
   async function loadReqs() {
     let reqs;
-    user.roleId == '1' ? (reqs = await getAllReqs()) : (reqs = await getReqs());
-    setReqs(reqs);
+    isManager ? (reqs = await getAllReqs()) : (reqs = await getReqs());
+
+    const sortedReqs = reqs.sort((a, b) => a.id - b.id);
+    setReqs(sortedReqs);
   }
 
   function clearReqs() {
@@ -32,7 +36,7 @@ const PendingRequestTable = ({ getReqs, getAllReqs, user }) => {
   }
 
   return (
-    <div class='container mx-auto px-4 sm:px-8 max-w-3xl'>
+    <div class={`container mx-auto px-4 sm:px-8`}>
       <div class='py-8'>
         <div class='flex flex-row mb-1 sm:mb-0 justify-between w-full'>
           <h2 class='text-xl leading-tight'>Pending Requests</h2>
@@ -59,10 +63,19 @@ const PendingRequestTable = ({ getReqs, getAllReqs, user }) => {
                 <tr>
                   <th
                     scope='col'
-                    class='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-center text-sm uppercase font-normal'
+                    class='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm text-left uppercase font-normal'
                   >
                     ID
                   </th>
+                  {isManager && (
+                    <th
+                      scope='col'
+                      class='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm text-left uppercase font-normal'
+                    >
+                      Employee
+                    </th>
+                  )}
+
                   <th
                     scope='col'
                     class='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm text-left uppercase font-normal'
@@ -85,7 +98,7 @@ const PendingRequestTable = ({ getReqs, getAllReqs, user }) => {
                     scope='col'
                     class='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800   text-sm uppercase font-normal'
                   >
-                    description
+                    desc.
                   </th>
                   <th
                     scope='col'
@@ -93,6 +106,14 @@ const PendingRequestTable = ({ getReqs, getAllReqs, user }) => {
                   >
                     receipt
                   </th>
+                  {isManager && (
+                    <th
+                      scope='col'
+                      class='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800   text-sm uppercase font-normal'
+                    >
+                      action
+                    </th>
+                  )}
                 </tr>
               </thead>
               <tbody className='relative'>
@@ -104,6 +125,7 @@ const PendingRequestTable = ({ getReqs, getAllReqs, user }) => {
                     <Record
                       {...props}
                       makeDescriptionModal={makeDescriptionModal}
+                      isManager={isManager}
                     />
                   ))}
               </tbody>
