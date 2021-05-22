@@ -2,7 +2,13 @@ import React, { useState, useEffect } from 'react';
 import DescpriptionModal from './DescpriptionModal';
 import Record from './Record';
 
-const PendingRequestTable = ({ getReqs, getAllReqs, user, updateReq }) => {
+const PendingRequestTable = ({
+  getReqs,
+  getAllReqs,
+  user,
+  approveReq,
+  rejectReq,
+}) => {
   const [reqs, setReqs] = useState([]);
   const [modalText, setModalText] = useState(null);
 
@@ -24,6 +30,7 @@ const PendingRequestTable = ({ getReqs, getAllReqs, user, updateReq }) => {
   }
 
   async function loadReqs() {
+    //TODO SORT/FILTER REQS HERE depending on view
     let reqs;
     isManager ? (reqs = await getAllReqs()) : (reqs = await getReqs());
 
@@ -128,6 +135,8 @@ const PendingRequestTable = ({ getReqs, getAllReqs, user, updateReq }) => {
                       {...props}
                       makeDescriptionModal={makeDescriptionModal}
                       isManager={isManager}
+                      approveReq={approveReq}
+                      rejectReq={rejectReq}
                     />
                   ))}
               </tbody>

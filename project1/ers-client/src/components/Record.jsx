@@ -16,9 +16,15 @@ const Record = ({
   authorLastName,
   makeDescriptionModal,
   isManager,
+  approveReq,
+  rejectReq,
 }) => {
   function handleApprove() {
-    console.log('handle approve');
+    approveReq(id);
+  }
+
+  function handleReject() {
+    rejectReq(id);
   }
 
   return (
@@ -71,14 +77,16 @@ const Record = ({
         <td class='px-5 py-5 border-b border-gray-200 bg-white text-center text-sm'>
           <div>
             <button
-              onClick={handleApprove}
-              href='#'
+              onClick={() => handleApprove()}
               class='text-indigo-600 hover:text-indigo-900'
             >
               <CheckIcon />
             </button>
 
-            <button href='#' class='text-indigo-600 hover:text-indigo-900'>
+            <button
+              onClick={() => handleReject()}
+              class='text-indigo-600 hover:text-indigo-900'
+            >
               <RejectIcon />
             </button>
           </div>

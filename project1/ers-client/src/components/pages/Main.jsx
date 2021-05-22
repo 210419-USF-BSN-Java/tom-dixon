@@ -16,6 +16,8 @@ const Main = ({
   getAllReqs,
   updateReq,
   getEmployees,
+  approveReq,
+  rejectReq,
 }) => {
   const [manView, setManView] = useState(null);
   const [empView, setEmpView] = useState(null);
@@ -70,6 +72,8 @@ const Main = ({
             user={user}
             getAllReqs={getAllReqs}
             updateReq={updateReq}
+            approveReq={approveReq}
+            rejectReq={rejectReq}
           />
         );
       // case 'managerResolved':
