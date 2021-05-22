@@ -3,12 +3,11 @@ import Page from '../Page';
 import employeeNavCards from '../EmployeeNavCards';
 import managerNavCards from '../ManagerNavCards';
 import EmployeeRequestForm from '../EmployeeRequestForm';
-import EmployeeRequestTable from '../PendingRequestTable';
-
-import { Redirect } from 'react-router';
 import PendingRequestTable from '../PendingRequestTable';
 
-const Main = ({ user, addReq, getOneEmpsReqs, reimReqs }) => {
+import { Redirect } from 'react-router';
+
+const Main = ({ user, addReq, getOneEmpsReqs }) => {
   const [manView, setManView] = useState(null);
   const [empView, setEmpView] = useState(null);
 
@@ -74,13 +73,16 @@ const Main = ({ user, addReq, getOneEmpsReqs, reimReqs }) => {
       </h3>
       <div
         name='card-container'
-        className='flex flex-wrap gap-x-3 gap-y-3 justify-around mb-9'
+        className='flex flex-wrap gap-x-3 gap-y-3 justify-center mb-9'
       >
         {user.roleId == 1
           ? managerNavCards(manViewStateControl)
           : employeeNavCards(empViewStateControl)}
       </div>
-      <div className='main-content flex justify-center' name='main-content'>
+      <div
+        className='main-content flex justify-center relative'
+        name='main-content'
+      >
         {empView || manView ? generateMainView() : null}
       </div>
     </Page>

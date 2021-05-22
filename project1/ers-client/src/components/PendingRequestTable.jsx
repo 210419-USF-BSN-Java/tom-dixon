@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import DescpriptionModal from './DescpriptionModal';
+import Record from './Record';
 
-const PendingRequestTable = ({ getReqs }) => {
+const PendingRequestTable = ({ getReqs, showDescription }) => {
   const [reqs, setReqs] = useState([]);
+  const [modalText, setModalText] = useState(null);
 
   useEffect(() => {
     loadReqs();
@@ -10,9 +13,17 @@ const PendingRequestTable = ({ getReqs }) => {
     };
   }, []);
 
+  function closeModal() {
+    setModalText(null);
+  }
+
+  function makeDescriptionModal(text) {
+    setModalText(text);
+  }
+
   async function loadReqs() {
     const reqs = await getReqs();
-    console.log(reqs);
+    setReqs(reqs);
   }
 
   function clearReqs() {
@@ -30,33 +41,30 @@ const PendingRequestTable = ({ getReqs }) => {
                 <input
                   type='text'
                   id='"form-subscribe-Filter'
-                  class='  border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent'
+                  class=' block appearance-none w-full bg-white border border-gray-200 hover:border-gray-500 px-4 py-2 pr-8 shadow-sm text-sm leading-tight focus:outline-none focus:shadow-outline'
                   placeholder='search by description'
                 />
               </div>
-              <button
-                class='flex-shrink-0 px-4 py-2 text-base font-semibold text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200'
-                type='submit'
-              >
-                Filter
-              </button>
             </form>
           </div>
         </div>
         <div class='-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto'>
           <div class='inline-block min-w-full shadow overflow-hidden'>
-            <table class='min-w-full leading-normal'>
+            <table
+              class='min-w-full leading-normal'
+              style={{ overflowY: 'auto' }}
+            >
               <thead>
                 <tr>
                   <th
                     scope='col'
-                    class='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
+                    class='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-center text-sm uppercase font-normal'
                   >
                     ID
                   </th>
                   <th
                     scope='col'
-                    class='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
+                    class='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm uppercase font-normal'
                   >
                     amount
                   </th>
@@ -64,58 +72,32 @@ const PendingRequestTable = ({ getReqs }) => {
                     scope='col'
                     class='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
                   >
-                    date submitted
+                    submitted
                   </th>
                   <th
                     scope='col'
-                    class='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
-                  >
-                    status
-                  </th>
-                  <th
-                    scope='col'
-                    class='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
+                    class='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800   text-sm uppercase font-normal'
                   >
                     description
                   </th>
+                  <th
+                    scope='col'
+                    class='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800   text-sm uppercase font-normal'
+                  >
+                    receipt
+                  </th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td class='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-                    <div class='flex items-center'>
-                      <div class='flex-shrink-0'></div>
-                      <div class='ml-3'>
-                        <p class='text-gray-900 whitespace-no-wrap'>
-                          Jean marc
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-                    <p class='text-gray-900 whitespace-no-wrap'>Admin</p>
-                  </td>
-                  <td class='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-                    <p class='text-gray-900 whitespace-no-wrap'>12/09/2020</p>
-                  </td>
-                  <td class='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-                    <span class='relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight'>
-                      <span
-                        aria-hidden='true'
-                        class='absolute inset-0 bg-green-200 opacity-50 rounded-full'
-                      ></span>
-                      <span class='relative'>active</span>
-                    </span>
-                  </td>
-                  <td class='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-                    <button
-                      href='#'
-                      class='text-indigo-600 hover:text-indigo-900'
-                    >
-                      Edit
-                    </button>
-                  </td>
-                </tr>
+              <tbody className='relative'>
+                {modalText && (
+                  <DescpriptionModal closeModal={closeModal} text={modalText} />
+                )}
+                {reqs.map(({ ...props }) => (
+                  <Record
+                    {...props}
+                    makeDescriptionModal={makeDescriptionModal}
+                  />
+                ))}
               </tbody>
             </table>
             <div class='px-5 bg-white py-5 flex flex-col xs:flex-row items-center xs:justify-between'>

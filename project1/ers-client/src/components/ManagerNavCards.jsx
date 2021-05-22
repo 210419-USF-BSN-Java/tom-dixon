@@ -12,7 +12,7 @@ const managerNavCards = ({
 }) => {
   return (
     <>
-      <div>
+      <div className='flex flex-col'>
         <Card
           action={pending}
           icon={time}
@@ -26,7 +26,7 @@ const managerNavCards = ({
           desc='View all approved/rejected reimbursement requests'
         />
       </div>
-      <div>
+      <div className='flex flex-col'>
         <Card
           action={singleEmployee}
           icon={userIcon}
