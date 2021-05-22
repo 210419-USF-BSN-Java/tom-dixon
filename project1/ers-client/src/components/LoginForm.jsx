@@ -40,22 +40,25 @@ const LoginForm = ({ login, user }) => {
   ) : (
     <div className='h-screen font-sans login bg-cover'>
       <div className='container mx-auto h-full flex flex-1 justify-center items-center'>
-        <div className='leading-loose'>
+        <div className='leading-loose' style={{ width: '300px' }}>
           <form
             onSubmit={handleFormSubmit}
-            className='max-w-sm m-4 p-10 bg-white bg-opacity-25 rounded shadow-xl'
+            className='bg-gray menu-card relative px-8 pt-6 pb-8 mb-4'
           >
-            <p className='text-gray-600 font-medium text-center text-lg font-bold'>
+            <p className='text-gray-600 font-medium text-center text-lg mb-5 font-bold'>
               LOGIN
             </p>
             <div className=''>
-              <label className='block text-sm text-white' htmlFor='email'>
-                E-mail
-              </label>
+              {/* <label
+                className='block text-gray-700 text-sm font-bold mb-2'
+                htmlFor='email'
+              >
+                Username
+              </label> */}
               <input
                 onChange={onChange}
                 name='username'
-                className='w-full px-5 py-1 text-gray-700 bg-gray-300 rounded focus:outline-none focus:bg-white'
+                className='block appearance-none w-full bg-white border border-gray-200 hover:border-gray-500 px-4 py-2 pr-8 shadow-sm mb-6 leading-tight focus:outline-none focus:shadow-outline'
                 value={form.username}
                 placeholder='username'
                 aria-label='username'
@@ -63,10 +66,12 @@ const LoginForm = ({ login, user }) => {
               />
             </div>
             <div className='mt-2'>
-              <label className='block  text-sm text-white'>Senha</label>
+              {/* <label className='block text-gray-700 text-sm font-bold mb-2'>
+                Password
+              </label> */}
               <input
                 onChange={onChange}
-                className='w-full px-5 py-1 text-gray-700 bg-gray-300 rounded focus:outline-none focus:bg-white'
+                className='block appearance-none w-full bg-white border border-gray-200 hover:border-gray-500 px-4 py-2 pr-8 shadow-sm mb-6 leading-tight focus:outline-none focus:shadow-outline'
                 name='password'
                 id='password'
                 type='password'
@@ -79,7 +84,7 @@ const LoginForm = ({ login, user }) => {
             <div className='mt-4 items-center flex justify-center'>
               <button
                 type='submit'
-                className='px-4 py-1 text-white font-bold tracking-wider form-btn '
+                className='px-4 py-1 text-white tracking-wider form-btn '
               >
                 Submit
               </button>

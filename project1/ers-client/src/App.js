@@ -19,6 +19,7 @@ const formHeaders = {
 // MAIN APP -- BEGIN
 function App() {
   const [ user, setUser ] = useState( null );
+  const [ reimReqs, setReimReqs ] = useState( [] );
 
 
   // API CALLS
@@ -51,20 +52,34 @@ function App() {
       empId: user.id
     } )
 
-    const result = await axios.post( 'add-emp-reimbursement', reqParams, formHeaders );
+    const result = await axios.post( 'emp-reimbursement', reqParams, formHeaders );
     console.log( result )
+    // add to state
+    setReimReqs( [ ...reimReqs, result ] )
   }
 
   async function getReimbursementTypes() {
+    //dynamically generate reimbursement type options for emp req form
     console.log( "get reimbursement types" )
     const result = await axios.get( 'reimbursementRequest' )
+    console.log( result )
+  }
+
+  async function getOneEmpsReqs() {
+    console.log( 'get an employee\'s requests' )
+    console.log( 'now make the api call' )
+    let { data } = await axios.get( 'emp-reimbursement' )
+    if ( data ) {
+      console.log( data )
+      return data.filter( e => e.statusId == 1 );
+    }
   }
 
   return (
     <Router>
       <AppNav user={user} logout={logout} />
       <Route path="/" render={props => ( <LoginPage {...props} login={login} user={user} /> )} />
-      <Route path="/main" render={props => ( <Main {...props} user={user} addReq={addRequest} /> )} />
+      <Route path="/main" render={props => ( <Main {...props} user={user} addReq={addRequest} getOneEmpsReqs={getOneEmpsReqs} /> )} />
     </Router>
   );
 }

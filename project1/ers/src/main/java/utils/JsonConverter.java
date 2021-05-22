@@ -1,5 +1,7 @@
 package utils;
 
+import java.util.List;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -19,6 +21,10 @@ public class JsonConverter {
     }
 
     public String convertToJson(Reimbursement r) {
+        return gson.toJson(r);
+    }
+
+    public String convertToJson(List<Reimbursement> r) {
         return gson.toJson(r);
     }
 

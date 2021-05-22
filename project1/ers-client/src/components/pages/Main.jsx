@@ -3,16 +3,11 @@ import Page from '../Page';
 import employeeNavCards from '../EmployeeNavCards';
 import managerNavCards from '../ManagerNavCards';
 import EmployeeRequestForm from '../EmployeeRequestForm';
+import PendingRequestTable from '../PendingRequestTable';
 
 import { Redirect } from 'react-router';
 
-const initialReqFormValues = {
-  typeId: 0,
-  dec: '',
-  amount: 0,
-};
-
-const Main = ({ user, addReq }) => {
+const Main = ({ user, addReq, getOneEmpsReqs }) => {
   const [manView, setManView] = useState(null);
   const [empView, setEmpView] = useState(null);
 
@@ -42,6 +37,7 @@ const Main = ({ user, addReq }) => {
     },
     pending: function () {
       setEmpView('pending');
+      // display pending table
     },
   };
 
@@ -54,7 +50,7 @@ const Main = ({ user, addReq }) => {
         );
       case 'pending':
         console.log('pending');
-        break;
+        return <PendingRequestTable getReqs={getOneEmpsReqs} />;
       case 'resolved':
         console.log('resolved requests');
         break;
@@ -70,20 +66,23 @@ const Main = ({ user, addReq }) => {
   return !user ? (
     <Redirect to='/login' />
   ) : (
-    <Page>
+    <Page class='bg-gray-200'>
       <h1 style={{ fontSize: 'calc(1.3rem + .6vw)' }}>Reimbursements</h1>
       <h3 className='ext-l uppercase text-gray-500 mb-10'>
         {user.roleId == 1 ? 'Manager' : 'Employee'}
       </h3>
       <div
         name='card-container'
-        className='flex flex-wrap gap-x-3 gap-y-3 justify-around mb-9'
+        className='flex flex-wrap gap-x-3 gap-y-3 justify-center mb-9'
       >
         {user.roleId == 1
           ? managerNavCards(manViewStateControl)
           : employeeNavCards(empViewStateControl)}
       </div>
-      <div className='main-content flex justify-center' name='main-content'>
+      <div
+        className='main-content flex justify-center relative'
+        name='main-content'
+      >
         {empView || manView ? generateMainView() : null}
       </div>
     </Page>

@@ -41,7 +41,7 @@ function EmployeeRequestForm({ addReq, clearMain }) {
       </h2>
       <form
         onSubmit={handleRequestSubmit}
-        className='bg-gray relative shadow-md px-8 pt-6 pb-8 mb-4'
+        className='bg-gray menu-card relative px-8 pt-6 pb-8 mb-4'
         action='emp-request'
       >
         <div className='flex justify-end absolute right-3 top-3'>
