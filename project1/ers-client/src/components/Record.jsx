@@ -20,7 +20,7 @@ const Record = ({
       <td class='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
         <div class=''>
           <div class='flex-shrink-0'></div>
-          <div class='ml-3'>
+          <div class='ml-1'>
             <p class='text-gray-900 whitespace-no-wrap'>{id}</p>
           </div>
         </div>

@@ -66,8 +66,6 @@ function App() {
   }
 
   async function getOneEmpsReqs() {
-    console.log( 'get an employee\'s requests' )
-    console.log( 'now make the api call' )
     let { data } = await axios.get( 'emp-reimbursement' )
     if ( data ) {
       console.log( data )
@@ -76,7 +74,8 @@ function App() {
   }
 
   function getAllReqs() {
-    console.log( "GET ALL REQS" )
+    console.log( 'make get req to "reimbursements"' )
+    // filter results for 
   }
 
   function getEmployees() {
