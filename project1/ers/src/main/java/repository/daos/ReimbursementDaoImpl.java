@@ -64,8 +64,26 @@ public class ReimbursementDaoImpl implements ReimbursementDao {
 
     @Override
     public List<Reimbursement> getAll() {
-        // TODO Auto-generated method stub
-        return null;
+        List<Reimbursement> result = new ArrayList<Reimbursement>();
+        // sql
+        String sql = "select * from reimbursement";
+        // preparedstatment
+        try (Connection con = ConnectionFactory.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, u.getId());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Reimbursement r = new Reimbursement(rs.getInt("id"), rs.getDouble("amount"), rs.getString("submitted"),
+                        rs.getString("resolved"), rs.getString("description"), rs.getString("receipt"),
+                        rs.getInt("author_id"), rs.getInt("resolver_id"), rs.getInt("status_id"),
+                        rs.getInt("reimbursement_type_id"));
+                result.add(r);
+            }
+        } catch (SQLException e) {
+            System.out.println("ReimbursementDoaImpl: getAllByEmp");
+            e.printStackTrace();
+        }
+        return result;
     }
 
     @Override
