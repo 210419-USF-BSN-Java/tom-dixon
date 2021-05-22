@@ -1,29 +1,24 @@
 import React, { useState } from 'react';
 import Page from '../Page';
 import employeeNavCards from '../EmployeeNavCards';
+import Employees from '../Employees';
 import managerNavCards from '../ManagerNavCards';
 import EmployeeRequestForm from '../EmployeeRequestForm';
 import PendingRequestTable from '../PendingRequestTable';
 
 import { Redirect } from 'react-router';
 
-const Main = ({ user, addReq, getOneEmpsReqs }) => {
+const Main = ({ user, addReq, getOneEmpsReqs, getAllReqs, getEmployees }) => {
   const [manView, setManView] = useState(null);
   const [empView, setEmpView] = useState(null);
 
   const manViewStateControl = {
-    //TODO implement manager views
-    pending: function () {
-      console.log('pending');
+    allReqs: function () {
+      setManView('managerPending');
     },
-    resolved: function () {
-      console.log('resolved');
-    },
-    singleEmployee: function () {
-      console.log('single view');
-    },
+
     allEmployees: function () {
-      console.log('all employees');
+      console.log('managerEmployees');
     },
   };
 
@@ -50,17 +45,38 @@ const Main = ({ user, addReq, getOneEmpsReqs }) => {
         );
       case 'pending':
         console.log('pending');
-        return <PendingRequestTable getReqs={getOneEmpsReqs} />;
+        return (
+          <PendingRequestTable
+            view={view}
+            user={user}
+            getReqs={getOneEmpsReqs}
+          />
+        );
       case 'resolved':
         console.log('resolved requests');
         break;
+      case 'managerPending':
+        return (
+          <PendingRequestTable
+            view={view}
+            user={user}
+            getAllReqs={getAllReqs}
+          />
+        );
+      // case 'managerResolved':
+      //   return <PendingRequestTable getReqs={getAllReqs} />;
+      // case 'managerSingleEmp':
+      //   return <PendingRequestTable getReqs={getAllReqs} />;
+      case 'managerEmployees':
+        return <Employees view={view} getEmployees={getEmployees} />;
       default:
         return null;
     }
   }
 
   function clearMainView() {
-    empView ? setEmpView(null) : setManView(null);
+    setEmpView(null);
+    setManView(null);
   }
 
   return !user ? (

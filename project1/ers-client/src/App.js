@@ -75,11 +75,19 @@ function App() {
     }
   }
 
+  function getAllReqs() {
+    console.log( "GET ALL REQS" )
+  }
+
+  function getEmployees() {
+    console.log( "GET ALL EMPLOYEES" )
+  }
+
   return (
     <Router>
       <AppNav user={user} logout={logout} />
       <Route path="/" render={props => ( <LoginPage {...props} login={login} user={user} /> )} />
-      <Route path="/main" render={props => ( <Main {...props} user={user} addReq={addRequest} getOneEmpsReqs={getOneEmpsReqs} /> )} />
+      <Route path="/main" render={props => ( <Main {...props} user={user} addReq={addRequest} getOneEmpsReqs={getOneEmpsReqs} getAllReqs={getAllReqs} getEmployees={getEmployees} /> )} />
     </Router>
   );
 }

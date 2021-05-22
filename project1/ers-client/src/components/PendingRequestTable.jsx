@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import DescpriptionModal from './DescpriptionModal';
 import Record from './Record';
 
-const PendingRequestTable = ({ getReqs, showDescription }) => {
+const PendingRequestTable = ({ getReqs, getAllReqs, user }) => {
   const [reqs, setReqs] = useState([]);
   const [modalText, setModalText] = useState(null);
 
@@ -22,7 +22,8 @@ const PendingRequestTable = ({ getReqs, showDescription }) => {
   }
 
   async function loadReqs() {
-    const reqs = await getReqs();
+    let reqs;
+    user.roleId == '1' ? (reqs = await getAllReqs()) : (reqs = await getReqs());
     setReqs(reqs);
   }
 
@@ -92,12 +93,13 @@ const PendingRequestTable = ({ getReqs, showDescription }) => {
                 {modalText && (
                   <DescpriptionModal closeModal={closeModal} text={modalText} />
                 )}
-                {reqs.map(({ ...props }) => (
-                  <Record
-                    {...props}
-                    makeDescriptionModal={makeDescriptionModal}
-                  />
-                ))}
+                {reqs &&
+                  reqs.map(({ ...props }) => (
+                    <Record
+                      {...props}
+                      makeDescriptionModal={makeDescriptionModal}
+                    />
+                  ))}
               </tbody>
             </table>
             <div class='px-5 bg-white py-5 flex flex-col xs:flex-row items-center xs:justify-between'>

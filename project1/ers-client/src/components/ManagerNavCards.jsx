@@ -4,23 +4,18 @@ import usersIcon from '../svg-icons/usersIcon';
 import time from '../svg-icons/time';
 import bank from '../svg-icons/bank';
 
-const managerNavCards = ({
-  pending,
-  resolved,
-  singleEmployee,
-  allEmployees,
-}) => {
+const managerNavCards = ({ allReqs, allEmployees }) => {
   return (
     <>
       <div className='flex flex-col'>
         <Card
-          action={pending}
+          action={allReqs}
           icon={time}
           title='Pending'
           desc='View all pending reimbursement requests'
         />
         <Card
-          action={resolved}
+          action={allReqs}
           icon={bank}
           title='Resolved'
           desc='View all approved/rejected reimbursement requests'
@@ -28,7 +23,7 @@ const managerNavCards = ({
       </div>
       <div className='flex flex-col'>
         <Card
-          action={singleEmployee}
+          action={allReqs}
           icon={userIcon}
           title='Employee requests'
           desc='View all requests from a single employee'
