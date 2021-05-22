@@ -5,10 +5,18 @@ import Employees from '../Employees';
 import managerNavCards from '../ManagerNavCards';
 import EmployeeRequestForm from '../EmployeeRequestForm';
 import PendingRequestTable from '../PendingRequestTable';
+import ManagerPendingRequestTable from '../PendingRequestTable';
 
 import { Redirect } from 'react-router';
 
-const Main = ({ user, addReq, getOneEmpsReqs, getAllReqs, getEmployees }) => {
+const Main = ({
+  user,
+  addReq,
+  getOneEmpsReqs,
+  getAllReqs,
+  updateReq,
+  getEmployees,
+}) => {
   const [manView, setManView] = useState(null);
   const [empView, setEmpView] = useState(null);
 
@@ -57,10 +65,11 @@ const Main = ({ user, addReq, getOneEmpsReqs, getAllReqs, getEmployees }) => {
         break;
       case 'managerPending':
         return (
-          <PendingRequestTable
+          <ManagerPendingRequestTable
             view={view}
             user={user}
             getAllReqs={getAllReqs}
+            updateReq={updateReq}
           />
         );
       // case 'managerResolved':
