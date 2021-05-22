@@ -32,12 +32,6 @@ public class EmpReimbursementServlet extends HttpServlet {
         String empId = req.getParameter("empId");
         String typeId = req.getParameter("type");
 
-        System.out.println("###########################");
-        System.out.println(amount);
-        System.out.println(descr);
-        System.out.println(empId);
-        System.out.println(typeId);
-
         // add to db
         Reimbursement re = rService.addReimbursement(new Reimbursement(Double.parseDouble(amount), descr,
                 Integer.parseInt(empId), Integer.parseInt(typeId)));
@@ -54,10 +48,6 @@ public class EmpReimbursementServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         // returns all of a single employees reimbursement reqs
 
-        System.out.println("************************");
-        System.out.println("doGet EMP REIMBURSEMENT: begin");
-        System.out.println("************************");
-
         // the id of the employee whose requests we are after
         String id = null;
 
@@ -66,25 +56,16 @@ public class EmpReimbursementServlet extends HttpServlet {
 
         if (cookies != null) {
             // convert to ArrayList for methods
-            System.out.println("************************");
-            System.out.println("doGet EMP REIMBURSEMENT: cookies not null");
-            System.out.println("************************");
             List<Cookie> cookieList = Arrays.asList(cookies);
 
             // get userRole cookie
             Cookie result = cookieList.stream().filter(cookie -> cookie.getName().equals("userRole")).findAny()
                     .orElse(null);
 
-            System.out.println("************************");
-            System.out.println("doGet EMP REIMBURSEMENT: cookie result get userRole and value: " + result.getName()
-                    + " " + result.getValue());
-            System.out.println("************************");
-
             // if employee, get id from userId cookie
             if (result.getValue().equals("2")) {
                 Cookie empId = cookieList.stream().filter(cookie -> cookie.getName().equals("userId")).findAny()
                         .orElse(null);
-                System.out.println("EMMMPLLOOOYEEEEE ID");
                 System.out.println(empId.getValue());
                 id = empId.getValue();
             } else {
@@ -93,10 +74,6 @@ public class EmpReimbursementServlet extends HttpServlet {
             }
 
         }
-
-        System.out.println("********************************");
-        System.out.println("doGet EMP REIMBURSEMENT ID: " + id);
-        System.out.println("*******************************");
 
         User u = new User();
         u.setId(Integer.parseInt(id));
