@@ -79,6 +79,9 @@ public class EmpReimbursementServlet extends HttpServlet {
         u.setId(Integer.parseInt(id));
         List<Reimbursement> result = rService.getReimbursementsByEmployee(u);
         // set output type for message
+        for (Reimbursement r : result) {
+            System.out.println(r.getStatus());
+        }
         res.setContentType("application/json;charset=UTF-8");
         ServletOutputStream jsonOut = res.getOutputStream();
 

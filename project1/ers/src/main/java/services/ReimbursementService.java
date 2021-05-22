@@ -33,7 +33,7 @@ public class ReimbursementService {
 
     // }
 
-    public List<Reimbursement> getReimbursements() {
+    public List<Reimbursement> getAllReimbursements() {
         return rDao.getAll();
     }
 

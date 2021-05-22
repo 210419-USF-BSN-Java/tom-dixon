@@ -5,6 +5,7 @@ import PhotoIcon from '../svg-icons/photo';
 const Record = ({
   id,
   amount,
+  type,
   dateSubmitted,
   description,
   makeDescriptionModal,
@@ -19,7 +20,7 @@ const Record = ({
       <td class='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
         <div class=''>
           <div class='flex-shrink-0'></div>
-          <div class='ml-3'>
+          <div class='ml-1'>
             <p class='text-gray-900 whitespace-no-wrap'>{id}</p>
           </div>
         </div>
@@ -28,6 +29,9 @@ const Record = ({
         <p class='text-gray-900 whitespace-no-wrap text-right pr-10'>
           ${(Math.round(amount * 100) / 100).toFixed(2)}
         </p>
+      </td>
+      <td class='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
+        <p class='text-gray-900 whitespace-no-wrap pr-10'>{type}</p>
       </td>
       <td class='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
         <p class='text-gray-900 whitespace-no-wrap'>

@@ -19,7 +19,7 @@ import repository.models.User;
 import services.ReimbursementService;
 import utils.JsonConverter;
 
-@WebServlet(name = "emp-reimbursement", urlPatterns = { "/main/reimbursements" })
+@WebServlet(name = "reimbursements", urlPatterns = { "/main/reimbursements" })
 public class ReimbursementsServlet extends HttpServlet {
 
     private ReimbursementService rService = new ReimbursementService();
@@ -40,20 +40,16 @@ public class ReimbursementsServlet extends HttpServlet {
 
             // if employee, get id from userId cookie
             if (result.getValue().equals("1")) {
-                List<Reimbursement> reimbursements = rService.getReimbursements();
+                List<Reimbursement> reimbursements = rService.getAllReimbursements();
                 // set output type for message
                 res.setContentType("application/json;charset=UTF-8");
                 ServletOutputStream jsonOut = res.getOutputStream();
-        
+
                 JsonConverter converter = new JsonConverter();
                 String output = converter.convertToJson(reimbursements);
                 jsonOut.print(output);
             }
 
         }
-
-
-
-
+    }
 }
-;
