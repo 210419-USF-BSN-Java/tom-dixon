@@ -44,7 +44,7 @@ const Record = ({
       )}
       {isResolved && isManager && (
         <td class='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-          <p class='text-gray-900 whitespace-no-wrap text-left pr-10'>
+          <p class='text-gray-900 whitespace-no-wrap  pr-10'>
             {status == 'approved' ? <CheckIcon /> : <RejectIcon />}
           </p>
         </td>
@@ -70,7 +70,8 @@ const Record = ({
             </p>
           </td>
           <td class='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-            <p class='text-gray-900 whitespace-no-wrap'>{`${resolverFirstName[0]}. ${resolverLastName}`}</p>
+            <p class='text-gray-900 whitespace-no-wrap'>{resolverFirstName}</p>
+            <p class='text-gray-900 whitespace-no-wrap'>{resolverLastName}</p>
           </td>
         </>
       )}
