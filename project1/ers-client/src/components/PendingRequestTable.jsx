@@ -22,6 +22,7 @@ const PendingRequestTable = ({
   }, [manView]);
 
   const isManager = user.roleId == 1;
+  const isResolved = manView == 'managerResolved';
 
   function closeModal() {
     setModalText(null);
@@ -119,6 +120,14 @@ const PendingRequestTable = ({
                       Employee
                     </th>
                   )}
+                  {isResolved && isManager && (
+                    <th
+                      scope='col'
+                      class='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm text-left uppercase font-normal'
+                    >
+                      Status
+                    </th>
+                  )}
 
                   <th
                     scope='col'
@@ -150,7 +159,7 @@ const PendingRequestTable = ({
                   >
                     receipt
                   </th>
-                  {isManager && (
+                  {!isResolved && isManager && (
                     <th
                       scope='col'
                       class='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800   text-sm uppercase font-normal'
@@ -170,6 +179,7 @@ const PendingRequestTable = ({
                       {...props}
                       makeDescriptionModal={makeDescriptionModal}
                       isManager={isManager}
+                      isResolved={isResolved}
                       view={view}
                       manView={manView}
                       handleApproveReq={handleApproveReq}
