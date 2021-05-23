@@ -1,6 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { Redirect } from 'react-router-dom'
 import axios from 'axios'
 import qs from 'qs';
+import getUserFromCookie from './utils/getUserFromCookie'
+import deleteCookies from './utils/deleteCookie'
 
 import '../src/styles/custom.css'
 
@@ -21,6 +24,23 @@ function App() {
   const [ user, setUser ] = useState( null );
   const [ reimReqs, setReimReqs ] = useState( [] );
 
+  useEffect( () => {
+    if ( document.cookie ) {
+      loadUser();
+    } else {
+      <Redirect to='login' />
+    }
+    return () => {
+
+    }
+  }, [] )
+
+
+  function loadUser() {
+    setUser( getUserFromCookie() )
+  }
+
+
 
   // API CALLS
   async function login( formData ) {
@@ -35,10 +55,19 @@ function App() {
     }
   }
 
+
+
   async function logout() {
-    console.log( "logout called" )
     const result = await axios.get( 'logout' )
     console.log( result )
+
+    let res = document.cookie;
+    let cookies = res.split( ";" );
+    for ( let i = 0; i < cookies.length; i++ ) {
+      let key = cookies[ i ].split( "=" );
+      console.log( key[ 0 ] )
+      document.cookie = key[ 0 ] + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=localhost";
+    }
     setUser( null )
   }
 
@@ -87,16 +116,12 @@ function App() {
 
   async function approveReq( id ) {
     const reqParams = qs.stringify( { id, manId: user.id } )
-    console.log( reqParams )
-    const result = await axios.post( 'approve-request', reqParams, formHeaders );
-    console.log( result )
+    return await axios.post( 'approve-request', reqParams, formHeaders );
   }
 
   async function rejectReq( id ) {
     const reqParams = qs.stringify( { id, manId: user.id } )
-    console.log( reqParams )
-    const result = await axios.post( 'deny-request', reqParams, formHeaders );
-    console.log( result )
+    return await axios.post( 'deny-request', reqParams, formHeaders );
   }
 
   function getEmployees() {

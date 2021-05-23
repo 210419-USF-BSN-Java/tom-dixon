@@ -74,12 +74,9 @@ const Main = ({
             updateReq={updateReq}
             approveReq={approveReq}
             rejectReq={rejectReq}
+            manView={manView}
           />
         );
-      // case 'managerResolved':
-      //   return <PendingRequestTable getReqs={getAllReqs} />;
-      // case 'managerSingleEmp':
-      //   return <PendingRequestTable getReqs={getAllReqs} />;
       case 'managerEmployees':
         return <Employees view={view} getEmployees={getEmployees} />;
       default:

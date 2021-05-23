@@ -8,6 +8,7 @@ const PendingRequestTable = ({
   user,
   approveReq,
   rejectReq,
+  manView,
 }) => {
   const [reqs, setReqs] = useState([]);
   const [modalText, setModalText] = useState(null);
@@ -29,15 +30,44 @@ const PendingRequestTable = ({
     setModalText(text);
   }
 
-  async function loadReqs() {
-    //TODO SORT/FILTER REQS HERE depending on view
-    let reqs;
-    isManager ? (reqs = await getAllReqs()) : (reqs = await getReqs());
-
-    const sortedReqs = reqs.sort((a, b) => a.id - b.id);
-    setReqs(sortedReqs);
+  async function handleApproveReq(id) {
+    const result = await approveReq(id);
+    if (result.data) {
+      loadReqs();
+    }
   }
 
+  async function handleDenyReq(id) {
+    const result = await rejectReq(id);
+    console.log(result);
+  }
+
+  async function loadReqs() {
+    if (!isManager) {
+      const result = await getReqs();
+      console.log(result);
+      setReqs(result.sort((a, b) => a.id - b.id));
+    } else {
+      const result = await getAllReqs();
+      switch (manView) {
+        case 'managerPending':
+          setReqs(
+            result
+              .filter((req) => req.status === 'pending')
+              .sort((a, b) => a.id - b.id)
+          );
+          break;
+        case 'managerResolved':
+          setReqs(
+            await getAllReqs()
+              .filter((req) => req.status !== 'pending')
+              .sort((a, b) => a.id - b.id)
+          );
+          break;
+        default:
+      }
+    }
+  }
   function clearReqs() {
     setReqs([]);
   }
@@ -135,8 +165,8 @@ const PendingRequestTable = ({
                       {...props}
                       makeDescriptionModal={makeDescriptionModal}
                       isManager={isManager}
-                      approveReq={approveReq}
-                      rejectReq={rejectReq}
+                      handleApproveReq={handleApproveReq}
+                      handleDenyReq={handleDenyReq}
                     />
                   ))}
               </tbody>
