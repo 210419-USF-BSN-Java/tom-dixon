@@ -84,7 +84,9 @@ const PendingRequestTable = ({
     >
       <div class='py-8'>
         <div class='flex flex-row mb-1 sm:mb-0 justify-between w-full'>
-          <h2 class='text-xl leading-tight'>Pending Requests</h2>
+          <h2 class='text-xl leading-tight'>
+            {isResolved ? 'Resolved Requests' : 'Pending Requests'}
+          </h2>
           <div class='text-end'>
             <form class='flex w-full max-w-sm space-x-3'>
               <div class=' relative '>
