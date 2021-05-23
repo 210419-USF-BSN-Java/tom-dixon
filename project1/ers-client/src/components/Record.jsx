@@ -10,6 +10,7 @@ const Record = ({
   amount,
   type,
   dateSubmitted,
+  dateResolved,
   description,
   authorId,
   authorFirstName,
@@ -19,6 +20,8 @@ const Record = ({
   handleApproveReq,
   handleDenyReq,
   isResolved,
+  resolverFirstName,
+  resolverLastName,
   status,
 }) => {
   return (
@@ -41,7 +44,9 @@ const Record = ({
       )}
       {isResolved && isManager && (
         <td class='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-          <p class='text-gray-900 whitespace-no-wrap'>{status}</p>
+          <p class='text-gray-900 whitespace-no-wrap text-left pr-10'>
+            {status == 'approved' ? <CheckIcon /> : <RejectIcon />}
+          </p>
         </td>
       )}
       <td class='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
@@ -57,6 +62,18 @@ const Record = ({
           {formatDate(dateSubmitted)}
         </p>
       </td>
+      {isResolved && (
+        <>
+          <td class='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
+            <p class='text-gray-900 whitespace-no-wrap'>
+              {formatDate(dateResolved)}
+            </p>
+          </td>
+          <td class='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
+            <p class='text-gray-900 whitespace-no-wrap'>{`${resolverFirstName[0]}. ${resolverLastName}`}</p>
+          </td>
+        </>
+      )}
 
       <td class='px-5 py-5 border-b border-gray-200 bg-white text-center text-sm'>
         <button
