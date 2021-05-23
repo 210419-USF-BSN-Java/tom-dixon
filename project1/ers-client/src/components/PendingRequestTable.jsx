@@ -13,16 +13,54 @@ const PendingRequestTable = ({
 }) => {
   const [reqs, setReqs] = useState([]);
   const [modalText, setModalText] = useState(null);
+  const [searchForm, setSearchForm] = useState('');
+
+  const isManager = user.roleId == 1;
+  const isResolved = manView == 'managerResolved';
 
   useEffect(() => {
     load();
+    console.log('load top');
     return () => {
       clearReqs();
     };
   }, [manView]);
 
-  const isManager = user.roleId == 1;
-  const isResolved = manView == 'managerResolved';
+  function filterByUser() {
+    if (searchForm.search(/\d/) > -1) {
+      const result = reqs.find((req) => req.authorId == searchForm);
+      console.log('RESULT: ', result);
+      if (result) {
+        const allReqByEmpId = reqs.filter((req) => req.authorId == searchForm);
+        setReqs(allReqByEmpId);
+      } else {
+        setReqs([]);
+        setTimeout(() => {
+          load();
+        }, 2000);
+      }
+    } else {
+      // search by name
+      const result = reqs.filter((req) =>
+        `${req.authorFirstName} ${req.authorLastName}`
+          .toLowerCase()
+          .includes(searchForm.toLowerCase())
+      );
+
+      if (result) {
+        setReqs(result);
+      } else {
+        setReqs([]);
+        setTimeout(() => {
+          load();
+        }, 2000);
+      }
+    }
+  }
+  function handleSubmit(e) {
+    e.preventDefault();
+    filterByUser();
+  }
 
   function closeModal() {
     setModalText(null);
@@ -74,8 +112,13 @@ const PendingRequestTable = ({
       }
     }
   }
+
   function clearReqs() {
     setReqs([]);
+  }
+
+  function handleSearchChange(e) {
+    setSearchForm(e.target.value);
   }
 
   return (
@@ -88,13 +131,30 @@ const PendingRequestTable = ({
             {isResolved ? 'Resolved Requests' : 'Pending Requests'}
           </h2>
           <div class='text-end'>
-            <form class='flex w-full max-w-sm space-x-3'>
+            <form
+              onSubmit={handleSubmit}
+              class='flex w-full max-w-sm space-x-3'
+            >
               <div class=' relative '>
                 <input
+                  onChange={handleSearchChange}
+                  value={searchForm}
                   type='text'
+                  name='search-form'
                   id='"form-subscribe-Filter'
                   class=' block appearance-none w-full bg-white border border-gray-200 hover:border-gray-500 px-4 py-2 pr-8 shadow-sm text-sm leading-tight focus:outline-none focus:shadow-outline'
-                  placeholder='search by description'
+                  placeholder={
+                    isResolved
+                      ? 'search by employee name or id'
+                      : 'search by description'
+                  }
+                />
+              </div>
+              <div class='flex justify-center'>
+                <input
+                  class='shadow form-btn focus:shadow-outline focus:outline-none text-white text-xs font-bold py-2 px-4'
+                  type='submit'
+                  value='Search'
                 />
               </div>
             </form>
@@ -208,7 +268,7 @@ const PendingRequestTable = ({
             </table>
             <div class='px-5 bg-white py-5 flex flex-col xs:flex-row items-center xs:justify-between'>
               <div class='flex items-center'>
-                <button
+                {/* <button
                   type='button'
                   class='w-full p-4 border text-base rounded-l-xl text-gray-600 bg-white hover:bg-gray-100'
                 >
@@ -261,7 +321,7 @@ const PendingRequestTable = ({
                   >
                     <path d='M1363 877l-742 742q-19 19-45 19t-45-19l-166-166q-19-19-19-45t19-45l531-531-531-531q-19-19-19-45t19-45l166-166q19-19 45-19t45 19l742 742q19 19 19 45t-19 45z'></path>
                   </svg>
-                </button>
+                </button> */}
               </div>
             </div>
           </div>
