@@ -97,7 +97,6 @@ function App() {
   }
 
   async function getAllReqs() {
-    console.log( 'getting all reqs' )
     let { data } = await axios.get( 'reimbursements' )
     if ( data ) {
       console.log( data )
