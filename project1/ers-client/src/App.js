@@ -85,10 +85,19 @@ function App() {
     // filter results for 
   }
 
-  async function updateReq() {
-    console.log( "calling update req" )
+  async function approveReq( id ) {
+    const reqParams = qs.stringify( { id, manId: user.id } )
+    console.log( reqParams )
+    const result = await axios.post( 'approve-request', reqParams, formHeaders );
+    console.log( result )
   }
 
+  async function rejectReq( id ) {
+    const reqParams = qs.stringify( { id, manId: user.id } )
+    console.log( reqParams )
+    const result = await axios.post( 'deny-request', reqParams, formHeaders );
+    console.log( result )
+  }
 
   function getEmployees() {
     console.log( "GET ALL EMPLOYEES" )
@@ -98,7 +107,19 @@ function App() {
     <Router>
       <AppNav user={user} logout={logout} />
       <Route path="/" render={props => ( <LoginPage {...props} login={login} user={user} /> )} />
-      <Route path="/main" render={props => ( <Main {...props} user={user} addReq={addRequest} getOneEmpsReqs={getOneEmpsReqs} getAllReqs={getAllReqs} getEmployees={getEmployees} /> )} />
+      <Route path="/main" render={props => (
+        <Main {...props}
+          user={user}
+          addReq={addRequest}
+          getOneEmpsReqs={getOneEmpsReqs}
+          getAllReqs={getAllReqs}
+          getEmployees={getEmployees}
+          approveReq={approveReq}
+          rejectReq={rejectReq}
+        />
+      )
+      }
+      />
     </Router>
   );
 }
