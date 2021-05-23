@@ -1,6 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { Redirect } from 'react-router-dom'
 import axios from 'axios'
 import qs from 'qs';
+import getUserFromCookie from './utils/getUserFromCookie'
+import deleteCookies from './utils/deleteCookie'
 
 import '../src/styles/custom.css'
 
@@ -21,6 +24,23 @@ function App() {
   const [ user, setUser ] = useState( null );
   const [ reimReqs, setReimReqs ] = useState( [] );
 
+  useEffect( () => {
+    if ( document.cookie ) {
+      loadUser();
+    } else {
+      <Redirect to='login' />
+    }
+    return () => {
+
+    }
+  }, [] )
+
+
+  function loadUser() {
+    setUser( getUserFromCookie() )
+  }
+
+
 
   // API CALLS
   async function login( formData ) {
@@ -36,9 +56,9 @@ function App() {
   }
 
   async function logout() {
-    console.log( "logout called" )
     const result = await axios.get( 'logout' )
     console.log( result )
+    deleteCookies()
     setUser( null )
   }
 
@@ -58,12 +78,12 @@ function App() {
     setReimReqs( [ ...reimReqs, result ] )
   }
 
-  async function getReimbursementTypes() {
-    //dynamically generate reimbursement type options for emp req form
-    console.log( "get reimbursement types" )
-    const result = await axios.get( 'reimbursementRequest' )
-    console.log( result )
-  }
+  // async function getReimbursementTypes() {
+  //   //dynamically generate reimbursement type options for emp req form
+  //   console.log( "get reimbursement types" )
+  //   const result = await axios.get( 'reimbursementRequest' )
+  //   console.log( result )
+  // }
 
   async function getOneEmpsReqs() {
 
@@ -87,16 +107,12 @@ function App() {
 
   async function approveReq( id ) {
     const reqParams = qs.stringify( { id, manId: user.id } )
-    console.log( reqParams )
-    const result = await axios.post( 'approve-request', reqParams, formHeaders );
-    console.log( result )
+    return await axios.post( 'approve-request', reqParams, formHeaders );
   }
 
   async function rejectReq( id ) {
     const reqParams = qs.stringify( { id, manId: user.id } )
-    console.log( reqParams )
-    const result = await axios.post( 'deny-request', reqParams, formHeaders );
-    console.log( result )
+    return await axios.post( 'deny-request', reqParams, formHeaders );
   }
 
   function getEmployees() {

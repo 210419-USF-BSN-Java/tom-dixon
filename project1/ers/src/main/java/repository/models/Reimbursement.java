@@ -18,6 +18,10 @@ public class Reimbursement {
     private String authorFirstName;
     private String authorLastName;
 
+    public Reimbursement(int id) {
+        this.id = id;
+    }
+
     public Reimbursement(double amount, String descr) {
         this.amount = amount;
         this.description = descr;

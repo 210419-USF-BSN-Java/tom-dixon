@@ -16,17 +16,9 @@ const Record = ({
   authorLastName,
   makeDescriptionModal,
   isManager,
-  approveReq,
-  rejectReq,
+  handleApproveReq,
+  handleDenyReq,
 }) => {
-  function handleApprove() {
-    approveReq(id);
-  }
-
-  function handleReject() {
-    rejectReq(id);
-  }
-
   return (
     <tr className='w-100'>
       <td class='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
@@ -77,14 +69,14 @@ const Record = ({
         <td class='px-5 py-5 border-b border-gray-200 bg-white text-center text-sm'>
           <div>
             <button
-              onClick={() => handleApprove()}
+              onClick={() => handleApproveReq(id)}
               class='text-indigo-600 hover:text-indigo-900'
             >
               <CheckIcon />
             </button>
 
             <button
-              onClick={() => handleReject()}
+              onClick={() => handleDenyReq(id)}
               class='text-indigo-600 hover:text-indigo-900'
             >
               <RejectIcon />
