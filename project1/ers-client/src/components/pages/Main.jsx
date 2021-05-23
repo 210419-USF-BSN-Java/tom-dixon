@@ -27,8 +27,12 @@ const Main = ({
       setManView('managerPending');
     },
 
+    allResolved: function () {
+      setManView('managerResolved');
+    },
+
     allEmployees: function () {
-      console.log('managerEmployees');
+      setManView('managerEmployees');
     },
   };
 
@@ -53,7 +57,7 @@ const Main = ({
         return (
           <EmployeeRequestForm addReq={addReq} clearMain={clearMainView} />
         );
-      case 'pending':
+      case 'pending' || 'resolved':
         console.log('pending');
         return (
           <PendingRequestTable
@@ -62,10 +66,7 @@ const Main = ({
             getReqs={getOneEmpsReqs}
           />
         );
-      case 'resolved':
-        console.log('resolved requests');
-        break;
-      case 'managerPending':
+      case 'managerPending' || 'managerResolved':
         return (
           <ManagerPendingRequestTable
             view={view}

@@ -55,19 +55,10 @@ function App() {
     }
   }
 
-
-
   async function logout() {
     const result = await axios.get( 'logout' )
     console.log( result )
-
-    let res = document.cookie;
-    let cookies = res.split( ";" );
-    for ( let i = 0; i < cookies.length; i++ ) {
-      let key = cookies[ i ].split( "=" );
-      console.log( key[ 0 ] )
-      document.cookie = key[ 0 ] + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=localhost";
-    }
+    deleteCookies()
     setUser( null )
   }
 
@@ -87,12 +78,12 @@ function App() {
     setReimReqs( [ ...reimReqs, result ] )
   }
 
-  async function getReimbursementTypes() {
-    //dynamically generate reimbursement type options for emp req form
-    console.log( "get reimbursement types" )
-    const result = await axios.get( 'reimbursementRequest' )
-    console.log( result )
-  }
+  // async function getReimbursementTypes() {
+  //   //dynamically generate reimbursement type options for emp req form
+  //   console.log( "get reimbursement types" )
+  //   const result = await axios.get( 'reimbursementRequest' )
+  //   console.log( result )
+  // }
 
   async function getOneEmpsReqs() {
 
