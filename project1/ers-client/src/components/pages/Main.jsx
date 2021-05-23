@@ -66,7 +66,19 @@ const Main = ({
             getReqs={getOneEmpsReqs}
           />
         );
-      case 'managerPending' || 'managerResolved':
+      case 'managerPending':
+        return (
+          <ManagerRequestTable
+            view={view}
+            user={user}
+            getAllReqs={getAllReqs}
+            updateReq={updateReq}
+            approveReq={approveReq}
+            rejectReq={rejectReq}
+            manView={manView}
+          />
+        );
+      case 'managerResolved':
         return (
           <ManagerRequestTable
             view={view}

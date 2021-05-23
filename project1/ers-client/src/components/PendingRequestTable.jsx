@@ -19,7 +19,7 @@ const PendingRequestTable = ({
     return () => {
       clearReqs();
     };
-  }, []);
+  }, [manView]);
 
   const isManager = user.roleId == 1;
 
@@ -46,14 +46,15 @@ const PendingRequestTable = ({
   }
 
   async function load() {
+    let result;
     if (!isManager) {
-      const result = await getReqs();
+      result = await getReqs();
       console.log(result);
       setReqs(result.sort((a, b) => a.id - b.id));
     } else {
-      const result = await getAllReqs();
       switch (manView) {
         case 'managerPending':
+          result = await getAllReqs();
           setReqs(
             result
               .filter((req) => req.status === 'pending')
@@ -61,8 +62,9 @@ const PendingRequestTable = ({
           );
           break;
         case 'managerResolved':
+          result = await getAllReqs();
           setReqs(
-            await getAllReqs()
+            result
               .filter((req) => req.status !== 'pending')
               .sort((a, b) => a.id - b.id)
           );
@@ -168,6 +170,8 @@ const PendingRequestTable = ({
                       {...props}
                       makeDescriptionModal={makeDescriptionModal}
                       isManager={isManager}
+                      view={view}
+                      manView={manView}
                       handleApproveReq={handleApproveReq}
                       handleDenyReq={handleDenyReq}
                     />
