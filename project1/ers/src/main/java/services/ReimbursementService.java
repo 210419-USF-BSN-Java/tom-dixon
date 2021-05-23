@@ -8,30 +8,15 @@ import repository.models.Reimbursement;
 import repository.models.User;
 
 public class ReimbursementService {
-    private ReimbursementDao rDao = new ReimbursementDaoImpl();
+    private static ReimbursementDao rDao = new ReimbursementDaoImpl();
 
-    // public static void main(String[] args) {
+    public Reimbursement approveReq(int reimbursementId, int managerId) {
+        return rDao.approve(reimbursementId, managerId);
+    }
 
-    // // test add Reimbursement ****************** PASS
-    // // create reimbursement
-    // // Reimbursement re = new Reimbursement(30.00, "Bought some stuff", 10, 3);
-    // // Reimbursement result = rDao.add(re);
-    // // System.out.println(result.toString());
-    // System.out.println("CALLED");
-    // ;
-    // // test get all Reimbursement by user ************ PASS
-    // User u = new User();
-    // u.setId(10);
-
-    // List<Reimbursement> result = getReimbursementsByEmployee(u);
-    // System.out.println("RESULT");
-    // System.out.println(result.toString());
-    // for (Reimbursement r : result) {
-    // System.out.println("ONE PER ");
-    // r.toString();
-    // }
-
-    // }
+    public Reimbursement denyReq(int reimbursementId, int managerId) {
+        return rDao.deny(reimbursementId, managerId);
+    }
 
     public List<Reimbursement> getAllReimbursements() {
         return rDao.getAll();

@@ -15,9 +15,9 @@ public interface ReimbursementDao {
 
     Reimbursement get(Reimbursement i);
 
-    Reimbursement approve(int i);
+    Reimbursement approve(int reId, int manId);
 
-    Reimbursement deny(int i);
+    Reimbursement deny(int reId, int manId);
 
     int remove(Reimbursement i);
 }

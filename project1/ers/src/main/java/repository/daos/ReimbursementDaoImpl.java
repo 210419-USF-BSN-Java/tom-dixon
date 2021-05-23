@@ -96,21 +96,20 @@ public class ReimbursementDaoImpl implements ReimbursementDao {
     }
 
     @Override
-    public Reimbursement approve(int i) {
+    public Reimbursement approve(int id, int manId) {
         Reimbursement result = null;
-        String sql = "update reimbursement r set status_id = (select id from reimbursement_status where status = 'approved' ) where r.id  = ? returning *";
+        String sql = "update reimbursement r set status_id = (select id from reimbursement_status where status = 'approved' ), resolved = now(), resolver_id = ? where r.id  = ? returning *";
 
         try (Connection con = ConnectionFactory.getConnection()) {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, i);
+            ps.setInt(1, manId);
+            ps.setInt(2, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Reimbursement r = new Reimbursement(rs.getInt("id"), rs.getDouble("amount"), rs.getString("submitted"),
                         rs.getString("resolved"), rs.getString("description"), rs.getString("receipt"),
                         rs.getInt("author_id"), rs.getInt("resolver_id"), rs.getInt("status_id"),
-                        rs.getInt("reimbursement_type_id"), rs.getString("expense_type"), rs.getString("status"),
-                        rs.getString("resolver_first_name"), rs.getString("resolver_last_name"),
-                        rs.getString("author_first_name"), rs.getString("author_last_name"));
+                        rs.getInt("reimbursement_type_id"));
                 result = r;
             }
         } catch (SQLException e) {
@@ -122,14 +121,15 @@ public class ReimbursementDaoImpl implements ReimbursementDao {
     }
 
     @Override
-    public Reimbursement deny(int i) {
+    public Reimbursement deny(int id, int manId) {
 
         Reimbursement result = null;
-        String sql = "update reimbursement r set status_id = (select id from reimbursement_status where status = 'denied' ) where r.id  = ? returning *";
+        String sql = "update reimbursement r set status_id = (select id from reimbursement_status where status = 'denied' ), resolved = now(), resolver_id = ? where r.id  = ? returning *";
 
         try (Connection con = ConnectionFactory.getConnection()) {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, i);
+            ps.setInt(1, manId);
+            ps.setInt(2, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Reimbursement r = new Reimbursement(rs.getInt("id"), rs.getDouble("amount"), rs.getString("submitted"),

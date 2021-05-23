@@ -86,16 +86,16 @@ function App() {
   }
 
   async function approveReq( id ) {
-    const reqParams = qs.stringify( { id } )
+    const reqParams = qs.stringify( { id, manId: user.id } )
     console.log( reqParams )
-    const result = await axios.put( 'approve', reqParams, formHeaders );
+    const result = await axios.post( 'approve-request', reqParams, formHeaders );
     console.log( result )
   }
 
   async function rejectReq( id ) {
-    const reqParams = qs.stringify( { id } )
+    const reqParams = qs.stringify( { id, manId: user.id } )
     console.log( reqParams )
-    const result = await axios.put( 'reject', reqParams, formHeaders );
+    const result = await axios.post( 'deny-request', reqParams, formHeaders );
     console.log( result )
   }
 

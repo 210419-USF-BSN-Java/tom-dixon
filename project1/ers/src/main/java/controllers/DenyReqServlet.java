@@ -16,15 +16,20 @@ import repository.models.Reimbursement;
 import services.ReimbursementService;
 import utils.JsonConverter;
 
-@WebServlet(name = "reimbursements", urlPatterns = { "/main/reimbursements" })
-public class ReimbursementsServlet extends HttpServlet {
+@WebServlet(name = "deny-request", urlPatterns = { "/main/deny-request" })
+public class DenyReqServlet extends HttpServlet {
 
     private ReimbursementService rService = new ReimbursementService();
 
-    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-        // returns all reimbursements
+    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 
-        // check if request is coming from a manager or employee
+        String id = req.getParameter("id");
+        String manId = req.getParameter("manId");
+
+        System.out.println("req.getParamter( )");
+        System.out.println(id);
+        System.out.println(manId);
+
         Cookie[] cookies = req.getCookies();
 
         if (cookies != null) {
@@ -37,16 +42,19 @@ public class ReimbursementsServlet extends HttpServlet {
 
             // if employee, get id from userId cookie
             if (result.getValue().equals("1")) {
-                List<Reimbursement> reimbursements = rService.getAllReimbursements();
+
+                Reimbursement reimbursement = rService.denyReq(Integer.parseInt(req.getParameter("id")),
+                        Integer.parseInt(req.getParameter("manId")));
                 // set output type for message
                 res.setContentType("application/json;charset=UTF-8");
                 ServletOutputStream jsonOut = res.getOutputStream();
 
                 JsonConverter converter = new JsonConverter();
-                String output = converter.convertToJson(reimbursements);
+                String output = converter.convertToJson(reimbursement);
                 jsonOut.print(output);
             }
 
         }
     }
+
 }
