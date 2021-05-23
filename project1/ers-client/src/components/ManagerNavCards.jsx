@@ -4,7 +4,7 @@ import usersIcon from '../svg-icons/usersIcon';
 import time from '../svg-icons/time';
 import bank from '../svg-icons/bank';
 
-const managerNavCards = ({ allReqs, allEmployees }) => {
+const managerNavCards = ({ allReqs, allResolved, allEmployees }) => {
   return (
     <>
       <div className='flex gap-3'>
@@ -15,7 +15,7 @@ const managerNavCards = ({ allReqs, allEmployees }) => {
           desc='View all pending reimbursement requests'
         />
         <Card
-          action={allReqs}
+          action={allResolved}
           icon={bank}
           title='Resolved'
           desc='View all approved/rejected reimbursement requests'

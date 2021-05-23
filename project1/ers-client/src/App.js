@@ -31,7 +31,8 @@ function App() {
       <Redirect to='login' />
     }
     return () => {
-
+      setUser( null )
+      setReimReqs( [] )
     }
   }, [] )
 
@@ -116,7 +117,7 @@ function App() {
   }
 
   function getEmployees() {
-    console.log( "GET ALL EMPLOYEES" )
+    console.log( "App: getEmployees() called" )
   }
 
   return (

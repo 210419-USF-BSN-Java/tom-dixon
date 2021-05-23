@@ -9,12 +9,13 @@ const PendingRequestTable = ({
   approveReq,
   rejectReq,
   manView,
+  view,
 }) => {
   const [reqs, setReqs] = useState([]);
   const [modalText, setModalText] = useState(null);
 
   useEffect(() => {
-    loadReqs();
+    load();
     return () => {
       clearReqs();
     };
@@ -33,16 +34,18 @@ const PendingRequestTable = ({
   async function handleApproveReq(id) {
     const result = await approveReq(id);
     if (result.data) {
-      loadReqs();
+      load();
     }
   }
 
   async function handleDenyReq(id) {
     const result = await rejectReq(id);
-    console.log(result);
+    if (result.data) {
+      load();
+    }
   }
 
-  async function loadReqs() {
+  async function load() {
     if (!isManager) {
       const result = await getReqs();
       console.log(result);
