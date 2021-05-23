@@ -9,7 +9,7 @@ public interface UserDao {
     // crud operations
     int add(User u);
 
-    List<User> getAll();
+    List<User> getAllEmployees();
 
     User get(User i);
 

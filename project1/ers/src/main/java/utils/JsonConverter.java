@@ -28,4 +28,8 @@ public class JsonConverter {
         return gson.toJson(r);
     }
 
+    public String convertEmpsToJson(List<User> r) {
+        return gson.toJson(r);
+    }
+
 }
