@@ -5,7 +5,7 @@ import Employees from '../Employees';
 import managerNavCards from '../ManagerNavCards';
 import EmployeeRequestForm from '../EmployeeRequestForm';
 import PendingRequestTable from '../PendingRequestTable';
-import ManagerPendingRequestTable from '../PendingRequestTable';
+import ManagerRequestTable from '../PendingRequestTable';
 
 import { Redirect } from 'react-router';
 
@@ -66,9 +66,21 @@ const Main = ({
             getReqs={getOneEmpsReqs}
           />
         );
-      case 'managerPending' || 'managerResolved':
+      case 'managerPending':
         return (
-          <ManagerPendingRequestTable
+          <ManagerRequestTable
+            view={view}
+            user={user}
+            getAllReqs={getAllReqs}
+            updateReq={updateReq}
+            approveReq={approveReq}
+            rejectReq={rejectReq}
+            manView={manView}
+          />
+        );
+      case 'managerResolved':
+        return (
+          <ManagerRequestTable
             view={view}
             user={user}
             getAllReqs={getAllReqs}

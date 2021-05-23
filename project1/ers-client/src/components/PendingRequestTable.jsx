@@ -9,18 +9,20 @@ const PendingRequestTable = ({
   approveReq,
   rejectReq,
   manView,
+  view,
 }) => {
   const [reqs, setReqs] = useState([]);
   const [modalText, setModalText] = useState(null);
 
   useEffect(() => {
-    loadReqs();
+    load();
     return () => {
       clearReqs();
     };
-  }, []);
+  }, [manView]);
 
   const isManager = user.roleId == 1;
+  const isResolved = manView == 'managerResolved';
 
   function closeModal() {
     setModalText(null);
@@ -33,24 +35,27 @@ const PendingRequestTable = ({
   async function handleApproveReq(id) {
     const result = await approveReq(id);
     if (result.data) {
-      loadReqs();
+      load();
     }
   }
 
   async function handleDenyReq(id) {
     const result = await rejectReq(id);
-    console.log(result);
+    if (result.data) {
+      load();
+    }
   }
 
-  async function loadReqs() {
+  async function load() {
+    let result;
     if (!isManager) {
-      const result = await getReqs();
+      result = await getReqs();
       console.log(result);
       setReqs(result.sort((a, b) => a.id - b.id));
     } else {
-      const result = await getAllReqs();
       switch (manView) {
         case 'managerPending':
+          result = await getAllReqs();
           setReqs(
             result
               .filter((req) => req.status === 'pending')
@@ -58,8 +63,9 @@ const PendingRequestTable = ({
           );
           break;
         case 'managerResolved':
+          result = await getAllReqs();
           setReqs(
-            await getAllReqs()
+            result
               .filter((req) => req.status !== 'pending')
               .sort((a, b) => a.id - b.id)
           );
@@ -78,7 +84,9 @@ const PendingRequestTable = ({
     >
       <div class='py-8'>
         <div class='flex flex-row mb-1 sm:mb-0 justify-between w-full'>
-          <h2 class='text-xl leading-tight'>Pending Requests</h2>
+          <h2 class='text-xl leading-tight'>
+            {isResolved ? 'Resolved Requests' : 'Pending Requests'}
+          </h2>
           <div class='text-end'>
             <form class='flex w-full max-w-sm space-x-3'>
               <div class=' relative '>
@@ -114,6 +122,14 @@ const PendingRequestTable = ({
                       Employee
                     </th>
                   )}
+                  {isResolved && isManager && (
+                    <th
+                      scope='col'
+                      class='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm text-left uppercase font-normal'
+                    >
+                      Status
+                    </th>
+                  )}
 
                   <th
                     scope='col'
@@ -133,6 +149,22 @@ const PendingRequestTable = ({
                   >
                     submitted
                   </th>
+                  {isResolved && (
+                    <>
+                      <th
+                        scope='col'
+                        class='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
+                      >
+                        resolved
+                      </th>
+                      <th
+                        scope='col'
+                        class='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
+                      >
+                        manager
+                      </th>
+                    </>
+                  )}
                   <th
                     scope='col'
                     class='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800   text-sm uppercase font-normal'
@@ -145,7 +177,7 @@ const PendingRequestTable = ({
                   >
                     receipt
                   </th>
-                  {isManager && (
+                  {!isResolved && isManager && (
                     <th
                       scope='col'
                       class='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800   text-sm uppercase font-normal'
@@ -165,6 +197,9 @@ const PendingRequestTable = ({
                       {...props}
                       makeDescriptionModal={makeDescriptionModal}
                       isManager={isManager}
+                      isResolved={isResolved}
+                      view={view}
+                      manView={manView}
                       handleApproveReq={handleApproveReq}
                       handleDenyReq={handleDenyReq}
                     />

@@ -10,6 +10,7 @@ const Record = ({
   amount,
   type,
   dateSubmitted,
+  dateResolved,
   description,
   authorId,
   authorFirstName,
@@ -18,6 +19,10 @@ const Record = ({
   isManager,
   handleApproveReq,
   handleDenyReq,
+  isResolved,
+  resolverFirstName,
+  resolverLastName,
+  status,
 }) => {
   return (
     <tr className='w-100'>
@@ -37,6 +42,13 @@ const Record = ({
           </p>
         </td>
       )}
+      {isResolved && isManager && (
+        <td class='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
+          <p class='text-gray-900 whitespace-no-wrap  pr-10'>
+            {status == 'approved' ? <CheckIcon /> : <RejectIcon />}
+          </p>
+        </td>
+      )}
       <td class='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
         <p class='text-gray-900 whitespace-no-wrap text-left pr-10'>
           ${(Math.round(amount * 100) / 100).toFixed(2)}
@@ -50,6 +62,19 @@ const Record = ({
           {formatDate(dateSubmitted)}
         </p>
       </td>
+      {isResolved && (
+        <>
+          <td class='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
+            <p class='text-gray-900 whitespace-no-wrap'>
+              {formatDate(dateResolved)}
+            </p>
+          </td>
+          <td class='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
+            <p class='text-gray-900 whitespace-no-wrap'>{resolverFirstName}</p>
+            <p class='text-gray-900 whitespace-no-wrap'>{resolverLastName}</p>
+          </td>
+        </>
+      )}
 
       <td class='px-5 py-5 border-b border-gray-200 bg-white text-center text-sm'>
         <button
@@ -65,7 +90,7 @@ const Record = ({
           <PhotoIcon />
         </button>
       </td>
-      {isManager && (
+      {!isResolved && isManager && (
         <td class='px-5 py-5 border-b border-gray-200 bg-white text-center text-sm'>
           <div>
             <button
