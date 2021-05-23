@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import DescpriptionModal from './DescpriptionModal';
 import Record from './Record';
+import RefreshIcon from '../svg-icons/refresh';
 
 const PendingRequestTable = ({
   getReqs,
@@ -144,7 +145,7 @@ const PendingRequestTable = ({
                   id='"form-subscribe-Filter'
                   class=' block appearance-none w-full bg-white border border-gray-200 hover:border-gray-500 px-4 py-2 pr-8 shadow-sm text-sm leading-tight focus:outline-none focus:shadow-outline'
                   placeholder={
-                    isResolved
+                    isManager
                       ? 'search by employee name or id'
                       : 'search by description'
                   }
@@ -157,6 +158,12 @@ const PendingRequestTable = ({
                   value='Search'
                 />
               </div>
+              <button
+                onClick={() => load()}
+                className='flex flex-col justify-center cursor-pointer'
+              >
+                <RefreshIcon />
+              </button>
             </form>
           </div>
         </div>
