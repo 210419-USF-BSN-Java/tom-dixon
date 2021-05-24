@@ -9,11 +9,11 @@ public interface UserDao {
     // crud operations
     int add(User u);
 
-    List<User> getAll();
+    List<User> getAllEmployees();
 
     User get(User i);
 
-    User getByUsername(String username);
+    User login(String username, String password);
 
     User update(User i);
 
