@@ -44,14 +44,6 @@ function EmployeeRequestForm({ addReq, clearMain }) {
         className='bg-gray menu-card relative px-8 pt-6 pb-8 mb-4'
         action='emp-request'
       >
-        <div className='flex justify-end absolute right-3 top-3'>
-          <button
-            onClick={handleCloseReqForm}
-            className='text-gray-600 hover:text-gray-800'
-          >
-            <CloseIcon />
-          </button>
-        </div>
         <label
           className='block text-gray-700 text-sm font-bold mb-2'
           htmlFor='type'
