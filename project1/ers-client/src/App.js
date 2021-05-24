@@ -41,8 +41,6 @@ function App() {
     setUser( getUserFromCookie() )
   }
 
-
-
   // API CALLS
   async function login( formData ) {
 
@@ -79,19 +77,17 @@ function App() {
     setReimReqs( [ ...reimReqs, result ] )
   }
 
-  // async function getReimbursementTypes() {
-  //   //dynamically generate reimbursement type options for emp req form
-  //   console.log( "get reimbursement types" )
-  //   const result = await axios.get( 'reimbursementRequest' )
-  //   console.log( result )
-  // }
+  async function getReqs() {
+    console.log( 'get one emp\'s reqs' )
+    let { data } = await axios.get( 'emp-reimbursement' )
+    return data
+  }
 
   async function getOneEmpsReqs() {
 
     console.log( 'get one emp\'s reqs' )
     let { data } = await axios.get( 'emp-reimbursement' )
     if ( data ) {
-      console.log( data )
       return data.filter( e => e.statusId == 1 );
     }
   }
@@ -132,6 +128,7 @@ function App() {
           getEmployees={getEmployees}
           approveReq={approveReq}
           rejectReq={rejectReq}
+          getReqs={getReqs}
         />
       )
       }

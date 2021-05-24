@@ -18,6 +18,7 @@ const Main = ({
   getEmployees,
   approveReq,
   rejectReq,
+  getReqs,
 }) => {
   const [manView, setManView] = useState(null);
   const [empView, setEmpView] = useState(null);
@@ -57,7 +58,7 @@ const Main = ({
         return (
           <EmployeeRequestForm addReq={addReq} clearMain={clearMainView} />
         );
-      case 'pending' || 'resolved':
+      case 'pending':
         console.log('pending');
         return (
           <PendingRequestTable
@@ -65,6 +66,11 @@ const Main = ({
             user={user}
             getReqs={getOneEmpsReqs}
           />
+        );
+      case 'resolved':
+        console.log('resolved emp');
+        return (
+          <PendingRequestTable view={view} user={user} getReqs={getReqs} />
         );
       case 'managerPending':
         return (
