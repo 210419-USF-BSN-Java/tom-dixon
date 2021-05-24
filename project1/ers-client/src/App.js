@@ -122,7 +122,7 @@ function App() {
   return (
     <Router>
       <AppNav user={user} logout={logout} />
-      <Route path="/" render={props => ( <LoginPage {...props} login={login} user={user} /> )} />
+      <Route path="/login" exact render={props => ( <LoginPage {...props} login={login} user={user} /> )} />
       <Route path="/main" render={props => (
         <Main {...props}
           user={user}

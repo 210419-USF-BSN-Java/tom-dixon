@@ -3,13 +3,6 @@ import qs from 'qs';
 import { Redirect } from 'react-router';
 
 const LoginForm = ({ login, user }) => {
-  // useEffect(() => {
-
-  //   return () => {
-
-  //   }
-  // }, [])
-
   const initialValues = { username: '', password: '' };
 
   const [form, setForm] = useState(initialValues);
@@ -38,7 +31,7 @@ const LoginForm = ({ login, user }) => {
   return user ? (
     <Redirect to='/main/' />
   ) : (
-    <div className='h-screen font-sans login bg-cover'>
+    <div className='font-sans login bg-cover'>
       <div className='container mx-auto h-full flex flex-1 justify-center items-center'>
         <div className='leading-loose' style={{ width: '300px' }}>
           <form

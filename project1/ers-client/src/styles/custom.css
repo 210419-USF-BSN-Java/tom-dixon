@@ -27,6 +27,9 @@ body {
   max-width: 16rem;
 }
 
+.custom-w-12 {
+  width: 12rem;
+}
 .bg-gray {
   background-color: rgba(0, 0, 0, 0.03);
 }
@@ -45,4 +48,8 @@ body {
 
 .fixed-width-md {
   min-width: 10rem;
+}
+
+.title-shadow {
+  text-shadow: 2px 2px 4px rgb(84, 105, 212);
 }
