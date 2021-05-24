@@ -1,3 +1,4 @@
+import { Transition } from '@headlessui/react';
 import React, { useState } from 'react';
 import Page from '../Page';
 import employeeNavCards from '../EmployeeNavCards';
@@ -56,7 +57,21 @@ const Main = ({
     switch (view) {
       case 'request':
         return (
-          <EmployeeRequestForm addReq={addReq} clearMain={clearMainView} />
+          <Transition
+            appear={true}
+            show={empView && empView == 'request'}
+            enter='transition ease-in-out duration-350 transform'
+            enterTo='translate-y-0'
+            enterFrom='translate-y-20'
+          >
+            <Transition.Child
+              enter='transition-opacity duration-200'
+              enterTo='opacity-100'
+              enterFrom='opacity-0'
+            >
+              <EmployeeRequestForm addReq={addReq} clearMain={clearMainView} />
+            </Transition.Child>
+          </Transition>
         );
       case 'pending':
         console.log('pending');

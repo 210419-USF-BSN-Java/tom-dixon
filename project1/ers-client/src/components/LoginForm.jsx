@@ -42,12 +42,6 @@ const LoginForm = ({ login, user }) => {
               LOGIN
             </p>
             <div className=''>
-              {/* <label
-                className='block text-gray-700 text-sm font-bold mb-2'
-                htmlFor='email'
-              >
-                Username
-              </label> */}
               <input
                 onChange={onChange}
                 name='username'
@@ -59,9 +53,6 @@ const LoginForm = ({ login, user }) => {
               />
             </div>
             <div className='mt-2'>
-              {/* <label className='block text-gray-700 text-sm font-bold mb-2'>
-                Password
-              </label> */}
               <input
                 onChange={onChange}
                 className='block appearance-none w-full bg-white border border-gray-200 hover:border-gray-500 px-4 py-2 pr-8 shadow-sm mb-6 leading-tight focus:outline-none focus:shadow-outline'
@@ -73,7 +64,6 @@ const LoginForm = ({ login, user }) => {
                 required
               />
             </div>
-
             <div className='mt-4 items-center flex justify-center'>
               <button
                 type='submit'
