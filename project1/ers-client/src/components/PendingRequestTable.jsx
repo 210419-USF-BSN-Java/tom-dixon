@@ -18,6 +18,7 @@ const PendingRequestTable = ({
 
   const isManager = user.roleId == 1;
   const isResolved = manView == 'managerResolved';
+  const empIsResolved = view == 'resolved';
 
   useEffect(() => {
     load();
@@ -25,7 +26,7 @@ const PendingRequestTable = ({
     return () => {
       clearReqs();
     };
-  }, [manView]);
+  }, [manView, view]);
 
   function filterByUser() {
     if (searchForm.search(/\d/) > -1) {
@@ -87,7 +88,25 @@ const PendingRequestTable = ({
 
   async function load() {
     let result;
-    if (!isManager) {
+
+    if (view) {
+      switch (view) {
+        case 'resolved':
+          result = await getReqs();
+          setReqs(
+            result
+              .sort((a, b) => a.id - b.id)
+              .filter((req) => req.status !== 'pending')
+          );
+          break;
+        case 'pending':
+          result = await getReqs();
+          setReqs(result.sort((a, b) => a.id - b.id));
+          break;
+        default:
+      }
+    }
+    if (!isManager && !empIsResolved) {
       result = await getReqs();
       console.log(result);
       setReqs(result.sort((a, b) => a.id - b.id));
@@ -124,12 +143,16 @@ const PendingRequestTable = ({
 
   return (
     <div
-      class={`container mx-auto px-4 sm:px-8 ${isManager ? '' : 'max-w-3xl'}`}
+      class={`container mx-auto px-4 sm:px-8 ${
+        isManager ? '' : empIsResolved ? 'max-w-5xl' : 'max-w-3xl'
+      }`}
     >
       <div class='py-8'>
         <div class='flex flex-row mb-1 sm:mb-0 justify-between w-full'>
           <h2 class='text-xl leading-tight'>
-            {isResolved ? 'Resolved Requests' : 'Pending Requests'}
+            {isResolved || empIsResolved
+              ? 'Resolved Requests'
+              : 'Pending Requests'}
           </h2>
           <div class='text-end'>
             <form
@@ -189,7 +212,7 @@ const PendingRequestTable = ({
                       Employee
                     </th>
                   )}
-                  {isResolved && isManager && (
+                  {(isResolved || empIsResolved) && (
                     <th
                       scope='col'
                       class='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm text-left uppercase font-normal'
@@ -216,7 +239,7 @@ const PendingRequestTable = ({
                   >
                     submitted
                   </th>
-                  {isResolved && (
+                  {(isResolved || empIsResolved) && (
                     <>
                       <th
                         scope='col'
@@ -265,6 +288,7 @@ const PendingRequestTable = ({
                       makeDescriptionModal={makeDescriptionModal}
                       isManager={isManager}
                       isResolved={isResolved}
+                      empIsResolved={empIsResolved}
                       view={view}
                       manView={manView}
                       handleApproveReq={handleApproveReq}

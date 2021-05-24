@@ -20,6 +20,7 @@ const Record = ({
   handleApproveReq,
   handleDenyReq,
   isResolved,
+  empIsResolved,
   resolverFirstName,
   resolverLastName,
   status,
@@ -35,14 +36,14 @@ const Record = ({
       {isManager && (
         <td class='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
           <p class='text-gray-900 whitespace-no-wrap text-left pr-10'>
-            Id:{authorId} | {authorFirstName[0]}.
+            ID: {authorId}
           </p>
           <p class='text-gray-900 whitespace-no-wrap text-left pr-10'>
-            {authorLastName}
+            {authorFirstName[0]}. {authorLastName}
           </p>
         </td>
       )}
-      {isResolved && isManager && (
+      {(isResolved || empIsResolved) && (
         <td class='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
           <p class='text-gray-900 whitespace-no-wrap  pr-10'>
             {status == 'approved' ? <CheckIcon /> : <RejectIcon />}
@@ -62,7 +63,7 @@ const Record = ({
           {formatDate(dateSubmitted)}
         </p>
       </td>
-      {isResolved && (
+      {(isResolved || empIsResolved) && (
         <>
           <td class='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
             <p class='text-gray-900 whitespace-no-wrap'>
